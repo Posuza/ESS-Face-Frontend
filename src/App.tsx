@@ -1,81 +1,149 @@
 // src/App.tsx
-import { useMemo, useState } from "react";
-import Login from "./pages/Login";
-import Home from "./pages/Home";
+import {
+  Suspense,
+  lazy,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
+import { useStore } from "./store/store";
+import LogoutPopUp, {
+  type LogoutStatus,
+} from "./components/auth/popup/LogoutPopUp";
+const Login = lazy(() => import("./pages/Login"));
+const Home = lazy(() => import("./pages/Home"));
 import Mo from "./pages/Mo/Mo";
-import Dashboard from "./pages/Dashboard";
-import CheckInOut from "./pages/Attendance/CheckInOut";
-import FaceVerify from "./pages/Attendance/FaceVerify";
-import FirstLoginModal from "./components/FirstLoginModal";
+const Dashboard = lazy(() => import("./pages/Dashboard"));
+const CheckInOut = lazy(() => import("./pages/Attendance/CheckInOut"));
+const FaceVerify = lazy(() => import("./pages/Attendance/FaceVerify"));
+const JobAssigner = lazy(() => import("./pages/Job_assigner"));
 
-type Route = "login" | "home" | "dashboard" | "checkInOut" | "faceVerify" | "mo";
+type Route =
+  | "login"
+  | "home"
+  | "dashboard"
+  | "checkInOut"
+  | "faceVerify"
+  | "mo"
+  | "jobAssigner";
 type PunchType = "in" | "out";
 
 export default function App() {
-  const [stack, setStack] = useState<Route[]>(["login"]);
+  // Restore session on refresh — if emp_code exists in sessionStorage, skip login
+  const savedRoute = sessionStorage.getItem("app_route") as Route | null;
+  const isLoggedIn = !!sessionStorage.getItem("emp_code");
+  const initialRoute: Route = savedRoute && isLoggedIn ? savedRoute : "login";
+  const [stack, setStack] = useState<Route[]>([initialRoute]);
   const route = stack[stack.length - 1];
 
-  const [empCode, setEmpCode] = useState("632070");
-  const [pin, setPin] = useState("");
+  // Persist current route to sessionStorage so refresh keeps the same page
+  useEffect(() => {
+    if (route !== "login") {
+      sessionStorage.setItem("app_route", route);
+    }
+  }, [route]);
 
-  const [firstLoginOpen, setFirstLoginOpen] = useState(false);
+  // ── Session timeout: 1 minute (for testing) ────────────────────────────
+  // const SESSION_TIMEOUT_MS = 1 * 60 * 1000; // 1 minute
+  const SESSION_TIMEOUT_MS = 2 * 60 * 60 * 1000; // 2 hours
 
-  const empValid = useMemo(() => /^\d{6}$/.test(empCode), [empCode]);
-  const pinValid = useMemo(() => /^\d{6}$/.test(pin), [pin]);
-  const canSubmit = empValid && pinValid;
+  const checkSession = useCallback(() => {
+    const loginTime = sessionStorage.getItem("login_time");
+    if (loginTime && Date.now() - Number(loginTime) > SESSION_TIMEOUT_MS) {
+      sessionStorage.clear();
+      window.location.reload();
+      return false;
+    }
+    return true;
+  }, [SESSION_TIMEOUT_MS]);
 
-  const [displayName] = useState("สุพจน์ หอมดอก");
+  // Check session on mount and on every route change
+  useEffect(() => {
+    checkSession();
+  }, [route, checkSession]);
+
+  // Extend session on user interaction (click, keydown, scroll)
+  // — resets the 2-hour timer so active users don't get kicked out
+  useEffect(() => {
+    const handleActivity = () => {
+      if (!checkSession()) return;
+      sessionStorage.setItem("login_time", String(Date.now()));
+    };
+    window.addEventListener("click", handleActivity);
+    window.addEventListener("keydown", handleActivity);
+    window.addEventListener("scroll", handleActivity);
+    return () => {
+      window.removeEventListener("click", handleActivity);
+      window.removeEventListener("keydown", handleActivity);
+      window.removeEventListener("scroll", handleActivity);
+    };
+  }, [checkSession]);
 
   const [lastInAt, setLastInAt] = useState<string | null>(null);
   const [lastOutAt, setLastOutAt] = useState<string | null>(null);
 
   const [punchType, setPunchType] = useState<PunchType>("in");
 
+  const [showLogoutPopup, setShowLogoutPopup] = useState(false);
+  const [logoutStatus, setLogoutStatus] = useState<LogoutStatus>("attempt");
+  const logoutPromiseRef = useRef<Promise<boolean> | null>(null);
+
   // ===== Navigation helpers =====
-  const reset = (r: Route) => setStack([r]);
+  const reset = (r: Route) => {
+    setStack([r]);
+    if (r === "login") sessionStorage.removeItem("app_route");
+  };
 
   const push = (r: Route) =>
     setStack((s) => (s[s.length - 1] === r ? s : [...s, r]));
 
-  const back = () =>
-    setStack((s) => (s.length > 1 ? s.slice(0, -1) : s));
+  const back = () => setStack((s) => (s.length > 1 ? s.slice(0, -1) : s));
 
-  function onlyDigits6(v: string) {
-    return v.replace(/\D/g, "").slice(0, 6);
-  }
+  async function onLogout() {
+    setLogoutStatus("attempt");
+    setShowLogoutPopup(true);
 
-  function isFirstTimeUser(code: string) {
-    return code === "632070";
-  }
+    // Start logout in background — popup waits
+    const code = sessionStorage.getItem("emp_code");
+    const p = useStore.getState().logout(code || "");
+    logoutPromiseRef.current = p;
 
-  async function onLogin() {
-    if (!canSubmit) return;
-
-    if (isFirstTimeUser(empCode)) {
-      setPin("");
-      setFirstLoginOpen(true);
-      return;
+    const ok = await p;
+    if (ok) {
+      // Small delay so user sees the attempt state briefly
+      setTimeout(() => setLogoutStatus("success"), 600);
+    } else {
+      setLogoutStatus("fail");
     }
-
-    reset("home");
   }
 
-  async function onRequestPassword() {
-    if (!empValid) return;
-    alert("ส่งรหัสไปอีเมลแล้ว (ตัวอย่าง)");
-  }
-
-  function onLogout() {
-    setPin("");
+  const onLogoutPopupClose = useCallback(async () => {
+    setShowLogoutPopup(false);
     reset("login");
-  }
+  }, []);
+
+  const onLogoutRetry = useCallback(() => {
+    setLogoutStatus("attempt");
+    // Re-run logout
+    const code = sessionStorage.getItem("emp_code");
+    const p = useStore.getState().logout(code || "");
+    logoutPromiseRef.current = p;
+    p.then((ok) => {
+      if (ok) {
+        setTimeout(() => setLogoutStatus("success"), 600);
+      } else {
+        setLogoutStatus("fail");
+      }
+    });
+  }, []);
 
   function goFaceVerify(type: PunchType) {
     setPunchType(type);
     push("faceVerify");
   }
 
-  // ✅ onConfirm = บันทึกอย่างเดียว (ไม่ navigate)
+  // onConfirm = บันทึกอย่างเดียว (ไม่ navigate)
   async function onFaceConfirm(_photoDataUrl: string, type: PunchType) {
     const nowIso = new Date().toISOString();
     if (type === "in") setLastInAt(nowIso);
@@ -85,7 +153,7 @@ export default function App() {
     return;
   }
 
-  // ✅ ให้ FaceVerify เรียกตอนกด OK ใน SuccessModal เพื่อไปหน้า CheckInOut
+  // ให้ FaceVerify เรียกตอนกด OK ใน SuccessModal เพื่อไปหน้า CheckInOut
   function goCheckInOutFromFaceVerify() {
     setStack((s) => {
       const prev = s[s.length - 2];
@@ -95,74 +163,67 @@ export default function App() {
   }
 
   return (
-    <>
-      {route === "login" && (
-        <>
-          <Login
-            empCode={empCode}
-            pin={pin}
-            onChangeEmp={(v) => setEmpCode(onlyDigits6(v))}
-            onChangePin={(v) => setPin(onlyDigits6(v))}
-            onSubmit={onLogin}
-            onSendForgot={onRequestPassword}
+    <Suspense
+      fallback={
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "100vh",
+          }}
+        >
+          กำลังโหลด...
+        </div>
+      }
+    >
+      <>
+        {route === "login" && <Login onLoginSuccess={() => reset("home")} />}
+
+        {route === "home" && (
+          <Home
+            onLogout={onLogout}
+            onGoCheckInOut={() => push("checkInOut")}
+            onGoLeaveOnline={() => alert("TODO: ไปหน้า ลาออนไลน์")}
+            onGoMo={() => push("mo")}
+            onGoJobAssigner={() => push("jobAssigner")}
           />
+        )}
 
-          <FirstLoginModal
-            open={firstLoginOpen}
-            empCode={empCode}
-            onClose={() => {
-              setPin("");
-              setFirstLoginOpen(false);
-            }}
-            onRequestPassword={() => {
-              onRequestPassword();
-              setFirstLoginOpen(false);
-            }}
+        {route === "checkInOut" && (
+          <CheckInOut
+            lastInAt={lastInAt}
+            lastOutAt={lastOutAt}
+            onBack={back}
+            onCheckIn={() => goFaceVerify("in")}
+            onCheckOut={() => goFaceVerify("out")}
+            onViewHistory={() => alert("TODO: เปิดหน้าประวัติย้อนหลัง 1 เดือน")}
           />
-        </>
-      )}
+        )}
 
-      {route === "home" && (
-        <Home
-          empCode={empCode}
-          displayName={displayName}
-          onLogout={onLogout}
-          onGoCheckInOut={() => push("checkInOut")}
-          onGoLeaveOnline={() => alert("TODO: ไปหน้า ลาออนไลน์")}
-          onGoMo={() => push("mo")}
-        />
-      )}
+        {route === "faceVerify" && (
+          <FaceVerify
+            punchType={punchType}
+            onBack={back}
+            onConfirm={onFaceConfirm}
+            onGoCheckInOut={goCheckInOutFromFaceVerify}
+            onViewHistory={() => alert("TODO: เปิดหน้าประวัติย้อนหลัง 1 เดือน")}
+          />
+        )}
+        {route === "mo" && <Mo onBackHome={() => reset("home")} />}
+        {route === "jobAssigner" && (
+          <JobAssigner onBackHome={() => reset("home")} />
+        )}
+        {route === "dashboard" && <Dashboard onLogout={onLogout} />}
 
-      {route === "checkInOut" && (
-        <CheckInOut
-          empCode={empCode}
-          displayName={displayName}
-          lastInAt={lastInAt}
-          lastOutAt={lastOutAt}
-          onBack={back}
-          onCheckIn={() => goFaceVerify("in")}
-          onCheckOut={() => goFaceVerify("out")}
-          onViewHistory={() => alert("TODO: เปิดหน้าประวัติย้อนหลัง 1 เดือน")}
+        {/* Logout popup overlay */}
+        <LogoutPopUp
+          open={showLogoutPopup}
+          status={logoutStatus}
+          onClose={onLogoutPopupClose}
+          onRetry={onLogoutRetry}
         />
-      )}
-
-      {route === "faceVerify" && (
-        <FaceVerify
-          empCode={empCode}
-          displayName={displayName}
-          punchType={punchType}
-          onBack={back}
-          onConfirm={onFaceConfirm}                // ✅ save only
-          onGoCheckInOut={goCheckInOutFromFaceVerify} // ✅ ไปหน้า checkInOut ตอนกด OK
-          onViewHistory={() => alert("TODO: เปิดหน้าประวัติย้อนหลัง 1 เดือน")}
-        />
-      )}
-      {route === "mo" && (
-        <Mo empCode={empCode} displayName={displayName} />
-      )}
-      {route === "dashboard" && (
-        <Dashboard empCode={empCode} onLogout={onLogout} />
-      )}
-    </>
+      </>
+    </Suspense>
   );
 }

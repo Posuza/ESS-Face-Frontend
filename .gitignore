@@ -1,1 +1,31 @@
-node_modules
+# Dependencies
+node_modules/
+
+# Production and test output
+dist/
+coverage/
+
+# Local environment files
+.env
+.env.*
+!.env.example
+*.local
+
+# Tool caches and logs
+*.tsbuildinfo
+.eslintcache
+.vite/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+tools/comparison_report.json
+tools/comparison_report.txt
+tools/page_analysis.json
+
+# Operating system and editor files
+.DS_Store
+Thumbs.db
+.idea/
+*.swp

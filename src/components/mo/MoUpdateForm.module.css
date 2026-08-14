@@ -1,0 +1,1571 @@
+.sector-cell-narrow {
+    padding: 2px 2px !important;
+    background-color: #f5f5f5 !important;
+    border: 1px solid #ccc !important;
+    width: 32px;
+    min-width: 32px;
+    max-width: 36px;
+    font-size: 15px;
+    font-weight: bold;
+    align-items: center;
+    justify-content: center;
+    height: 36px;
+    min-height: 36px;
+    height: 36px;
+    min-height: 36px;
+}
+.pin-icon {
+    width: 16px !important;
+    height: 16px !important;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    color: #014f86 !important;
+    stroke: currentColor !important;
+    opacity: 0.95;
+    margin-right: 0;
+}
+
+.pin-icon svg {
+    width: 16px;
+    height: 16px;
+    display: block;
+}
+
+.sector-cell-bodytext {
+    padding: 4px 8px !important;
+    text-align: left !important;
+    background-color: transparent;
+    border: 1px solid #5c7a9e;
+    vertical-align: middle;
+    font-size: 14px;
+}
+
+.sector-cell-bodytext-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    width: 100%;
+    vertical-align: middle;
+}
+.sector-header-fullwidth {
+    width: 100%;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    box-sizing: border-box;
+    font-weight: bold;
+    font-size: 14px;
+    /* ensure the header container fills the table cell height */
+    height: 100%;
+    padding: 4px 7px;
+}
+.plus-header-fullwidth {
+    width: auto;
+    display: inline-flex;
+    color: var(--brandDark, rgba(2, 75, 118, 0.9)) !important;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 4px;
+    box-sizing: border-box;
+    font-weight: 600;
+    font-size: 13px;
+    padding: 4px 8px;
+    background-color: transparent;
+    border: none;
+    border-radius: 4px;
+    max-width: 100%;
+}
+
+.plus-header-fullwidth:hover {
+    background-color: #f0f2f5;
+}
+
+.plus-header-fullwidth span {
+    color: var(--brandDark, rgba(2, 75, 118, 0.9));
+    font-weight: 500;
+    text-decoration: none;
+    line-height: 1;
+    text-align: left;
+}
+/* Trimmed CSS: only classes used by MoNewForm.tsx */
+
+/* Back button (outside form) */
+.guts-back-outer {
+    display: flex;
+    max-width: 420px;
+    justify-content: space-between;
+    align-items: center;
+    gap: 4px;
+    padding: 0 0 2px 0;
+    box-sizing: border-box;
+}
+
+.guts-back-outer .guts-back-btn:hover {
+    transform: translateY(-1px) !important;
+    box-shadow: 0 14px 32px rgba(2, 75, 118, 0.1) !important;
+    background: rgba(4, 110, 146, 0.9) !important;
+    border-color: rgba(2, 75, 118, 0.18) !important;
+}
+
+.guts-back-btn {
+    height: 40px !important;
+    padding: 10px !important;
+    border-radius: 999px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background: var(--brandDark, rgba(2, 75, 118, 0.9)) !important;
+    border: 1px solid rgba(2, 75, 118, 0.06) !important;
+    color: #ffffff !important;
+    cursor: pointer !important;
+    box-shadow: 0 10px 24px rgba(3, 30, 83, 0.1) !important;
+    width: auto !important;
+    box-sizing: border-box;
+    transition:
+        transform 0.12s ease,
+        box-shadow 0.12s ease,
+        background 0.12s ease,
+        color 0.12s ease !important;
+}
+
+/* MO form shell */
+.guts-Mo-layout {
+    margin-top: 14px;
+
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 5px;
+    align-items: start;
+}
+
+.sector-table-wrapper {
+    margin-bottom: 0;
+}
+
+.sector-cell {
+    padding: 4px 8px !important;
+    text-align: left !important;
+    background-color: #f5f5f5 !important;
+    border: 1px solid #ccc !important;
+    vertical-align: middle;
+}
+
+.sector-cell-label {
+    font-size: 14px;
+    font-weight: 700;
+    color: #333;
+    margin-right: 8px;
+}
+
+.sector-cell-select {
+    font-size: 14px;
+    font-weight: 600;
+    padding: 4px 8px;
+    border-radius: 0 !important;
+    border: 1px solid #fff;
+    background: transparent;
+    color: #fff;
+    cursor: pointer;
+    outline: none;
+    box-sizing: border-box;
+
+    /* Responsive fixed width: won't stretch to fill the whole header */
+    min-width: 140px; /* don't go smaller than this */
+    max-width: 60%; /* allow growth up to 60% of header */
+    width: auto; /* let content determine width within min/max */
+    flex: 0 0 auto; /* keep current horizontal sizing behaviour */
+
+    /* make the select stretch vertically to match its header container */
+    align-self: stretch;
+    height: 100%;
+}
+
+.sector-select-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+}
+
+.sector-cell-select-green {
+    background-color: var(--brandDark) !important;
+    color: #fff;
+}
+
+.sector-cell-select:hover,
+.sector-cell-select:focus {
+    border-color: rgba(255, 255, 255, 0.6);
+}
+
+.region-card-meta-date {
+    display: block;
+    margin: 0;
+    color: var(--blueText);
+    text-align: right;
+    line-height: 1;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.region-card-value {
+    width: 100%;
+    color: var(--blueText);
+    font-size: 19px;
+    font-weight: 700;
+    line-height: 1.1;
+    padding-left: 8px;
+}
+
+/* Table styles used by the form */
+.mo-table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: auto;
+}
+
+/* ensure the table wrapper allows expanded cells to be visible */
+.mo-table-wrapper {
+    position: relative;
+    overflow: visible; /* allow cells to grow without clipping */
+}
+
+.mo-table th,
+.mo-table td {
+    border: none;
+    text-align: center;
+    vertical-align: top;
+}
+
+.mo-table td {
+    font-size: 12px;
+}
+
+.mo-table th {
+    font-size: 13px;
+}
+
+/* Restore header padding explicitly (headers should keep slightly larger padding) */
+.mo-table th {
+    padding: 5px 6px;
+}
+
+/* default table header styling */
+.mo-table th {
+    background-color: #003366;
+    color: white;
+    font-weight: bold;
+}
+
+/* Add row dividers — bottom border on each data row */
+.mo-table tbody tr {
+    border-bottom: 1px solid #e5e7eb;
+    border-left: 1px solid #e5e7eb;
+    border-right: 1px solid #e5e7eb;
+}
+
+/* Add reduced default padding for common data cells */
+.mo-table td.first-column-cell,
+.mo-table td.second-column-cell,
+.mo-table td.third-column-cell,
+.mo-table td.fourth-column-cell,
+.mo-table td.five-column-cell {
+    padding: 6px 8px;
+    box-sizing: border-box;
+}
+
+/* red variant for special groups (applied to the same th element)
+   use the more specific selector to override defaults */
+.mo-table th.mo-table-header-red {
+    background-color: #9b111e; /* dark red */
+    color: #ffffff;
+    border-color: #7f0f0f !important;
+}
+.mo-table th.mo-table-header-white {
+    background-color: transparent;
+    border: none;
+    padding: 0;
+}
+
+.mo-location-table-header {
+    padding-top: 8px;
+    padding-bottom: 8px;
+    text-align: left !important;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+}
+.mo-pluse-button-header {
+    padding: 0;
+    text-align: left !important;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+.location-table-header {
+    /* let inner .mo-header control padding so inner content lines up with cells */
+    padding: 6px 8px;
+    line-height: 1.1;
+}
+.mo-table th.first-column-cell {
+    font-size: 12px;
+    font-weight: normal;
+    text-align: center;
+    width: 4%;
+}
+.mo-table-header {
+    /* let inner .mo-header control padding so inner content lines up with cells */
+    padding: 0 !important;
+    line-height: 1.1;
+}
+
+.mo-header {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 6px 8px; /* match table cell padding so edges align */
+    box-sizing: border-box;
+}
+
+/* ensure the header text takes remaining space and the chevron has a fixed slot */
+.mo-header p {
+    margin: 0;
+    padding: 0;
+    font-size: 14px;
+    font-weight: 700;
+    flex: 1 1 auto;
+    text-align: left;
+}
+
+/* make the chevron occupy a fixed width so its presence/absence doesn't shift layout */
+.mo-header svg,
+.mo-header .chevron-slot {
+    flex: 0 0 28px; /* fixed slot for the chevron */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ensure chevron slot doesn't show border: remove any inherited border */
+.mo-header .chevron-slot {
+    border: none;
+    padding: 0;
+}
+
+/* if you prefer the chevron visually separated, the SVG can be nudged */
+.mo-header svg {
+    margin-left: 6px;
+}
+
+/* red header style for discipline group */
+.mo-table-header-red {
+    background: #9b111e; /* dark red */
+    color: #fff;
+    border-color: #7f0f0f !important;
+}
+
+/* red text style for header title when in red header */
+.mo-header-red-text {
+    color: #fff;
+    font-weight: 700;
+}
+
+/* textarea danger (red numbers) */
+.third-column-textarea-danger {
+    color: #b71c1c; /* red */
+    font-weight: 500;
+    overflow: hidden;
+}
+
+/* five-column cell base + danger style (red + underline) */
+.five-column-cell {
+    font-size: smaller;
+    text-align: center;
+    box-sizing: border-box;
+    min-width: 36px;
+    width: 10%;
+    padding: 2px;
+}
+.five-column-cell-danger {
+    color: #b71c1c;
+    text-decoration: underline;
+    text-decoration-color: #b71c1c;
+    font-weight: 600;
+    text-align: center;
+}
+
+.no-border {
+    border: none !important;
+}
+
+.mo-table td.first-column-cell {
+    font-weight: normal;
+    background-color: transparent;
+    text-align: center;
+    width: 4%;
+    padding: 6px 4px;
+    border-right: 1px solid #e5e7eb !important;
+}
+
+.mo-table td.second-column-cell {
+    text-align: right !important;
+    background-color: transparent;
+    width: 45%;
+    word-break: break-word;
+    vertical-align: middle;
+    font-size: 13px;
+    overflow: visible;
+    padding: 6px 12px;
+}
+
+.mo-table td.group3-second-column-cell {
+    text-align: left !important;
+    background-color: transparent;
+    width: 35%;
+    word-break: break-word;
+    vertical-align: middle;
+    font-size: 13px;
+    padding: 6px 8px;
+}
+
+.mo-table td.third-column-cell {
+    position: relative;
+    text-align: center !important;
+    font-weight: bold;
+    padding: 0 !important;
+    width: 10%;
+    background-color: transparent !important;
+    border: none !important;
+    vertical-align: middle;
+}
+
+/* Zebra striping — exclude status-colored cells so their bg shows through */
+.mo-table tbody tr:nth-child(even) td:not([class*="status-"]) {
+    background-color: #eff1f3 !important;
+}
+
+.mo-table td.group3-third-column-cell {
+    position: relative;
+    text-align: center !important;
+    font-weight: bold;
+    padding: 0 !important;
+    width: 10%;
+    min-height: 100%;
+    background-color: transparent;
+    display: table-cell;
+    vertical-align: middle;
+    box-sizing: border-box;
+    cursor: pointer;
+    line-height: 1;
+    color: #fff;
+    border-radius: 0;
+}
+
+/* when a cell needs to show wrapped content, allow it to expand */
+.third-column-wrap-cell {
+    width: auto !important;
+    max-width: none !important;
+}
+
+/* textarea used for wrapped editing */
+.third-column-textarea {
+    display: block;
+    width: 100%;
+    height: auto;
+    min-height: 0;
+    min-width: 0;
+    max-width: 100%;
+    box-sizing: border-box;
+    padding: 6px 3px !important;
+    margin: 0 !important;
+    font-weight: 800;
+    font-size: 11px;
+    color: #333;
+    background: transparent;
+    border: none !important;
+    outline: none !important;
+    resize: none;
+    overflow: hidden;
+    line-height: 1.2;
+    text-align: center;
+}
+
+/* View mode (disabled): bold, no underline */
+.third-column-textarea:disabled {
+    font-weight: bold !important;
+    text-decoration: none !important;
+    cursor: default;
+}
+
+/* Edit mode (enabled): normal weight, italic, underlined */
+.third-column-textarea:not(:disabled) {
+    font-weight: 400 !important;
+    font-style: italic;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-color: #8cb4d4;
+}
+.group3-popup-third-column-textarea1 {
+    display: block;
+    width: 100%;
+    height: auto;
+    min-height: 80px;
+    max-width: 100%;
+    box-sizing: border-box;
+    padding: 3px 8px !important;
+    margin: 0 !important;
+    font-weight: 400;
+    font-size: 11px;
+    color: #333;
+    background: transparent;
+    border: none !important;
+    outline: none !important;
+    resize: none;
+    overflow: hidden;
+    line-height: 1.2;
+    text-align: center;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-color: #8cb4d4;
+}
+.group3-popup-third-column-textarea1:not(:disabled) {
+    font-style: italic;
+}
+.group3-popup-third-column-textarea2 {
+    display: block;
+    width: 100%;
+    height: auto;
+    min-height: 40px;
+    max-width: 100%;
+    box-sizing: border-box;
+    padding: 3px 8px !important;
+    margin: 0 !important;
+    font-weight: 400;
+    font-size: 11px;
+    color: #333;
+    background: transparent;
+    border: none !important;
+    outline: none !important;
+    resize: none;
+    overflow: hidden;
+    line-height: 1.2;
+    text-align: center;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-color: #8cb4d4;
+}
+.group3-popup-third-column-textarea2:not(:disabled) {
+    font-style: italic;
+}
+
+/* make a specific cell variant that removes the cell padding so a child textarea can fill it */
+.textarea-cell {
+    padding: 0 !important;
+    box-sizing: border-box;
+    overflow: visible !important;
+    /* remove fixed height so cell can grow naturally; use min-height if needed */
+    min-height: 48px;
+    vertical-align: top; /* allow cell to grow with content */
+}
+
+/* Ensure text inside table cells aligns to top vertically while preserving horizontal centering.
+   Use .cell-top-left when you want left-aligned text that also sits at the top. */
+.cell-top-left {
+    text-align: left !important;
+    vertical-align: top !important;
+}
+
+/* visual warning state when user attempts invalid content */
+.third-column-textarea-warning {
+    /* show a red border and subtle glow */
+    box-shadow: 0 0 0 2px darkred;
+    outline: none;
+}
+
+.mo-table td.fourth-column-cell {
+    background-color: transparent;
+    text-align: center !important;
+    box-sizing: border-box;
+    min-width: 40px;
+    width: 18%;
+    vertical-align: middle !important;
+    font-weight: normal;
+}
+.mo-table td.group3-fourth-column-cell {
+    background-color: transparent;
+    text-align: center !important;
+    box-sizing: border-box;
+    min-width: 40px;
+    width: 10%;
+    vertical-align: middle !important;
+    border-right: 1px solid #e5e7eb;
+}
+
+/* reduced width variant for discipline/group-5 fourth column */
+.fourth-column-cell-danger {
+    min-width: 40px !important;
+    text-align: center !important;
+    font-weight: 700;
+    border-right: 1px solid #e5e7eb !important;
+}
+
+/* action button used for group3 rows */
+.action-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: transparent;
+    border: none;
+    padding: 4px 8px;
+    cursor: pointer;
+    color: inherit;
+}
+
+.action-label {
+    color: #0b4bd6;
+    text-decoration: underline;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+/* explicit styles for the action link in column 4 */
+.action-link {
+    background: transparent;
+    border: none;
+    color: #0b4bd6;
+    text-decoration: underline;
+    font-weight: 600;
+    font-size: 12px;
+    display: inline-block;
+    cursor: pointer;
+}
+
+/* styles for the delete action in column 5 */
+.delete-link {
+    background: transparent;
+    border: none;
+    color: #b71c1c;
+    font-weight: 700;
+    padding: 4px 8px;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.status-normal {
+    background: #4caf50 !important; /* green */
+    border-color: #3a8a3a !important;
+}
+.status-warning {
+    background: #ff9800 !important; /* orange */
+    border-color: #e07a00 !important;
+}
+.status-danger {
+    background: #b71c1c !important; /* red */
+    border-color: #7f0f0f !important;
+}
+
+/* Report approval status badges (matching MoHome.module.css) */
+.status-pill {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 22px;
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 1.15;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.status-approved {
+    color: #087a35;
+    background: #dff7e7;
+    border: 1px solid rgba(22, 163, 74, 0.18);
+}
+
+.status-pending {
+    color: #d97706;
+    background: #fffbeb;
+    border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+.status-rejected {
+    color: #dc2626;
+    background: #fef2f2;
+    border: 1px solid rgba(248, 113, 113, 0.32);
+}
+
+/* Approval Section - matching MoDetailPage style */
+.approval-section {
+    padding: 10px 3px 12px;
+    margin-bottom: 8px;
+    box-sizing: border-box;
+}
+
+.approval-remark-section {
+    background: #f3f6f9;
+    border-left: 4px solid transparent;
+    border-right: 1px solid transparent;
+    border-top: 1px solid transparent;
+    border-bottom: 1px solid transparent;
+    padding: 8px 0 4px;
+    box-shadow: 0 6px 14px rgba(2, 75, 118, 0.04);
+}
+
+.approval-remark-pending {
+    background: rgba(255, 247, 237, 0.4);
+    border-left-color: rgba(217, 119, 6, 0.18);
+    border-right-color: rgba(217, 119, 6, 0.12);
+    border-top-color: rgba(217, 119, 6, 0.18);
+    border-bottom-color: rgba(217, 119, 6, 0.12);
+    box-shadow:
+        0 -4px 10px rgba(217, 119, 6, 0.05),
+        0 6px 14px rgba(217, 119, 6, 0.04);
+}
+
+.approval-remark-approved {
+    background: rgba(240, 253, 244, 0.45);
+    border-left-color: rgba(16, 185, 129, 0.18);
+    border-right-color: rgba(16, 185, 129, 0.12);
+    border-top-color: rgba(16, 185, 129, 0.18);
+    border-bottom-color: rgba(16, 185, 129, 0.12);
+    box-shadow:
+        0 -4px 10px rgba(16, 185, 129, 0.05),
+        0 6px 14px rgba(16, 185, 129, 0.04);
+}
+
+.approval-remark-reject {
+    background: rgba(254, 242, 242, 0.45);
+    border-left-color: rgba(185, 28, 28, 0.18);
+    border-right-color: rgba(185, 28, 28, 0.12);
+    border-top-color: rgba(185, 28, 28, 0.18);
+    border-bottom-color: rgba(185, 28, 28, 0.12);
+    box-shadow:
+        0 -4px 10px rgba(185, 28, 28, 0.05),
+        0 6px 14px rgba(185, 28, 28, 0.04);
+}
+
+.approval-status-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 6px;
+    padding: 0 8px;
+}
+
+.approval-status-label {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--blueText);
+}
+
+.approval-content {
+    margin-bottom: 0;
+    padding: 0 8px;
+}
+
+.approval-select {
+    max-width: 60%;
+    width: 100%;
+    height: 35px;
+    border-radius: 7px;
+    padding: 8px 12px;
+    font-weight: 700;
+    font-size: 15px;
+    border: 1px solid rgba(2, 75, 118, 0.12);
+    background: transparent;
+    box-shadow: none;
+}
+
+.approval-select-pending {
+    background: rgba(217, 119, 6, 0.08);
+    border-color: rgba(217, 119, 6, 0.3);
+    color: rgb(146, 64, 14);
+}
+
+.approval-select-approved {
+    background: rgba(16, 185, 129, 0.08);
+    border-color: rgba(16, 185, 129, 0.3);
+    color: rgb(6, 95, 70);
+}
+
+.approval-select-reject {
+    background: rgba(185, 28, 28, 0.08);
+    border-color: rgba(185, 28, 28, 0.3);
+    color: rgb(127, 29, 29);
+}
+
+/* Stronger selectors to beat generic `.guts-field-row select` border rules */
+.guts-field-row .approval-select.approval-select-pending {
+    border-color: rgba(217, 119, 6, 0.22);
+}
+
+.guts-field-row .approval-select.approval-select-approved {
+    border-color: rgba(16, 185, 129, 0.22);
+}
+
+.guts-field-row .approval-select.approval-select-reject {
+    border-color: rgba(185, 28, 28, 0.22);
+}
+
+.approval-textarea {
+    width: 100%;
+    min-height: 72px;
+    padding: 8px 10px; /* reduced vertical + horizontal padding */
+    border: 1.5px solid rgba(92, 133, 214, 0.2);
+    border-radius: 8px;
+    font-size: 13px; /* slightly smaller text */
+    font-weight: 500;
+    color: #334155;
+    line-height: 1.4;
+    background: #fafbfc;
+    resize: vertical;
+    transition: all 0.16s ease;
+    box-sizing: border-box;
+}
+
+.approval-remark-pending .approval-textarea:not(:focus) {
+    background: rgba(255, 247, 237, 0.82);
+    border: 1px solid rgba(217, 119, 6, 0.18);
+    box-shadow: inset 0 0 0 1px rgba(217, 119, 6, 0.04);
+}
+
+.approval-remark-approved .approval-textarea:not(:focus) {
+    background: rgba(240, 253, 244, 0.84);
+    border: 1px solid rgba(16, 185, 129, 0.18);
+    box-shadow: inset 0 0 0 1px rgba(16, 185, 129, 0.04);
+}
+
+.approval-remark-reject .approval-textarea:not(:focus) {
+    background: rgba(254, 242, 242, 0.84);
+    border: 1px solid rgba(185, 28, 28, 0.18);
+    box-shadow: inset 0 0 0 1px rgba(185, 28, 28, 0.04);
+}
+
+.approval-textarea:focus {
+    outline: none;
+    border-color: #5c85d6;
+    background: #ffffff;
+    box-shadow: 0 0 0 3px rgba(92, 133, 214, 0.1);
+}
+
+.approval-textarea:disabled {
+    /* Disabled keeps the same soft status tint from the wrapper selectors. */
+    background: inherit;
+    padding: 8px 10px !important;
+    font-size: 13px !important;
+    line-height: 1.4 !important;
+    box-sizing: border-box !important;
+    opacity: 1 !important;
+    cursor: not-allowed;
+}
+
+.approval-textarea::placeholder {
+    color: #94a3b8;
+    font-style: italic;
+    font-size: 12px;
+}
+
+/* Apply the same smaller sizing to other full-width textareas only */
+textarea.guts-input-full:not(:focus),
+textarea.guts-detail-textarea:not(:focus),
+textarea.approval-textarea:not(:focus) {
+    background: #f3f6f9;
+    border: none;
+    box-shadow: none;
+    padding: 8px 10px;
+    line-height: 1.4;
+}
+
+.approval-remark-pending textarea.approval-textarea:not(:focus) {
+    background: rgba(255, 247, 237, 0.82) !important;
+    border: 1px solid rgba(217, 119, 6, 0.18) !important;
+    box-shadow: inset 0 0 0 1px rgba(217, 119, 6, 0.04) !important;
+}
+
+.approval-remark-approved textarea.approval-textarea:not(:focus) {
+    background: rgba(240, 253, 244, 0.84) !important;
+    border: 1px solid rgba(16, 185, 129, 0.18) !important;
+    box-shadow: inset 0 0 0 1px rgba(16, 185, 129, 0.04) !important;
+}
+
+.approval-remark-reject textarea.approval-textarea:not(:focus) {
+    background: rgba(254, 242, 242, 0.84) !important;
+    border: 1px solid rgba(185, 28, 28, 0.18) !important;
+    box-shadow: inset 0 0 0 1px rgba(185, 28, 28, 0.04) !important;
+}
+
+/* Higher-specificity focus rules inside detail box */
+.guts-detail-box textarea.approval-textarea:focus,
+.guts-detail-box .guts-input-full.approval-textarea:focus {
+    background: #ffffff !important;
+    border: 1.5px solid #5c85d6 !important;
+    box-shadow: 0 0 0 4px rgba(92, 133, 214, 0.12) !important;
+    padding: 8px 10px !important;
+    font-size: 13px !important;
+    line-height: 1.4 !important;
+    outline: none !important;
+}
+
+/* Focus appearance for approval textarea anywhere */
+textarea.approval-textarea:focus,
+.guts-field-row textarea.approval-textarea:focus,
+.guts-box textarea.approval-textarea:focus,
+.guts-field-row .approval-textarea:focus,
+.guts-box .approval-textarea:focus {
+    background: #ffffff !important;
+    border: 1.5px solid #5c85d6 !important;
+    box-shadow: 0 0 0 4px rgba(92, 133, 214, 0.12) !important;
+    outline: none !important;
+}
+
+/* Overlay/portal styles */
+
+/* Modal overlay + dialog styling to match existing app modals */
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    background: rgba(0, 0, 0, 0.55);
+    z-index: 9999;
+    padding: 8px; /* reduce outer padding so modal sits centered without large side margin */
+}
+
+.modal {
+    width: min(520px, 94vw);
+    margin: 0 auto; /* defensive centering */
+    border-radius: 6px; /* reduced radius */
+    background: linear-gradient(
+        180deg,
+        var(--cardTop, #ffffff),
+        var(--cardBottom, #fafafa)
+    );
+    box-shadow: 0 22px 60px rgba(0, 0, 0, 0.35);
+    overflow: hidden;
+    border: 2px solid rgba(2, 75, 118, 0.08);
+}
+
+/* reduce horizontal padding to 2px left/right and tighten vertical spacing */
+.modal-header {
+    padding: 4px 2px; /* further reduced vertical padding */
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    min-height: 32px; /* keep header compact but readable */
+    justify-content: flex-start; /* align header content to the left */
+}
+
+.modal-header h3 {
+    margin: 0;
+    font-size: 15px; /* smaller title */
+    line-height: 1.1;
+    padding: 4px 8px; /* restore a bit of left padding */
+    color: var(--blueText, #0b4bd6);
+    font-weight: 700;
+    text-align: left;
+}
+
+.modal-body {
+    padding: 6px 2px; /* reduced vertical padding */
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.modal-label {
+    font-size: 13px;
+    color: #333;
+    font-weight: 700;
+    margin-top: 6px;
+}
+
+.modal-input {
+    padding: 8px 10px;
+    border-radius: 6px;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    background: #fff;
+    font-size: 14px;
+}
+
+.modal-footer {
+    padding: 6px 2px;
+    display: flex;
+    gap: 12px; /* space between buttons */
+    justify-content: center; /* center the buttons horizontally */
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.btn-primary {
+    /* filled primary button */
+    background: var(--brandDark, #0b4bd6);
+    color: #fff;
+    border: 2px solid var(--brandDark, #0b4bd6);
+    padding: 6px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 800;
+    min-width: 84px;
+    box-shadow: 0 6px 14px rgba(2, 75, 118, 0.15);
+}
+
+.btn-primary:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+.btn-secondary {
+    background: #fff;
+    color: #b71c1c;
+    border: 2px solid #b71c1c;
+    padding: 6px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 800;
+    min-width: 84px;
+    box-shadow: 0 6px 14px rgba(183, 28, 28, 0.04);
+}
+
+/* hover/focus states */
+.btn-primary:hover:not(:disabled),
+.btn-primary:focus:not(:disabled) {
+    background: #0a3ea8;
+    border-color: #0a3ea8;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(2, 75, 118, 0.25);
+}
+.btn-secondary:hover,
+.btn-secondary:focus {
+    background: linear-gradient(180deg, rgba(183, 28, 28, 0.04), #fff);
+    transform: translateY(-1px);
+}
+
+/* utility: left-align textarea inside modal */
+.textarea-left {
+    text-align: left !important;
+    padding-left: 8px !important;
+    padding-right: 8px !important;
+    white-space: normal !important;
+}
+
+/* group3 textarea popup variant: initial min-height 60px, left-aligned text, full width */
+.group3-textarea-popup {
+    width: 100% !important;
+    box-sizing: border-box;
+    text-align: left !important;
+    min-height: 60px !important;
+    height: auto !important; /* allow autosize to control height */
+    padding: 8px !important;
+    overflow: visible !important; /* let the textarea grow the row */
+}
+
+/* helper: variant of second column cell with left-aligned content (used for labels like 'Project XXXXX') */
+.mo-table td.second-column-cell-left {
+    text-align: left !important;
+    padding-left: 3px !important;
+    box-sizing: border-box;
+}
+/* checkbox for inactive items in modal */
+.modal-checkbox {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+    accent-color: #c62828;
+    margin: 0;
+    padding: 0;
+    display: block;
+}
+
+/* cursor pointer for clickable cells */
+.cursor-pointer {
+    cursor: pointer;
+}
+
+/* label text for inactive items in modal */
+.modal-item-label {
+    display: block;
+    padding: 4px 8px;
+    font-weight: 600;
+    font-size: 15px;
+    color: #333;
+}
+
+.group3-popup-second-column-cell-left {
+    text-align: left !important;
+    padding-left: 8px !important;
+    box-sizing: border-box;
+}
+
+/* radio group for select-like options (flex wrapping, each item grows) */
+.radio-group {
+    padding: 1.5px 0;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.radio-item {
+    display: inline-flex;
+    gap: 2.5px; /* each radio item can grow and will wrap when space is tight */
+    box-sizing: border-box;
+}
+
+.radio-input {
+    /* align the native radio visually with text */
+    width: 20px;
+    height: 20px;
+    margin: 0;
+    accent-color: var(--brandDark, #0b4bd6);
+}
+
+/* ── status option text colors ── */
+.option-normal {
+    color: #4caf50;
+    font-weight: 400;
+    font-size: 12px;
+}
+
+.option-warning {
+    color: #ff9800;
+    font-weight: 400;
+    font-size: 12px;
+}
+
+.option-danger {
+    color: #b71c1c;
+    font-weight: 400;
+    font-size: 12px;
+}
+
+/* end modal styles */
+
+/* Action buttons (copied from MoNewPage.module.css) */
+.guts-Mo-actions {
+    display: flex;
+    justify-content: center;
+    margin-top: 24px;
+    margin-bottom: 24px;
+
+    grid-column: 1 / -1;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+    box-sizing: border-box;
+}
+
+.guts-actions-line {
+    padding-top: 16px;
+    border-top: 1px solid rgba(2, 75, 118, 0.14);
+}
+
+.guts-Mo-actions .guts-submit-btn {
+    min-width: 0;
+    flex: 1;
+    padding: 14px 24px;
+    height: auto;
+    border-radius: 999px;
+    font-size: 18px;
+    letter-spacing: 0.4px;
+    font-weight: 900;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background: linear-gradient(
+        90deg,
+        var(--brand),
+        var(--brandDark)
+    ) !important;
+    color: #fff !important;
+    border: 0;
+    box-shadow: 0 10px 22px rgba(0, 0, 0, 0.12);
+    transition:
+        transform 0.12s ease,
+        box-shadow 0.12s ease,
+        filter 0.12s ease;
+    cursor: pointer;
+}
+
+.guts-Mo-actions .guts-submit-btn:hover:not(:disabled) {
+    transform: translateY(-3px);
+    box-shadow: 0 18px 40px rgba(1, 58, 88, 0.2);
+}
+
+.guts-Mo-actions .guts-btn {
+    min-width: 0;
+    flex: 1;
+    padding: 14px 24px;
+    height: auto;
+    border-radius: 999px;
+    font-size: 18px;
+    letter-spacing: 0.4px;
+    font-weight: 900;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background: transparent;
+    color: var(--brandDark, #024b76);
+    border: 2.5px solid var(--brandDark, #024b76);
+    box-shadow: none;
+    transition:
+        transform 0.12s ease,
+        box-shadow 0.12s ease,
+        background 0.12s ease,
+        color 0.12s ease;
+    cursor: pointer;
+}
+
+.guts-Mo-actions .guts-btn:hover:not(:disabled) {
+    transform: translateY(-3px);
+    box-shadow: 0 18px 40px rgba(1, 58, 88, 0.2);
+}
+
+.guts-Mo-actions .guts-btn:active:not(:disabled) {
+    transform: translateY(1px);
+}
+
+.guts-Mo-actions .guts-btn:focus-visible {
+    outline: 3px solid rgba(2, 75, 118, 0.18);
+    outline-offset: 4px;
+    border-radius: 12px;
+}
+
+.guts-Mo-actions .guts-btn:disabled {
+    opacity: 0.62;
+    cursor: not-allowed;
+    box-shadow: none;
+    transform: none;
+}
+
+/* ── บันทึกรายงาน ── grey outline pill (all editing users) */
+.guts-Mo-actions .guts-save-report-btn {
+    min-width: 0;
+    flex: 1;
+    padding: 8px 16px;
+    height: auto;
+    border-radius: 5px;
+    font-size: 14px;
+    letter-spacing: 0.4px;
+    font-weight: 800;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: var(--brandDark, #024b76);
+    color: #fff;
+    border: 2px solid var(--brandDark, #024b76);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+    transition:
+        transform 0.12s ease,
+        box-shadow 0.12s ease,
+        background 0.12s ease;
+    cursor: pointer;
+}
+.guts-Mo-actions .guts-save-report-btn:hover:not(:disabled) {
+    background: #013a5c;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+.guts-Mo-actions .guts-save-report-btn:active:not(:disabled) {
+    transform: translateY(1px);
+}
+
+.guts-Mo-actions .guts-save-report-btn.status-rejected:hover:not(:disabled) {
+    background: #a01919; /* Slightly darker red */
+    border-color: #a01919;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* ── ยกเลิก ── cancel button with dark blue border (all editing users) */
+.guts-Mo-actions .guts-cancel-btn {
+    min-width: 0;
+    flex: 1;
+    padding: 8px 16px;
+    height: auto;
+    border-radius: 5px;
+    font-size: 14px;
+    letter-spacing: 0.4px;
+    font-weight: 800;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: transparent;
+    color: var(--brandDark, #024b76);
+    border: 2px solid var(--brandDark, #024b76);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+    transition:
+        transform 0.12s ease,
+        box-shadow 0.12s ease,
+        background 0.12s ease;
+    cursor: pointer;
+}
+.guts-Mo-actions .guts-cancel-btn:hover:not(:disabled) {
+    background: #f0f7ff;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+.guts-Mo-actions .guts-cancel-btn:active:not(:disabled) {
+    transform: translateY(1px);
+}
+
+/* ── อนุมัติรายงาน ── teal filled pill (manager only) */
+.guts-Mo-actions .guts-approve-btn {
+    min-width: 0;
+    flex: 1;
+    padding: 9px 24px; /* Reduced vertical padding from 14px to 10px */
+    height: auto;
+    border-radius: 999px;
+    font-size: 16px;
+    letter-spacing: 0.4px;
+    font-weight: 900;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    color: #fff;
+    border: 0;
+    transition:
+        transform 0.12s ease,
+        box-shadow 0.12s ease,
+        filter 0.12s ease;
+    cursor: pointer;
+}
+.guts-Mo-actions .guts-approve-btn:hover:not(:disabled) {
+    transform: translateY(-3px);
+    box-shadow: 0 14px 32px rgba(0, 168, 150, 0.45);
+    filter: brightness(1.06);
+}
+.guts-Mo-actions .guts-approve-btn:active:not(:disabled) {
+    transform: translateY(1px);
+}
+
+/* ── ส่งกลับแก้ไข หลังอนุมัติ ── yellow pill (manager only, active only when APPROVED) */
+.guts-Mo-actions .guts-reactive-btn {
+    min-width: 0;
+    flex: 1;
+    padding: 11px 24px; /* Reduced vertical padding from 14px to 10px */
+    height: auto;
+    border-radius: 999px;
+    font-size: 14px;
+    line-height: 1.3;
+    letter-spacing: 0.3px;
+    font-weight: 900;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    color: white;
+    background: var(--brandDark, #024b76);
+    border: 0;
+    cursor: pointer;
+}
+.guts-Mo-actions .guts-reactive-btn:hover:not(:disabled) {
+    transform: translateY(-3px);
+    box-shadow: 0 14px 32px rgba(255, 193, 7, 0.45);
+    filter: brightness(1.05);
+}
+.guts-Mo-actions .guts-reactive-btn:active:not(:disabled) {
+    transform: translateY(1px);
+}
+
+/* Signature Section */
+.signature-section {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 4px;
+    margin-bottom: 0;
+    padding: 0 2px; /* Adding horizontal padding */
+    width: 100%;
+}
+
+.signature-slot {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1px;
+    white-space: nowrap;
+}
+
+.signature-slot-left {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1px;
+    white-space: nowrap;
+    justify-content: flex-start;
+}
+
+.signature-slot-right {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1px;
+    white-space: nowrap;
+    justify-content: flex-end;
+}
+
+.signature-title {
+    font-size: 9px; /* Reduced from 11px */
+    font-weight: 400;
+    color: #1b2b4a;
+    flex-shrink: 0;
+}
+
+.signature-line {
+    font-size: 10px; /* Reduced from 12px */
+    font-weight: 400;
+    color: #475569;
+    flex-shrink: 0;
+}
+
+.mo-table td.add-row-cell {
+    vertical-align: middle;
+}
+
+.add-row-centered {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    width: 100%;
+    height: 100%;
+    font-weight: 600;
+}
+
+/* Discipline specific first column styles (Group 2) */
+.group2-first-column-cell {
+    background-color: #fff1f2 !important; /* Light red tint for index */
+    color: #e11d48 !important; /* Dark red text */
+    text-align: left !important;
+}
+
+/* ── status colors for group3 dynamic items ── */
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 60px;
+    padding: 3px 6px;
+    border: 0.75px solid transparent;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.status-normal {
+    background: #4caf50 !important;
+    border-color: #3a8a3a !important;
+    color: #fff !important;
+}
+
+.status-warning {
+    background: #ff9800 !important;
+    border-color: #e07a00 !important;
+    color: #fff !important;
+}
+
+.status-danger {
+    background: #b71c1c !important;
+    border-color: #7f0f0f !important;
+    color: #fff !important;
+}
+
+/* Group 4 — guard post movement styles */
+.mo-table td.group4-third-column-cell {
+    position: relative;
+    text-align: center !important;
+    padding: 1px 1px !important;
+    width: 13%;
+    min-height: 100%;
+    background-color: transparent;
+    display: table-cell;
+    vertical-align: middle;
+    box-sizing: border-box;
+    cursor: pointer;
+    line-height: 1;
+    border-left: 1px solid #e5e7eb;
+    border-right: 1px solid #e5e7eb;
+    color: #333;
+    border-radius: 0;
+}
+
+/* Group 4 modal cell & textarea (copies of group3 with group4- prefix) */
+.mo-table td.group4-second-column-cell {
+    text-align: left !important;
+    background-color: transparent;
+    width: 35%;
+    word-break: break-word;
+    vertical-align: middle;
+    font-size: 13px;
+    padding: 6px 8px;
+}
+
+.group4-popup-third-column-textarea1 {
+    display: block;
+    width: 100%;
+    height: auto;
+    min-height: 80px;
+    max-width: 100%;
+    box-sizing: border-box;
+    padding: 3px 8px !important;
+    margin: 0 !important;
+    font-weight: 400;
+    font-size: 11px;
+    color: #333;
+    background: transparent;
+    border: none !important;
+    outline: none !important;
+    resize: none;
+    overflow: hidden;
+    line-height: 1.2;
+    text-align: center;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-color: #8cb4d4;
+}
+.group4-popup-third-column-textarea1:not(:disabled) {
+    font-style: italic;
+}
+.group4-popup-third-column-textarea2 {
+    display: block;
+    width: 100%;
+    height: auto;
+    min-height: 40px;
+    max-width: 100%;
+    box-sizing: border-box;
+    padding: 3px 8px !important;
+    margin: 0 !important;
+    font-weight: 400;
+    font-size: 11px;
+    color: #333;
+    background: transparent;
+    border: none !important;
+    outline: none !important;
+    resize: none;
+    overflow: hidden;
+    line-height: 1.2;
+    text-align: center;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-color: #8cb4d4;
+}
+.group4-popup-third-column-textarea2:not(:disabled) {
+    font-style: italic;
+}

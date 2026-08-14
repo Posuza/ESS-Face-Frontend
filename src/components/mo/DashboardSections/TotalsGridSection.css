@@ -1,0 +1,233 @@
+.mo-totals {
+  width: 100%;
+}
+
+.tabs {
+  display: flex;
+  gap: 4px;
+}
+
+.tab-button {
+  background: rgba(0, 0, 0, 0.03);
+  border: 1px solid rgba(0, 0, 0, 0.008);
+  padding: 6px 10px 3px 10px;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  cursor: pointer;
+  font-weight: 800;
+  font-family: "Prompt", prompt, sans-serif;
+  color: #939495;
+}
+
+.tab-button.active {
+  background: rgba(0, 0, 0, 0.07);
+  border-color: rgba(0, 0, 0, 0.005);
+  color: #0e4275;
+}
+
+.tab-panel {
+  background: rgba(57, 79, 205, 0.07);
+  border: 1px solid rgba(0, 0, 0, 0.005);
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  padding: 6px 3px 3px 3px;
+}
+
+.totals-grid {
+  display: grid;
+  /* Fixed two-column layout */
+  grid-template-columns: repeat(2, minmax(110px, 1fr));
+  gap: 3px;
+  align-items: stretch;
+}
+
+/* Placeholder card that occupies grid cell but is visually empty */
+.totals-card.empty {
+  background: transparent;
+  box-shadow: none;
+  pointer-events: none;
+}
+.totals-card.empty .totals-count,
+.totals-card.empty .totals-unit,
+.totals-card.empty .totals-label {
+  visibility: hidden;
+}
+
+.totals-card {
+  border-radius: 6px;
+  padding: 8px;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 72px;
+  box-shadow: 0 6px 14px rgba(2, 75, 118, 0.06);
+  font-family: "Prompt", prompt, sans-serif;
+}
+
+.totals-count-row {
+  margin-top: 4px;
+  margin-bottom: 4px;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  width: 100%;
+  gap: 5px;
+}
+
+.totals-count {
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1;
+  overflow-wrap: break-word;
+  word-break: break-all;
+  max-width: 100%;
+  text-align: right;
+}
+
+.totals-unit {
+  font-weight: 200;
+  font-size: 13px;
+  line-height: 1;
+  max-width: 100%;
+  color: rgb(238, 233, 233);
+}
+
+.totals-label {
+  margin-top: auto;
+  font-size: 14px;
+  font-family: "Prompt", prompt, sans-serif;
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%;
+  opacity: 0.95;
+  text-align: right;
+  align-self: flex-end;
+  color: rgb(236, 236, 236);
+}
+
+.card-blue {
+  background: #1e6fb3;
+}
+.card-teal {
+  background: #2b9aa3;
+}
+.card-green {
+  background: #3fb374;
+}
+.card-orange {
+  background: #f59e2e;
+}
+.card-red {
+  background: #e76b6b;
+}
+
+/* ── Feature Grid ───────────────────────────────────────── */
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-top: 20px;
+  padding: 0 15px 5px;
+}
+
+.feature-card {
+  position: relative;
+  height: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Solid background */
+.feature-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  transform: skewX(-20deg);
+  background: var(--fc, #aaa);
+  z-index: 1;
+}
+
+/* Accent bracket (top & left border offset) */
+.feature-card::after {
+  content: "";
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  right: 0;
+  bottom: 0;
+  transform: skewX(-20deg);
+  border-top: 2px solid var(--fc, #aaa);
+  border-left: 2px solid var(--fc, #aaa);
+  z-index: -2;
+}
+
+/* Label text container */
+.feature-label {
+  position: absolute;
+  top: -13px;
+  left: 14px; /* Perfectly aligned inside the mask gap */
+  font-size: 10px;
+  font-weight: 900;
+  font-style: italic;
+  color: #0e4275;
+  z-index: -1;
+  font-family: "Prompt", prompt, sans-serif;
+  white-space: nowrap;
+}
+
+/* Label skewed mask (dynamically fits text width!) */
+.feature-label::before {
+  content: "";
+  position: absolute;
+  top: -2px;
+  bottom: -2px;
+  left: -6px;
+  right: -6px;
+  background: rgb(255, 255, 255);
+  transform: skewX(-20deg);
+  z-index: -1;
+}
+
+/* Inner value text */
+.feature-value {
+  font-size: 13px;
+  font-weight: 800;
+  color: #fefefe;
+  z-index: 2;
+  position: relative;
+  font-family: "Prompt", prompt, sans-serif;
+  padding-top: 2px;
+  margin-left: auto;
+  margin-right: 6px;
+}
+
+/* Feature Colors */
+.feature-green {
+  --fc: #73a942;
+}
+.feature-yellow {
+  --fc: #fbd659;
+}
+.feature-red {
+  --fc: #e06863;
+}
+.feature-gray {
+  --fc: #d1d5db;
+}
+.feature-teal {
+  --fc: #2b9aa3;
+}
+.feature-blue {
+  --fc: #1e6fb3;
+}
+.feature-orange {
+  --fc: #f59e2e;
+}

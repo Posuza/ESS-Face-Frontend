@@ -1,0 +1,72 @@
+/* ConfirmDeleteDialog.module.css */
+.confirm-dialog-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(3, 20, 40, 0.48);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1200;
+    padding: 18px;
+}
+.confirm-dialog-card {
+    width: 100%;
+    max-width: 400px;
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 24px 48px -12px rgba(220, 38, 38, 0.18);
+    padding: 28px 24px 20px;
+    box-sizing: border-box;
+    border: 1px solid #fecaca;
+}
+.confirm-dialog-title {
+    font-weight: 700;
+    font-size: 18px;
+    color: #dc2626;
+    margin-bottom: 10px;
+    text-align: center;
+}
+.confirm-dialog-desc {
+    color: #64748b;
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 24px;
+    text-align: center;
+}
+.confirm-dialog-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    justify-content: stretch;
+}
+
+/* Local module classes so component can reference styles.btn / styles.cancel-btn / styles.submit-btn */
+.btn {
+    width: 100%;
+    padding: 10px 16px;
+    height: 44px;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 15px;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+.cancel-btn {
+    background: #f8fafc;
+    color: #475569;
+    border: 1px solid #e2e8f0;
+}
+.cancel-btn:hover {
+    background: #f1f5f9;
+    border-color: #cbd5e1;
+}
+.submit-btn {
+    background: #dc2626;
+    color: #fff;
+    border: 1px solid #b91c1c;
+}
+.submit-btn:hover {
+    background: #b91c1c;
+    border-color: #991b1b;
+}

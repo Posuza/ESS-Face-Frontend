@@ -16,8 +16,6 @@ type PunchType = "in" | "out";
 type Step = "capture" | "confirm";
 
 type Props = {
-  empCode: string;
-  displayName?: string;
   punchType: PunchType;
   onBack: () => void;
 
@@ -58,16 +56,19 @@ function toRad(v: number) {
   return (v * Math.PI) / 180;
 }
 
-function distanceMeters(lat1: number, lng1: number, lat2: number, lng2: number) {
+function distanceMeters(
+  lat1: number,
+  lng1: number,
+  lat2: number,
+  lng2: number,
+) {
   const R = 6371000;
   const dLat = toRad(lat2 - lat1);
   const dLng = toRad(lng2 - lng1);
 
   const a =
     Math.sin(dLat / 2) ** 2 +
-    Math.cos(toRad(lat1)) *
-      Math.cos(toRad(lat2)) *
-      Math.sin(dLng / 2) ** 2;
+    Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.sin(dLng / 2) ** 2;
 
   return 2 * R * Math.asin(Math.sqrt(a));
 }
@@ -152,8 +153,6 @@ function getBestPositionAsync(opts: {
 }
 
 export default function FaceVerify({
-  empCode,
-  displayName,
   punchType,
   onBack,
   onConfirm,
@@ -205,7 +204,10 @@ export default function FaceVerify({
     setBusy(false);
   }, [punchType]);
 
-  async function checkLocationGate(): Promise<{ ok: boolean; status: LocStatus }> {
+  async function checkLocationGate(): Promise<{
+    ok: boolean;
+    status: LocStatus;
+  }> {
     const reqId = ++locReqRef.current;
 
     setLocStatus("checking");
@@ -235,8 +237,8 @@ export default function FaceVerify({
         setLocStatus("error");
         setLocHint(
           `สัญญาณ GPS ยังไม่ดี (accuracy ~${Math.round(
-            accuracy ?? 0
-          )}m) กรุณาไปที่โล่ง/เปิด Wi-Fi แล้วกด “ตรวจสอบตำแหน่งอีกครั้ง”`
+            accuracy ?? 0,
+          )}m) กรุณาไปที่โล่ง/เปิด Wi-Fi แล้วกด “ตรวจสอบตำแหน่งอีกครั้ง”`,
         );
         setOutModalOpen(true);
         return { ok: false, status: "error" };
@@ -248,8 +250,8 @@ export default function FaceVerify({
         setLocStatus("allowed");
         setLocHint(
           `อยู่ในพื้นที่ ✅ (ห่าง ~${Math.round(dist)}m / กำหนด ${SITE.radiusM}m, accuracy ~${Math.round(
-            accuracy ?? 0
-          )}m)`
+            accuracy ?? 0,
+          )}m)`,
         );
         setOutModalOpen(false);
         return { ok: true, status: "allowed" };
@@ -257,8 +259,8 @@ export default function FaceVerify({
         setLocStatus("outside");
         setLocHint(
           `อยู่นอกพื้นที่ ❌ (ห่าง ~${Math.round(dist)}m / กำหนด ${SITE.radiusM}m, accuracy ~${Math.round(
-            accuracy ?? 0
-          )}m)`
+            accuracy ?? 0,
+          )}m)`,
         );
         setOutModalOpen(true);
         return { ok: false, status: "outside" };
@@ -269,7 +271,7 @@ export default function FaceVerify({
       if (e?.code === 1) {
         setLocStatus("blocked");
         setLocHint(
-          "ไม่อนุญาตให้เข้าถึงตำแหน่ง กรุณาเปิด Location และอนุญาตสิทธิ์ (ต้องเป็น HTTPS/localhost)"
+          "ไม่อนุญาตให้เข้าถึงตำแหน่ง กรุณาเปิด Location และอนุญาตสิทธิ์ (ต้องเป็น HTTPS/localhost)",
         );
         setOutModalOpen(true);
         return { ok: false, status: "blocked" };
@@ -370,7 +372,7 @@ export default function FaceVerify({
     <main className="guts-bg">
       <div className="guts-home">
         <section className="guts-home-card" aria-label="Face Verify">
-          <Header empCode={empCode} displayName={displayName} />
+          <Header />
 
           <h2 className="guts-att-title">ลงเวลาเข้า-ออกงาน</h2>
 
@@ -426,13 +428,13 @@ export default function FaceVerify({
                 {locStatus === "checking"
                   ? "กำลังตรวจสอบตำแหน่ง..."
                   : locStatus === "allowed" && busy
-                  ? "พิกัดถูกต้อง ✅ กำลังบันทึก..."
-                  : locHint}
+                    ? "พิกัดถูกต้อง ✅ กำลังบันทึก..."
+                    : locHint}
 
                 {locFix ? (
                   <div style={{ marginTop: 6, opacity: 0.85 }}>
-                    lat: {locFix.lat.toFixed(6)} | lng: {locFix.lng.toFixed(6)} |
-                    acc: ~{locFix.accuracy}m | dist: ~{locFix.dist}m
+                    lat: {locFix.lat.toFixed(6)} | lng: {locFix.lng.toFixed(6)}{" "}
+                    | acc: ~{locFix.accuracy}m | dist: ~{locFix.dist}m
                   </div>
                 ) : null}
               </div>
@@ -454,7 +456,10 @@ export default function FaceVerify({
                   transition: "all 0.25s ease",
                 }}
               >
-                <FontAwesomeIcon icon={faCamera} className={styles.fvPrimaryIcon} />
+                <FontAwesomeIcon
+                  icon={faCamera}
+                  className={styles.fvPrimaryIcon}
+                />
                 ถ่ายภาพและยืนยัน
               </button>
             ) : (

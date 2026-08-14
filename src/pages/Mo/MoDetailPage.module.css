@@ -1,0 +1,321 @@
+/* Core Page Layout */
+.mo-home-page {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 16px;
+    box-sizing: border-box;
+}
+
+/* Table Wrapper & Container */
+.mo-table-wrapper {
+    width: 100%;
+    background: #ffffff;
+    border: 1px solid #d8e1ec;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(148, 163, 184, 0.08);
+}
+
+.mo-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    font-size: 15px;
+}
+
+/* Table Header Styles */
+.mo-table-header-cell {
+    background: #024b76;
+    color: #ffffff;
+    padding: 12px 16px;
+    font-weight: 700;
+}
+
+.mo-table-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Table Body Cells */
+.first-column-cell {
+    padding: 14px 16px;
+    font-weight: 600;
+    color: #334155;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.second-column-cell {
+    padding: 14px 16px;
+    border-bottom: 1px solid #e2e8f0;
+    text-align: right;
+    width: 150px; /* Adjusted slightly to fit Thai text layout nicely */
+}
+
+.second-column-inner {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 4px;
+}
+
+/* Status Pill Alignment base class */
+.status-pill {
+    font-weight: 700;
+}
+
+/* --- Status Configurations --- */
+
+/* Approved: White background, green accent border */
+.status-approved {
+    background: #ffffff;
+    color: #059669;
+    border-left: 4px solid #10b981;
+}
+
+/* Pending: Translucent Orange */
+.status-pending {
+    background: linear-gradient(
+        180deg,
+        rgba(255, 247, 237, 0.96),
+        rgba(255, 237, 213, 0.98)
+    );
+    color: #b45309;
+    border-left: 4px solid #f59e0b;
+}
+
+/* Rejected: Light Red layout */
+.status-rejected {
+    background: #fef2f2;
+    color: #dc2626;
+    border-left: 4px solid #ef4444;
+}
+
+/* Loader & No Data State Styles */
+.no-data-cell {
+    padding: 32px;
+    text-align: center;
+    color: #64748b;
+    font-weight: 500;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+/* ── อนุมัติรายงาน ── teal filled pill (manager only) */
+.guts-approve-btn {
+    width: 100%;
+    padding: 14px 24px;
+    height: auto;
+    border-radius: 999px;
+    font-size: 18px;
+    letter-spacing: 0.4px;
+    font-weight: 900;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    color: #fff;
+    background: #00a896;
+    border: 0;
+    transition:
+        transform 0.12s ease,
+        box-shadow 0.12s ease,
+        filter 0.12s ease;
+    cursor: pointer;
+}
+.guts-approve-btn:hover:not(:disabled) {
+    transform: translateY(-3px);
+    box-shadow: 0 14px 32px rgba(0, 168, 150, 0.45);
+    filter: brightness(1.06);
+}
+.guts-approve-btn:active:not(:disabled) {
+    transform: translateY(1px);
+}
+
+/* ── ส่งกลับแก้ไข หลังอนุมัติ ── yellow pill (manager only, active only when APPROVED) */
+.guts-reactive-btn {
+    width: 100%;
+    padding: 14px 24px;
+    height: auto;
+    border-radius: 999px;
+    font-size: 18px;
+    line-height: 1.3;
+    letter-spacing: 0.3px;
+    font-weight: 900;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    color:black;
+    background: rgb(222, 146, 4);
+    border: 0;
+    cursor: pointer;
+}
+.guts-reactive-btn:hover:not(:disabled) {
+    transform: translateY(-3px);
+    box-shadow: 0 14px 32px rgba(255, 193, 7, 0.45);
+    filter: brightness(1.05);
+}
+.guts-reactive-btn:active:not(:disabled) {
+    transform: translateY(1px);
+}
+
+.gut-detail-btns-box {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    margin: 12px 0;
+    box-sizing: border-box;
+}
+
+.gut-back-icon {
+    height: 40px;
+    padding: 10px;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--brandDark, rgba(2, 75, 118, 0.9));
+    border: 1px solid rgba(2, 75, 118, 0.06);
+    color: #ffffff;
+    cursor: pointer;
+    transition:
+        transform 0.12s ease,
+        box-shadow 0.12s ease,
+        background 0.12s ease,
+        border-color 0.12s ease;
+}
+
+.mo-back-outer {
+    display: flex;
+    padding-top: 4px;
+}
+
+.mo-back-btn {
+    width: 100%;
+    height: 50px;
+    padding: 0;
+    margin-top: 3px;
+    border-radius: 999px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    font-size: 18px;
+    font-weight: 700;
+    background: black;
+    border: 0;
+    color: #fff;
+    box-shadow: 0 10px 24px rgba(75, 85, 99, 0.35);
+    gap: 8px;
+    cursor: pointer;
+    transition:
+        transform 0.12s ease,
+        box-shadow 0.12s ease,
+        background 0.12s ease,
+        color 0.12s ease;
+}
+
+.gut-back-icon:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 14px 32px rgba(2, 75, 118, 0.1);
+    background: rgba(4, 110, 146, 0.9);
+    border-color: rgba(2, 75, 118, 0.18);
+}
+
+.gut-back-icon svg {
+    stroke: currentColor !important;
+    fill: none !important;
+}
+
+.guts-action-icons {
+    display: inline-flex;
+    gap: 8px;
+    align-items: center;
+    margin-left: auto;
+}
+
+.guts-icon-btn {
+    height: 32px;
+    width: 32px;
+    padding: 0;
+    border-radius: 8px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: #f3f4f6;
+    border: 1px solid rgba(2, 75, 118, 0.06);
+    color: var(--brandDark, rgba(2, 75, 118, 0.9));
+    cursor: pointer;
+    box-shadow: 0 2px 1px rgba(0, 0, 0, 0.08);
+    transition:
+        transform 0.12s ease,
+        box-shadow 0.12s ease,
+        background 0.12s ease;
+}
+
+.guts-icon-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 32px rgba(2, 75, 118, 0.1);
+}
+
+.guts-icon-btn svg {
+    stroke: currentColor !important;
+    fill: none !important;
+}
+
+.guts-icon-delete:hover {
+    background: rgba(220, 38, 38, 0.1);
+    color: rgb(220, 38, 38);
+    border-color: rgba(220, 38, 38, 0.2);
+}
+
+/* Bottom Action Buttons */
+.guts-mo-btn {
+    width: 100%;
+}
+
+.mo-home-addnew,
+.mo-home-search {
+    width: 100%;
+    height: 48px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition:
+        background-color 0.12s ease,
+        transform 0.1s ease;
+}
+
+.mo-home-addnew {
+    background: #8b1e1e;
+    color: #ffffff;
+    box-shadow: 0 4px 12px rgba(139, 30, 30, 0.15);
+}
+
+.mo-home-addnew:hover {
+    background: #a32424;
+}
+
+.mo-home-search {
+    background: #024b76;
+    color: #ffffff;
+    box-shadow: 0 4px 12px rgba(2, 75, 118, 0.15);
+}
+
+.mo-home-search:hover {
+    background: #035b8f;
+}
+
+.mo-home-addnew:active,
+.mo-home-search:active {
+    transform: scale(0.99);
+}

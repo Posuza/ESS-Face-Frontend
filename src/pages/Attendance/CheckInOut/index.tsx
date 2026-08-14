@@ -13,9 +13,6 @@ import BackButton from "@/components/BackButton";
 import styles from "./CheckInOut.module.css";
 
 type Props = {
-  empCode: string;
-  displayName?: string;
-
   // เวลาเข้างาน/ออกงานล่าสุด (ของวันนี้หรือครั้งล่าสุด) ส่งเป็น ISO string
   lastInAt?: string | null;
   lastOutAt?: string | null;
@@ -49,8 +46,6 @@ function safeDate(iso?: string | null) {
 }
 
 export default function CheckInOut({
-  empCode,
-  displayName,
   lastInAt,
   lastOutAt,
   onBack,
@@ -75,7 +70,7 @@ export default function CheckInOut({
     <main className="guts-bg">
       <div className="guts-home">
         <section className="guts-home-card" aria-label="CheckInOut">
-          <Header empCode={empCode} displayName={displayName} />
+          <Header />
 
           <h2 className={styles.attTitle}>ลงเวลาเข้า-ออกงาน</h2>
 
@@ -87,28 +82,38 @@ export default function CheckInOut({
           >
             <div className={styles.col}>
               <div className={styles.colHead}>
-                <FontAwesomeIcon icon={faPersonWalking} className={styles.walk} />
+                <FontAwesomeIcon
+                  icon={faPersonWalking}
+                  className={styles.walk}
+                />
                 <span>เข้างาน</span>
               </div>
 
               <div className={`${styles.time} ${styles.timeIn}`}>
                 {lastIn ? fmtTimeHHMM(lastIn) : "--:--"}
               </div>
-              <div className={styles.date}>{lastIn ? fmtThaiDate(lastIn) : "—"}</div>
+              <div className={styles.date}>
+                {lastIn ? fmtThaiDate(lastIn) : "—"}
+              </div>
             </div>
 
             <div className={styles.divider} aria-hidden="true" />
 
             <div className={styles.col}>
               <div className={styles.colHead}>
-                <FontAwesomeIcon icon={faPersonWalking} className={styles.walk} />
+                <FontAwesomeIcon
+                  icon={faPersonWalking}
+                  className={styles.walk}
+                />
                 <span>ออกงาน</span>
               </div>
 
               <div className={`${styles.time} ${styles.timeOut}`}>
                 {lastOut ? fmtTimeHHMM(lastOut) : "--:--"}
               </div>
-              <div className={styles.date}>{lastOut ? fmtThaiDate(lastOut) : "—"}</div>
+              <div className={styles.date}>
+                {lastOut ? fmtThaiDate(lastOut) : "—"}
+              </div>
             </div>
           </div>
 
