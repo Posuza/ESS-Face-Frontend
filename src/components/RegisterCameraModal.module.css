@@ -1,0 +1,299 @@
+/* src/components/RegisterCameraModal.module.css */
+.backdrop{
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(0,0,0,0.55);
+  display: grid;
+  place-items: center;
+  padding: 12px;
+}
+
+.modal{
+  width: min(430px, 100%);
+  max-height: calc(100dvh - 24px);
+  border-radius: 16px;
+  background: rgba(255,255,255,0.96);
+  border: 2px solid rgba(2,75,118,0.18);
+  box-shadow: 0 24px 44px rgba(0,0,0,0.28);
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.header{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 10px;
+  border-bottom: 1px solid rgba(2,75,118,0.14);
+}
+
+.title{
+  font-weight: 900;
+  color: rgba(27,43,74,0.92);
+  line-height: 1.25;
+}
+
+.warningTitle{
+  color: #c1121f;
+  display: grid;
+  gap: 1px;
+  text-align: center;
+  flex: 1;
+}
+
+.warningTitleMain{
+  font-size: 18px;
+}
+
+.warningTitleSub{
+  font-size: 13px;
+}
+
+.close{
+  border: 0;
+  background: rgba(0,0,0,0.06);
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 900;
+}
+
+.body{
+  padding: 6px;
+}
+
+.frame{
+  width: min(100%, 405px);
+  margin: 0 auto;
+  aspect-ratio: 3 / 4;
+  position: relative;
+  overflow: hidden;
+  border-radius: 16px;
+  background: #171a21;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.12);
+}
+
+.analysisCanvas{
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.video{
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transform: scaleX(-1);
+}
+
+.capturedImage{
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.overlayContainer{
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 3;
+  --guide-color: #245b83;
+  --guide-muted: rgba(36,91,131,0.58);
+  --guide-glow:
+    drop-shadow(0 0 4px rgba(36,91,131,0.5))
+    drop-shadow(0 0 10px rgba(36,91,131,0.22));
+}
+
+.maskSvg{
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.darkBackdrop{
+  fill: rgba(6, 10, 18, 0.64);
+}
+
+.glowingOutline{
+  fill: none;
+  stroke: var(--guide-color);
+  stroke-width: 1.45;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0.88;
+  vector-effect: non-scaling-stroke;
+  filter: var(--guide-glow);
+  transition: stroke 0.2s ease, opacity 0.2s ease, filter 0.2s ease;
+}
+
+.wireframeMesh{
+  fill: none;
+  stroke: var(--guide-color);
+  stroke-width: 0.75;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0.46;
+  vector-effect: non-scaling-stroke;
+  filter: drop-shadow(0 0 1px rgba(0,229,255,0.18));
+  transition: stroke 0.2s ease, opacity 0.2s ease, filter 0.2s ease;
+}
+
+.overlayHidden{
+  display: none;
+}
+
+.pendingMatch .wireframeMesh{
+  opacity: 0.54;
+  filter: drop-shadow(0 0 1px rgba(255,176,32,0.2));
+}
+
+.perfectMatch .wireframeMesh{
+  opacity: 0.62;
+  filter: drop-shadow(0 0 1px rgba(0,255,102,0.24));
+}
+
+.pendingMatch{
+  --guide-color: #245b83;
+  --guide-muted: rgba(36,91,131,0.58);
+  --guide-soft: rgba(36,91,131,0.12);
+  --guide-glow:
+    drop-shadow(0 0 4px rgba(36,91,131,0.5))
+    drop-shadow(0 0 10px rgba(36,91,131,0.22));
+}
+
+.lightGuide{
+  --guide-color: rgba(255,255,255,0.9);
+  --guide-muted: rgba(255,255,255,0.62);
+  --guide-soft: rgba(255,255,255,0.12);
+  --guide-glow:
+    drop-shadow(0 0 4px rgba(255,255,255,0.5))
+    drop-shadow(0 0 10px rgba(255,255,255,0.22));
+}
+
+.perfectMatch{
+  --guide-color: #67ff7a;
+  --guide-muted: rgba(103,255,122,0.74);
+  --guide-soft: rgba(103,255,122,0.13);
+  --guide-glow:
+    drop-shadow(0 0 5px rgba(0,255,102,0.76))
+    drop-shadow(0 0 12px rgba(0,255,102,0.3));
+}
+
+.featureAlignmentGuide{
+  fill: none;
+  stroke: var(--guide-color);
+  stroke-width: 0.6;
+  stroke-linecap: round;
+  opacity: 0.28;
+  vector-effect: non-scaling-stroke;
+  transition: stroke 0.2s ease, opacity 0.2s ease;
+}
+
+.pendingMatch .featureAlignmentGuide{
+  opacity: 0.34;
+}
+
+.perfectMatch .featureAlignmentGuide{
+  opacity: 0.42;
+}
+
+.corner{
+  position: absolute;
+  width: 35px;
+  height: 35px;
+  border: 2.5px solid rgba(255,255,255,0.65);
+  border-radius: 10px;
+  z-index: 4;
+}
+
+.tl{ top: 8px; left: 8px; border-right: 0; border-bottom: 0; }
+.tr{ top: 8px; right: 8px; border-left: 0; border-bottom: 0; }
+.bl{ bottom: 8px; left: 8px; border-right: 0; border-top: 0; }
+.br{ bottom: 8px; right: 8px; border-left: 0; border-top: 0; }
+
+.status{
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 5;
+  text-align: center;
+  background: rgba(0,0,0,0.7);
+  padding: 8px 16px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 700;
+  max-width: 92%;
+}
+
+.canvas{
+  display: none;
+}
+
+/* Button is outside .body, but still inside .modal */
+.buttonContainer{
+  padding: 6px 10px 10px;
+}
+
+.reviewActions{
+  display: grid;
+  gap: 10px;
+}
+
+.captureBtn{
+  width: 100%;
+  height: clamp(52px, 6.2vw, 58px);
+  border: 0;
+  border-radius: 999px;
+  cursor: pointer;
+
+  color: #fff;
+  font-weight: 900;
+  font-size: 18px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+
+  background: linear-gradient(90deg, var(--brand), var(--brandDark));
+  box-shadow: 0 16px 26px rgba(0,0,0,0.12);
+}
+
+.captureBtn:disabled{
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.retakeBtn{
+  width: 100%;
+  height: clamp(48px, 5.8vw, 54px);
+  border: 1px solid rgba(2,75,118,0.22);
+  border-radius: 999px;
+  cursor: pointer;
+
+  color: #1b2b4a;
+  font-weight: 900;
+  font-size: 17px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+
+  background: #fff;
+  box-shadow: 0 10px 18px rgba(0,0,0,0.08);
+}

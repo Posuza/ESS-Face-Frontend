@@ -1,0 +1,325 @@
+/* ========================================================= 
+   Shared result / identity / failed panel
+========================================================= */
+
+.statusPanel {
+  margin-top: 12px;
+  overflow: hidden;
+  border: 1px solid;
+  border-radius: 10px;
+  box-shadow: 0 5px 14px rgba(0, 0, 0, 0.05);
+}
+
+/* =========================================================
+   Header
+========================================================= */
+
+.screenTitle {
+  margin: 0 0 14px;
+  color: #ef2f24;
+  font-size: 24px;
+  font-weight: 900;
+  line-height: 1;
+  text-align: center;
+}
+
+.statusBanner {
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  padding: 10px 14px;
+  font-size: 15px;
+  font-weight: 900;
+  line-height: 1.3;
+  text-align: center;
+}
+
+.warningTitle {
+  margin: 0;
+  color: #ef2f24;
+  font-size: 24px;
+  font-weight: 900;
+  line-height: 1;
+  text-align: center;
+}
+
+.warningButton {
+  margin-top: 12px;
+  width: 100%;
+  height: clamp(50px, 6vw, 56px);
+  border: 0;
+  border-radius: 8px;
+  cursor: pointer;
+  color: #fff;
+  font-weight: 900;
+  font-size: 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background: linear-gradient(90deg, #ef2f24, #d62016);
+  box-shadow: 0 16px 26px rgba(239, 47, 36, 0.3);
+}
+
+.statusBanner svg {
+  flex: 0 0 auto;
+  font-size: 18px;
+}
+
+/* ========================================================= 
+   IDENTITY / BEFORE VERIFY
+========================================================= */
+
+.statusIdentity {
+  color: #174f70;
+  background: #eef7fc;
+  border-color: #a9cede;
+}
+
+.statusIdentity .statusBanner {
+  color: #175b80;
+  background: #e1f1f9;
+  border-bottom: 1px solid rgba(23, 91, 128, 0.14);
+}
+
+.identityValue {
+  min-height: 56px;
+  display: grid;
+  place-items: center;
+  padding: 10px 14px;
+  background: rgba(255, 255, 255, 0.62);
+  text-align: center;
+}
+
+.identityValue strong {
+  color: #163d56;
+  font-size: 18px;
+  font-weight: 900;
+  line-height: 1.3;
+  overflow-wrap: anywhere;
+}
+
+/* ========================================================= 
+   SUCCESS
+========================================================= */
+
+.statusSuccess {
+  color: #176b36;
+  background: #eaf7ef;
+  border-color: #9fd5b3;
+}
+
+.statusSuccess .statusBanner {
+  color: #176b36;
+  background: #e0f4e8;
+}
+
+/* =========================================================
+   SUCCESS METRICS
+========================================================= */
+
+.statusMetrics {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin: 0;
+  border-top: 1px solid rgba(23, 107, 54, 0.18);
+}
+
+.profileDetails {
+  margin-top: 14px;
+  padding: 12px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.95);
+}
+
+.profileDetailsTitle {
+  margin: 0 0 12px;
+  color: #1b2b4a;
+  font-size: 18px;
+  font-weight: 900;
+  text-align: center;
+}
+
+.profileDetails dl {
+  margin: 0;
+  border-top: 1px solid rgba(2, 75, 118, 0.12);
+}
+
+.profileDetails dl > div {
+  display: grid;
+  grid-template-columns: minmax(96px, 36%) minmax(0, 1fr);
+  gap: 12px;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(2, 75, 118, 0.09);
+}
+
+.profileDetails dt {
+  color: #667085;
+  font-size: 15px;
+  font-weight: 800;
+  line-height: 1.25;
+}
+
+.profileDetails dd {
+  min-width: 0;
+  margin: 0;
+  color: #1b2b4a;
+  font-size: 15px;
+  font-weight: 900;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+}
+
+.statusMetrics > div {
+  min-width: 0;
+  padding: 10px 12px;
+  text-align: center;
+}
+
+.statusMetrics > div + div {
+  border-left: 1px solid rgba(23, 107, 54, 0.18);
+}
+
+.statusMetrics dt {
+  color: #4f6f5c;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.statusMetrics dd {
+  margin: 2px 0 0;
+  color: #17492c;
+  font-size: 17px;
+  font-weight: 900;
+}
+
+/* ========================================================= 
+   FAILED
+========================================================= */
+
+.statusFailed {
+  color: #a21b16;
+  background: #fff1f0;
+  border-color: #efb0ab;
+}
+
+.statusFailed .statusBanner {
+  color: #b42318;
+  background: #fee4e2;
+  border-bottom: 1px solid rgba(180, 35, 24, 0.15);
+}
+
+.failedMessage {
+  min-height: 52px;
+  display: grid;
+  place-items: center;
+  padding: 10px 14px;
+  color: #912018;
+  background: rgba(255, 255, 255, 0.5);
+  font-size: 14px;
+  font-weight: 800;
+  line-height: 1.4;
+  text-align: center;
+}
+
+.fvPrimary {
+  margin-top: 12px;
+  width: 100%;
+  height: clamp(50px, 6vw, 56px);
+  border: 0;
+  border-radius: 8px;
+  cursor: pointer;
+
+  color: #fff;
+  font-weight: 900;
+  font-size: 18px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+
+  background: linear-gradient(90deg, var(--brand), var(--brandDark));
+  box-shadow: 0 16px 26px rgba(0, 0, 0, 0.12);
+}
+
+.fvPrimary:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.fvPrimaryIcon {
+  font-size: 20px;
+}
+
+/* Logout button — deliberately a different (neutral/dark) color from the
+   primary retry button, so it doesn't look like the "preferred" action. */
+.fvLogoutBtn {
+  margin-top: 10px;
+  width: 100%;
+  height: clamp(50px, 6vw, 56px);
+  border: 2px solid #000;
+  border-radius: 8px;
+  cursor: pointer;
+
+  color: #fff;
+  font-weight: 900;
+  font-size: 18px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  background: #000;
+  box-shadow: 0 10px 16px rgba(0, 0, 0, 0.22);
+  transition: opacity 0.15s ease, transform 0.08s ease;
+}
+
+.fvLogoutBtn:hover {
+  opacity: 0.92;
+}
+
+.fvLogoutBtn:active {
+  transform: translateY(1px);
+}
+
+.fvBackButton {
+  margin: 12px 3px 18px 6px;
+  width: calc(100% - 9px);
+  height: clamp(50px, 6vw, 56px);
+  border: 0;
+  border-radius: 30px;
+  cursor: pointer;
+
+  color: #fff;
+  font: inherit;
+  font-weight: 900;
+  font-size: 18px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  background: linear-gradient(90deg, var(--brand), var(--brandDark));
+  box-shadow: 0 16px 26px rgba(0, 0, 0, 0.12);
+  transition:
+    opacity 0.15s ease,
+    transform 0.08s ease;
+}
+
+.fvBackButton:hover:not(:disabled) {
+  opacity: 0.94;
+}
+
+.fvBackButton:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.fvBackButton:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}

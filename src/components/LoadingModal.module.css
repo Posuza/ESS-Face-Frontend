@@ -1,0 +1,71 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 18px;
+  background: rgba(3, 20, 40, 0.46);
+  animation: fadeIn 180ms ease-out forwards;
+}
+
+.card {
+  width: min(300px, 100%);
+  min-height: 150px;
+  padding: 26px 22px 24px;
+  display: grid;
+  place-items: center;
+  gap: 18px;
+  border: 1px solid rgba(36, 91, 131, 0.12);
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 24px 48px rgba(3, 16, 42, 0.2);
+  box-sizing: border-box;
+  text-align: center;
+  animation: slideUp 240ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.spinner {
+  width: 52px;
+  height: 52px;
+  border: 5px solid #e7eef5;
+  border-top-color: #245b83;
+  border-radius: 50%;
+  animation: spin 850ms linear infinite;
+}
+
+.message {
+  color: #1d2939;
+  font-size: 15px;
+  font-weight: 800;
+  line-height: 1.45;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}

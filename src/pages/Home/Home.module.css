@@ -1,175 +1,427 @@
 /* src/pages/Home/Home.module.css */
 
-.home {
-    width: min(390px, calc(100vw - 24px));
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    min-height: 100dvh;
+.pageShell {
+  width: min(430px, calc(100vw - 24px));
+  max-width: 430px;
+  margin-left: auto;
+  margin-right: auto;
+  overflow-x: hidden;
 }
 
-.home section[aria-label="Home"] {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
+.fvCard {
+  width: 100%;
+  max-width: 100%;
+  margin-top: 8px;
+  border-radius: 16px;
+  border: 2px solid rgba(2, 75, 118, 0.18);
+  background: rgba(255, 255, 255, 0.78);
+  box-shadow: 0 14px 26px rgba(0, 0, 0, 0.1);
+  padding: 12px;
 }
 
-/* --- title --- */
-.title {
-    margin: 10px 0 12px;
-    display: flex;
-    font-weight: 900;
-    color: rgba(27, 43, 74, 0.92);
-    font-size: 18px;
+.warningTitle {
+  margin: 0;
+  color: #ef2f24;
+  font-size: 24px;
+  font-weight: 900;
+  line-height: 1;
+  text-align: center;
 }
 
-/* ✅ change stack -> grid 2 columns like mock */
-.menuStack {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 12px;
-    margin-top: 12px;
+.warningSubtitle {
+  margin: 6px 0 14px;
+  color: #ef2f24;
+  font-size: 14px;
+  font-weight: 800;
+  line-height: 1.25;
+  text-align: center;
 }
 
-@media (min-width: 520px) {
-    .menuStack {
-        grid-template-columns: 1fr;
-        gap: 12px;
-    }
+.lookupForm {
+  display: grid;
+  gap: 10px;
 }
 
-/* 2) ปุ่มครอบ */
-.menuBtn {
-    width: 100%;
-    border: 0;
-    background: transparent;
-    cursor: pointer;
-    padding: 0;
-    -webkit-tap-highlight-color: transparent;
+.lookupLabel {
+  color: #111827;
+  font-size: 16px;
+  font-weight: 800;
+  line-height: 1.25;
+  text-align: center;
 }
 
-.menuBtn:focus-visible {
-    outline: 3px solid rgba(2, 75, 118, 0.28);
-    outline-offset: 4px;
-    border-radius: 18px;
+.lookupField {
+  position: relative;
 }
 
-/* 3) ตัว tile */
-.menuBox {
-    border-radius: 18px;
-    border: 1px solid rgba(2, 75, 118, 0.16);
-    background: linear-gradient(
-        180deg,
-        rgba(255, 255, 255, 0.92),
-        rgba(245, 249, 255, 0.88)
-    );
-    box-shadow:
-        0 10px 18px rgba(0, 0, 0, 0.08),
-        0 2px 0 rgba(255, 255, 255, 0.65) inset;
-
-    min-height: 64px;
-    padding: 9px 14px;
-
-    display: grid;
-    grid-template-columns: 52px minmax(0, 1fr);
-    align-items: center;
-    gap: 12px;
-
-    transition:
-        transform 140ms ease,
-        box-shadow 180ms ease,
-        border-color 180ms ease;
-    will-change: transform;
+.lookupIconLeft {
+  position: absolute;
+  left: 14px;
+  top: 60%;
+  transform: translateY(-50%);
+  color: var(--brand);
+  opacity: 0.9;
+  pointer-events: none;
+  z-index: 1;
 }
 
-/* hover/active */
-.menuBtn:hover .menuBox {
-    transform: translateY(-2px);
-    border-color: rgba(2, 75, 118, 0.22);
-    box-shadow:
-        0 14px 26px rgba(0, 0, 0, 0.11),
-        0 2px 0 rgba(255, 255, 255, 0.65) inset;
+.lookupInput {
+  width: 100%;
+  height: clamp(52px, 6.2vw, 58px);
+  border: 2px solid var(--brand);
+  border-radius: 10px;
+  background: #fff;
+  color: var(--textDark);
+  font: inherit;
+  font-size: clamp(16px, 2.2vw, 18px);
+  font-weight: 700;
+  margin-top: 10px;
+  padding: 0 16px;
+  outline: none;
+  box-shadow: none;
 }
 
-.menuBtn:active .menuBox {
-    transform: translateY(0px) scale(0.99);
+.lookupInput::placeholder {
+  color: rgba(27, 43, 74, 0.45);
+  font-weight: 600;
 }
 
-/* 4) วงกลมไอคอน */
-.iconWrap {
-    width: 44px;
-    height: 44px;
-    border-radius: 999px;
-    background: radial-gradient(
-        circle at 30% 30%,
-        #ffffff 0%,
-        #e8f1ff 55%,
-        #dbe9ff 100%
-    );
-    border: 1px solid rgba(2, 75, 118, 0.18);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.06);
-    display: grid;
-    place-items: center;
+.lookupInput:focus {
+  border-color: var(--brand);
+  box-shadow: 0 0 0 4px rgba(2, 75, 118, 0.18);
 }
 
-.fa {
-    font-size: 20px;
-    color: var(--brand);
-    display: block;
+.lookupInputWithLeft {
+  padding-left: 46px;
 }
 
-/* 5) ข้อความ */
-.text {
-    text-align: left;
-    font-weight: 800;
-    color: rgba(27, 43, 74, 0.92);
-    font-size: 19px;
-    line-height: 1.15;
-    letter-spacing: 0.2px;
-
-    min-width: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
+.identityPanel {
+  display: grid;
+  gap: 8px;
+  margin-top: 12px;
+  text-align: center;
 }
 
-/* actions */
-.actions {
-    margin-top: auto;
-    margin-bottom: 12px;
-    display: grid;
-    gap: 10px;
-    padding-top: 16px;
+.identityPanel div {
+  color: #111827;
+  font-size: 16px;
+  font-weight: 800;
 }
 
-/* logout -> red bar like mock */
-.logout {
-    width: 100%;
-    border-radius: 30px;
-    border: 0;
-    background: var(--red);
-    color: #fff;
-    height: 54px;
-    font-weight: 900;
-    cursor: pointer;
-    font-size: 20px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-
-    box-shadow: 0 16px 26px rgba(192, 0, 0, 0.22);
+.identityPanel strong {
+  min-height: 52px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(0, 0, 0, 0.35);
+  border-radius: 8px;
+  background: #fff;
+  color: #000;
+  font-size: 18px;
+  font-weight: 900;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+  padding: 8px 10px;
 }
 
-.logoutFa {
-    font-size: 18px;
+.fvFrame {
+  position: relative;
+  width: 100%;
+  max-width: 360px;
+  aspect-ratio: 4 / 3;
+  margin: 10px auto;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #2b2b2b;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.12);
 }
 
-/* กันจอเล็กมากๆ */
-@media (max-width: 360px) {
-    .menuStack {
-        grid-template-columns: 1fr;
-    }
+.fvImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.fvEmpty {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  background: linear-gradient(
+    180deg,
+    rgba(245, 248, 252, 0.95),
+    rgba(235, 240, 246, 0.95)
+  );
+}
+
+.fvEmptyIcon {
+  width: 68px;
+  height: 68px;
+  border-radius: 18px;
+  display: grid;
+  place-items: center;
+  background: rgba(2, 75, 118, 0.1);
+  border: 2px solid rgba(2, 75, 118, 0.18);
+  color: rgba(2, 75, 118, 0.75);
+  font-size: 27px;
+  margin-bottom: 8px;
+}
+
+.fvEmptyText {
+  font-weight: 900;
+  font-size: 15px;
+  color: rgba(27, 43, 74, 0.72);
+}
+
+.fvLocHint {
+  margin-top: 10px;
+  font-weight: 800;
+  color: rgba(27, 43, 74, 0.82);
+  background: rgba(2, 75, 118, 0.06);
+  border: 1px solid rgba(2, 75, 118, 0.14);
+  padding: 10px 12px;
+  border-radius: 12px;
+  line-height: 1.35;
+  text-align: center;
+}
+
+.fvError {
+  margin-top: 10px;
+  font-weight: 800;
+  color: #b80000;
+  background: rgba(192, 0, 0, 0.08);
+  border: 1px solid rgba(192, 0, 0, 0.18);
+  padding: 10px 12px;
+  border-radius: 12px;
+  text-align: center;
+}
+
+.successBanner {
+  margin-top: 12px;
+  min-height: 46px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  color: #176b36;
+  background: #eaf7ef;
+  border: 1px solid #9fd5b3;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 900;
+}
+
+.profileDetails {
+  margin: 0 0 16px;
+}
+
+.profileDetails h3 {
+  margin: 0 0 8px;
+  color: #1b2b4a;
+  font-size: 19px;
+  line-height: 1.3;
+  text-align: center;
+}
+
+.profileDetails dl {
+  margin: 0;
+  border-top: 1px solid rgba(2, 75, 118, 0.14);
+}
+
+.profileDetails .profileDetailsContinuation {
+  border-top: 0;
+}
+
+.profileDetails dl > div {
+  display: grid;
+  grid-template-columns: minmax(100px, 38%) minmax(0, 1fr);
+  gap: 12px;
+  padding: 9px 0;
+  border-bottom: 1px solid rgba(2, 75, 118, 0.1);
+}
+
+.profileDetails dt {
+  color: #667085;
+  font-weight: 700;
+}
+
+.profileDetails dd {
+  min-width: 0;
+  margin: 0;
+  color: #1b2b4a;
+  font-weight: 800;
+  overflow-wrap: anywhere;
+}
+
+.userInfoPanel {
+  margin-top: 14px;
+  padding: 12px;
+  border: 1px solid rgba(2, 75, 118, 0.12);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 5px 14px rgba(0, 0, 0, 0.05);
+}
+
+.userInfoTitle {
+  margin: 0 0 12px;
+  color: #1b2b4a;
+  font-size: 18px;
+  font-weight: 900;
+  text-align: center;
+}
+
+.userInfoPanel dl {
+  margin: 0;
+  border-top: 1px solid rgba(2, 75, 118, 0.12);
+}
+
+.userInfoPanel dl > div {
+  display: grid;
+  grid-template-columns: minmax(96px, 36%) minmax(0, 1fr);
+  gap: 12px;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(2, 75, 118, 0.09);
+}
+
+.userInfoPanel dt {
+  color: #667085;
+  font-size: 15px;
+  font-weight: 800;
+  line-height: 1.25;
+}
+
+.userInfoPanel dd {
+  min-width: 0;
+  margin: 0;
+  color: #1b2b4a;
+  font-size: 15px;
+  font-weight: 900;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+}
+
+.faceRegistered {
+  color: #067647 !important;
+}
+
+.faceNotRegistered {
+  color: #b54708 !important;
+}
+
+.fvPrimary {
+  margin-top: 12px;
+  width: 100%;
+  max-width: 100%;
+  height: clamp(50px, 6vw, 56px);
+  border: 0;
+  border-radius: 8px;
+  cursor: pointer;
+
+  color: #fff;
+  font-weight: 900;
+  font-size: 18px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 0 14px;
+  line-height: 1.18;
+  text-align: center;
+  white-space: normal;
+  overflow-wrap: anywhere;
+
+  background: linear-gradient(90deg, var(--brand), var(--brandDark));
+  box-shadow: 0 16px 26px rgba(0, 0, 0, 0.12);
+}
+
+.fvPrimary:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.fvPrimaryIcon {
+  font-size: 20px;
+}
+
+/* Logout button — deliberately a different (neutral/dark) color from the
+   primary retry button, so it doesn't look like the "preferred" action. */
+.fvLogoutBtn {
+  margin-top: 10px;
+  width: 100%;
+  height: clamp(50px, 6vw, 56px);
+  border: 2px solid #000;
+  border-radius: 8px;
+  cursor: pointer;
+
+  color: #fff;
+  font-weight: 900;
+  font-size: 18px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  background: #000;
+  box-shadow: 0 10px 16px rgba(0, 0, 0, 0.22);
+  transition: opacity 0.15s ease, transform 0.08s ease;
+}
+
+.fvLogoutBtn:hover {
+  opacity: 0.92;
+}
+
+.fvLogoutBtn:active {
+  transform: translateY(1px);
+}
+
+.logoutButton {
+  margin: 12px 6px 18px;
+  width: calc(100% - 12px);
+  max-width: calc(100% - 12px);
+  height: clamp(50px, 6vw, 56px);
+  border: 2px solid var(--red);
+  border-radius: 30px;
+  background: var(--red);
+  color: #fff;
+  font: inherit;
+  font-size: 18px;
+  font-weight: 900;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 0 14px;
+  line-height: 1.18;
+  text-align: center;
+  box-shadow: 0 16px 26px rgba(192, 0, 0, 0.22);
+  transition:
+    transform 0.08s ease,
+    background 0.15s ease,
+    opacity 0.15s ease;
+}
+
+.logoutButton:hover:not(:disabled) {
+  background: #a40000;
+  border-color: #a40000;
+}
+
+.logoutButton:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.logoutButton:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+@media (max-width: 430px) {
+  .fvPrimary,
+  .logoutButton {
+    font-size: 16px;
+  }
 }

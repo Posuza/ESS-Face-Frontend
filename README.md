@@ -30,6 +30,12 @@ This is the frontend for the ESS MO (Employee Self Service - Ministry of Organiz
 
 The app will be available at `http://localhost:5173` by default.
 
+When running through an HTTPS tunnel or public dev domain, enable secure HMR:
+
+```bash
+VITE_PUBLIC_HMR=true npm run dev -- --host 0.0.0.0
+```
+
 ### Build for Production
 
 ```bash
@@ -44,6 +50,7 @@ Copy `.env.development` or `.env.production` and set your API endpoint:
 
 ```
 VITE_API_URL=https://your-api-endpoint
+VITE_PUBLIC_HMR=true # only for HTTPS tunnel/public dev domains
 ```
 
 ---
