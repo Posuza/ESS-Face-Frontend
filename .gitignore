@@ -5,6 +5,10 @@ node_modules/
 dist/
 coverage/
 
+# Local duplicate/backup artifacts
+src1/
+Archive1.zip
+
 # Local environment files
 .env
 .env.*
