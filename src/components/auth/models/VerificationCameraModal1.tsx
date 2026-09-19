@@ -46,7 +46,7 @@ type FeaturePoints = {
 };
 type GuideContrast = "dark" | "light";
 
-const STABLE_HOLD_MS = 3000;
+const STABLE_HOLD_MS = 2000;
 const INVALID_CONFIRMATION_FRAMES = 2;
 const DETECTION_INTERVAL_MS = 60;
 const LIGHTING_INTERVAL_MS = 500;
