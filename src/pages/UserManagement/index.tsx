@@ -315,7 +315,7 @@ export default function UserManagement() {
 
                     <td>
                       {employee.has_face_profile
-                        ? `employee-faces/${employee.employee_code}.jpeg`
+                        ? (employee.face_profile_location ?? "มีรูปแล้ว")
                         : "ยังไม่มี"}
                     </td>
 

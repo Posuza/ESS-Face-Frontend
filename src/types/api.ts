@@ -27,6 +27,7 @@ export type AdminEmployee = {
   start_date: string | null;
   leave_date: string | null;
   has_face_profile: boolean;
+  face_profile_location: string | null;
   profile_image_updated_at: string | null;
 };
 
