@@ -1,4 +1,4 @@
-# ESS MO Frontend version3
+# ESS MO Frontend verion1
 
 This is the frontend for the ESS MO (Employee Self Service - Ministry of Organization) system. It is a modern web application built with React, TypeScript, and Vite, providing a user interface for employee attendance, reporting, and management features.
 
