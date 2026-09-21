@@ -5,12 +5,12 @@ import ErrorBoundary from "./components/ErrorBoundary";
 import App from "./App";
 import "./index.css";
 
-ReactDOM.createRoot(document.getElementById("root")!).render(
-  <React.StrictMode>
-    <BrowserRouter>
-      <ErrorBoundary>
-        <App />
-      </ErrorBoundary>
-    </BrowserRouter>
-  </React.StrictMode>
-);
+// ReactDOM.createRoot(document.getElementById("root")!).render(
+//   <React.StrictMode>
+//     <BrowserRouter>
+//       <ErrorBoundary>
+//         <App />
+//       </ErrorBoundary>
+//     </BrowserRouter>
+//   </React.StrictMode>
+// );
