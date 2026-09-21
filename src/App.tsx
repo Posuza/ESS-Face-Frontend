@@ -1,10 +1,10 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 
-// import AdminHome from "./pages/AdminHome";
-// import AdminLogin from "./pages/AdminLogin";
-// import FaceVerification from "./pages/FaceVerify";
-// import Home from "./pages/Home";
-// import { useAppStore } from "./store";
+import AdminHome from "./pages/AdminHome";
+import AdminLogin from "./pages/AdminLogin";
+import FaceVerification from "./pages/FaceVerify";
+import Home from "./pages/Home";
+import { useAppStore } from "./store";
 
 function EmployeeApp() {
   const employee = useAppStore((state) => state.employee);
