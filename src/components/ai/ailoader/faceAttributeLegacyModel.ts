@@ -9,7 +9,7 @@ import { getFaceModelValue } from "../faceModelSettings";
 type FaceLandmark = { x: number; y: number; z?: number };
 type FaceImageSource = HTMLVideoElement | HTMLCanvasElement;
 
-const WASM_URL = "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.35/wasm";
+const WASM_URL = "/wasm";
 const MODEL_URL = "/models/face_attrib_net.tflite";
 const INPUT_SIZE = 128;
 

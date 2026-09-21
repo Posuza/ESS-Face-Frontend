@@ -1,6 +1,6 @@
 import { FaceLandmarker, FilesetResolver } from "@mediapipe/tasks-vision";
 
-const WASM_URL = "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.35/wasm";
+const WASM_URL = "/wasm";
 const MODEL_URL = "/models/face_landmarker.task";
 
 let landmarkerPromise: Promise<FaceLandmarker> | null = null;
