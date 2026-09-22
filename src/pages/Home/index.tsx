@@ -8,6 +8,7 @@ import Header from "@/layout/Header";
 import LoadingModal from "@/components/LoadingModal";
 import PermissionErrorModal from "@/components/auth/popup/PermissionErrorModal";
 import RegisterCameraModal from "@/components/RegisterCameraModal";
+import { scheduleIdleModelPreload } from "@/components/ai/modelPreloadScheduler";
 import { preloadRegisterCameraModels } from "@/components/ai/registerCameraPreloader";
 import { useAppStore } from "@/store";
 import type { EmployeeProfile } from "@/types/api";
@@ -52,6 +53,11 @@ export default function Home({
   const [errorMessage, setErrorMessage] = useState("");
 
   const verifyReqRef = useRef(0);
+
+  useEffect(
+    () => scheduleIdleModelPreload(preloadRegisterCameraModels, "registration models"),
+    [],
+  );
 
   useEffect(() => {
     if (!employee) return;

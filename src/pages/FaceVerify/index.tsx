@@ -8,6 +8,7 @@ import Header from "@/layout/Header";
 import LoadingModal from "@/components/LoadingModal";
 import PermissionErrorModal from "@/components/auth/popup/PermissionErrorModal";
 import VerificationCameraModal from "@/components/auth/models/VerificationCameraModal1";
+import { scheduleIdleModelPreload } from "@/components/ai/modelPreloadScheduler";
 import { preloadVerificationCameraModels } from "@/components/ai/verificationCameraPreloader";
 import { useAppStore } from "@/store";
 import type { EmployeeProfile } from "@/types/api";
@@ -58,6 +59,11 @@ export default function FaceVerify({
   const verifyReqRef = useRef(0);
   const capturedFromCameraRef = useRef(false);
   const autoOpenedEmployeeRef = useRef<string | null>(null);
+
+  useEffect(
+    () => scheduleIdleModelPreload(preloadVerificationCameraModels, "verification models"),
+    [],
+  );
 
   async function openCamera() {
     setErrorMessage("");
