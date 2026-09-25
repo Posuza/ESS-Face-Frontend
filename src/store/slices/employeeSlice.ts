@@ -35,6 +35,7 @@ export type EmployeeSlice = {
   employeeLookupBusy: boolean;
   employeeLookupError: string;
   lookupEmployee: (employeeCode: string) => Promise<EmployeeProfile>;
+  setAuthenticatedEmployee: (employee: EmployeeProfile) => void;
   clearEmployeeSession: () => void;
   setEmployeeRoute: (route: EmployeeRoute) => void;
   clearEmployeeLookupError: () => void;
@@ -45,6 +46,17 @@ export const createEmployeeSlice: AppSliceCreator<EmployeeSlice> = (set) => ({
   employeeRoute: "register",
   employeeLookupBusy: false,
   employeeLookupError: "",
+
+  setAuthenticatedEmployee(employee) {
+    persistEmployee(employee);
+    sessionStorage.removeItem(ROUTE_SESSION_KEY);
+    set({
+      employee,
+      employeeRoute: "register",
+      employeeLookupBusy: false,
+      employeeLookupError: "",
+    });
+  },
 
   async lookupEmployee(employeeCode) {
     set({ employeeLookupBusy: true, employeeLookupError: "" });
