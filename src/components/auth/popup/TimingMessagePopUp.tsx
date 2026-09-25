@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { AlertCircle, AlertTriangle, BookOpen } from "lucide-react";
+import { AlertCircle, AlertTriangle } from "lucide-react";
 
 import styles from "./TimingMessagePopUp.module.css";
 
@@ -9,9 +9,13 @@ type Props = {
   variant?: "warning" | "error";
   closeOnBackdrop?: boolean;
   closeOnEsc?: boolean;
+
+  // Kept only for compatibility with existing Home usage.
+  // This popup no longer renders a tutorial action/button.
   showTutorialAction?: boolean;
   tutorialLabel?: string;
   onViewTutorial?: () => void;
+
   onClose?: () => void;
 };
 
@@ -21,9 +25,6 @@ export default function TimingMessagePopUp({
   variant = "error",
   closeOnBackdrop = true,
   closeOnEsc = true,
-  showTutorialAction = false,
-  tutorialLabel = "ดูบทเรียน",
-  onViewTutorial,
   onClose,
 }: Props) {
   useEffect(() => {
@@ -38,11 +39,11 @@ export default function TimingMessagePopUp({
   }, [closeOnEsc, onClose, open]);
 
   useEffect(() => {
-    if (!open || showTutorialAction) return;
+    if (!open) return;
 
     const timer = window.setTimeout(() => onClose?.(), 3000);
     return () => window.clearTimeout(timer);
-  }, [onClose, open, showTutorialAction]);
+  }, [onClose, open]);
 
   if (!open) return null;
 
@@ -94,33 +95,6 @@ export default function TimingMessagePopUp({
             </div>
           ))}
         </div>
-
-        {showTutorialAction && onViewTutorial ? (
-          <button
-            type="button"
-            onClick={onViewTutorial}
-            style={{
-              minHeight: 40,
-              marginTop: 14,
-              padding: "0 16px",
-              display: "inline-flex",
-              alignItems: "center",
-              justifyContent: "center",
-              gap: 7,
-              border: "1px solid #07577d",
-              borderRadius: 999,
-              background: "#07577d",
-              color: "#fff",
-              font: "inherit",
-              fontSize: 13,
-              fontWeight: 800,
-              cursor: "pointer",
-            }}
-          >
-            <BookOpen size={17} strokeWidth={2} aria-hidden="true" />
-            {tutorialLabel}
-          </button>
-        ) : null}
       </div>
     </div>
   );
