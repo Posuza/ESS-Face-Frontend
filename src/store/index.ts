@@ -6,6 +6,7 @@ import { createEmployeeSlice } from "./slices/employeeSlice";
 import { createFaceActionSlice } from "./slices/faceActionSlice";
 import { createFrontendModelSettingsSlice } from "./slices/frontendModelSettingsSlice";
 import { createModelSettingsSlice } from "./slices/modelSettingsSlice";
+import { createReturnSiteSlice } from "./slices/returnSiteSlice";
 import type { AppState } from "./types";
 
 export const useAppStore = create<AppState>()((...store) => ({
@@ -15,6 +16,7 @@ export const useAppStore = create<AppState>()((...store) => ({
   ...createModelSettingsSlice(...store),
   ...createFaceActionSlice(...store),
   ...createFrontendModelSettingsSlice(...store),
+  ...createReturnSiteSlice(...store),
 }));
 
 export type { AppState };

@@ -5,14 +5,26 @@ export type AdminSession = {
   role_name: string;
 };
 
-export type AdminEmployee = {
+export type DirectoryEmployee = {
+  employee_code: string;
+  first_name: string;
+  last_name: string;
+  has_face_profile: boolean;
+  profile_image_updated_at: string | null;
+};
+
+export type EmployeeSummary = {
+  total: number;
+  registered: number;
+  missing: number;
+};
+
+export type AdminEmployee = DirectoryEmployee & {
   employee_code: string;
   role_id: number;
   role_name: string | null;
   name_prefix_id: number;
   name_prefix: string | null;
-  first_name: string;
-  last_name: string;
   birth_date: string;
   email: string | null;
   phone_number: string | null;
@@ -26,9 +38,7 @@ export type AdminEmployee = {
   is_active: boolean;
   start_date: string | null;
   leave_date: string | null;
-  has_face_profile: boolean;
   face_profile_location: string | null;
-  profile_image_updated_at: string | null;
 };
 
 export type SettingMetadata = {

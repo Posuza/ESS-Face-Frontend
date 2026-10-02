@@ -261,6 +261,48 @@
   box-shadow: none;
 }
 
+.returnButtonContainer{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.returnButton {
+  width: 98%;
+  min-height: 46px;
+  margin-top: 12px;
+  margin-bottom: 12px;
+  padding: 0 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 2px solid #000;
+  border-radius: 35px;
+  background: #000;
+  color: #fff;
+  font: inherit;
+  font-size: 16px;
+  font-weight: 800;
+  line-height: 1.2;
+  cursor: pointer;
+  box-shadow: 0 10px 16px rgba(0, 0, 0, 0.22);
+  transition: opacity 0.15s ease, transform 0.08s ease;
+}
+
+.returnButton:hover {
+  opacity: 0.92;
+}
+
+.returnButton:active {
+  transform: translateY(1px);
+}
+
+.returnButton:focus-visible {
+  outline: 2px solid rgba(7, 87, 125, 0.2);
+  outline-offset: 2px;
+}
+
 .identityPanel {
   display: grid;
   gap: 8px;

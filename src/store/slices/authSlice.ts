@@ -57,7 +57,21 @@ export const createAuthSlice: AppSliceCreator<AuthSlice> = (set, get) => ({
 
   logoutAdmin() {
     sessionStorage.removeItem(ADMIN_SESSION_KEY);
-    set({ adminSession: null, adminLoginError: "", adminPermissionDenied: false });
+    set({
+      adminSession: null,
+      adminLoginError: "",
+      adminPermissionDenied: false,
+      adminUsers: [],
+      employeeDirectory: [],
+      adminUsersPage: 1,
+      employeeDirectoryPage: 1,
+      adminUsersTotal: 0,
+      employeeDirectoryTotal: 0,
+      employeeSummary: { total: 0, registered: 0, missing: 0 },
+      adminUsersAppliedSearch: "",
+      employeeDirectoryAppliedSearch: "",
+      adminUsersListOptions: {},
+    });
   },
 
   clearAdminLoginError() {

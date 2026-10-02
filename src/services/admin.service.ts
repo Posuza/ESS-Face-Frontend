@@ -2,6 +2,8 @@ import { API_URL } from "@/config/api.config";
 import type {
   AdminEmployee,
   AdminSession,
+  DirectoryEmployee,
+  EmployeeSummary,
   FaceMode,
   ModelGroup,
   ModelSchema,
@@ -12,17 +14,41 @@ export const ADMIN_SESSION_KEY = "guts-face.admin.v1";
 const REQUIRED_MODEL_KEYS = new Set(["scrfd_detector", "arcface_recognizer", "face_landmarker"]);
 const USER_MANAGER_EMPLOYEE_CODES = new Set(["680708", "622057", "632070", "622062"]);
 
+export type AdminUserListOptions = {
+  isActive?: boolean;
+  registeredFacesFirst?: boolean;
+  sortEmployeeCode?: boolean;
+  sortBy?: "employee_code" | "face_status";
+  sortDirection?: "asc" | "desc";
+  faceStatus?: "all" | "registered" | "missing";
+};
+
+function normalizeRoleName(roleName: string) {
+  return roleName.trim().toLowerCase().replace(/[\s-]+/g, "_");
+}
+
 export function isAdminRole(roleName: string) {
-  const normalized = roleName.trim().toLowerCase().replace(/[\s-]+/g, "_");
-  return normalized === "admin" || normalized === "super_admin";
+  return normalizeRoleName(roleName) === "admin";
+}
+
+export function isSuperAdminRole(roleName: string) {
+  return normalizeRoleName(roleName) === "super_admin";
+}
+
+export function canAccessAdminDashboard(session: AdminSession) {
+  return USER_MANAGER_EMPLOYEE_CODES.has(session.employee_code);
+}
+
+export function canAccessSuperAdminPortal(session: AdminSession) {
+  return isSuperAdminRole(session.role_name);
 }
 
 export function canAccessAdminPortal(session: AdminSession) {
-  return isAdminRole(session.role_name) || USER_MANAGER_EMPLOYEE_CODES.has(session.employee_code);
+  return Boolean(session.employee_code);
 }
 
 export function canEditAdminModels(session: AdminSession) {
-  return isAdminRole(session.role_name);
+  return canAccessSuperAdminPortal(session);
 }
 
 function adminHeaders(adminCode: string, json = true): HeadersInit {
@@ -55,16 +81,78 @@ export const adminService = {
       body: JSON.stringify({ employee_code: employeeCode, password }),
     });
     const data = await parseResponse<{ employee: AdminSession }>(response);
-    if (!canAccessAdminPortal(data.employee)) {
-      throw new Error("บัญชีนี้ไม่มีสิทธิ์เข้าใช้งานระบบผู้ดูแล");
-    }
     return data.employee;
   },
 
-  async listUsers(adminCode: string, search = "", page = 1) {
+  async listEmployeeDirectory(
+    employeeCode: string,
+    search = "",
+    page = 1,
+    options: AdminUserListOptions = {},
+  ) {
     const params = new URLSearchParams({ search, page: String(page), page_size: "25" });
-    return parseResponse<{ items: AdminEmployee[]; total: number; page: number; page_size: number }>(
-      await fetch(`${API_URL}/admin/users?${params}`, { headers: adminHeaders(adminCode, false) }),
+    if (options.sortBy) {
+      params.set("sort_by", options.sortBy);
+      params.set("sort_direction", options.sortDirection ?? "asc");
+    }
+    if (options.faceStatus) {
+      params.set("face_status", options.faceStatus);
+    }
+    return parseResponse<{
+      items: DirectoryEmployee[];
+      total: number;
+      page: number;
+      page_size: number;
+    }>(
+      await fetch(`${API_URL}/employee-directory?${params}`, {
+        headers: adminHeaders(employeeCode, false),
+        cache: "no-store",
+      }),
+    );
+  },
+
+  async getEmployeeSummary(employeeCode: string) {
+    return parseResponse<EmployeeSummary>(
+      await fetch(`${API_URL}/employee-summary`, {
+        headers: adminHeaders(employeeCode, false),
+        cache: "no-store",
+      }),
+    );
+  },
+
+  async listUsers(
+    adminCode: string,
+    search = "",
+    page = 1,
+    options: AdminUserListOptions = {},
+  ) {
+    const params = new URLSearchParams({ search, page: String(page), page_size: "25" });
+    if (options.isActive !== undefined) {
+      params.set("is_active", String(options.isActive));
+    }
+    if (options.sortEmployeeCode) {
+      params.set("sort_employee_code", "true");
+    }
+    if (options.registeredFacesFirst) {
+      params.set("registered_faces_first", "true");
+    }
+    if (options.sortBy) {
+      params.set("sort_by", options.sortBy);
+      params.set("sort_direction", options.sortDirection ?? "asc");
+    }
+    if (options.faceStatus) {
+      params.set("face_status", options.faceStatus);
+    }
+    return parseResponse<{
+      items: AdminEmployee[];
+      total: number;
+      page: number;
+      page_size: number;
+    }>(
+      await fetch(`${API_URL}/admin/users?${params}`, {
+        headers: adminHeaders(adminCode, false),
+        cache: "no-store",
+      }),
     );
   },
 

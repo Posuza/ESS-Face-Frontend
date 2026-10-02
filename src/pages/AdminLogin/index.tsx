@@ -9,10 +9,13 @@ import {
 import { Navigate, useNavigate } from "react-router-dom";
 
 import Header from "@/layout/Header";
-import PermissionErrorModal from "@/components/auth/popup/PermissionErrorModal";
+import TimingMessagePopUp from "@/components/auth/popup/TimingMessagePopUp";
+import { isSuperAdminRole } from "@/services/admin.service";
 import { useAppStore } from "@/store";
 
 import styles from "./AdminLogin.module.css";
+
+type LoginPopupVariant = "warning" | "error";
 
 export default function AdminLogin() {
   const navigate = useNavigate();
@@ -26,30 +29,49 @@ export default function AdminLogin() {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
+  const [popupVariant, setPopupVariant] = useState<LoginPopupVariant>("warning");
   const displayError = error || storeError;
 
   if (session) {
-    return <Navigate to="/admin/home" replace />;
+    return (
+      <Navigate
+        to={isSuperAdminRole(session.role_name) ? "/super-admin/home" : "/admin/home"}
+        replace
+      />
+    );
   }
 
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (!/^[A-Z0-9]{6}$/.test(employeeCode)) {
-      setError("กรุณากรอกรหัสพนักงาน 6 ตัว โดยใช้ตัวอักษรหรือตัวเลข");
+    if (!/^\d{6}$/.test(employeeCode)) {
+      setPopupVariant("warning");
+      setError("กรุณากรอกรหัสพนักงานเป็นตัวเลข 6 หลัก");
       return;
     }
-    if (password.length !== 6) {
-      setError("กรุณากรอกรหัสผ่าน 6 ตัว");
+    if (!/^\d{6}$/.test(password)) {
+      setPopupVariant("warning");
+      setError("กรุณากรอกรหัสผ่านเป็นตัวเลข 6 หลัก");
       return;
     }
     setError("");
     clearAdminLoginError();
     try {
-      await loginAdmin(employeeCode, password);
-      navigate("/admin/home", { replace: true });
+      const loggedInSession = await loginAdmin(employeeCode, password);
+      navigate(
+        isSuperAdminRole(loggedInSession.role_name)
+          ? "/super-admin/home"
+          : "/admin/home",
+        { replace: true },
+      );
     } catch (loginError) {
+      const message = loginError instanceof Error ? loginError.message : "เข้าสู่ระบบไม่สำเร็จ";
+      setPopupVariant(
+        message.includes("รหัสผ่านไม่ถูกต้อง") || message.includes("ไม่มีสิทธิ์")
+          ? "warning"
+          : "error",
+      );
       if (!(loginError instanceof Error && loginError.message.includes("ไม่มีสิทธิ์"))) {
-        setError(loginError instanceof Error ? loginError.message : "เข้าสู่ระบบไม่สำเร็จ");
+        setError(message);
       }
     }
   }
@@ -61,7 +83,7 @@ export default function AdminLogin() {
       </div>
 
       <section className={styles["guts-card"]} aria-labelledby="admin-login-title">
-        <h2 id="admin-login-title" className={styles["guts-card-title"]}>เข้าสู่ระบบผู้ดูแล</h2>
+        <h2 id="admin-login-title" className={styles["guts-card-title"]}>เข้าสู่ระบบแดชบอร์ด</h2>
 
         <form className={styles["guts-form"]} onSubmit={submit}>
           {/* Employee Code Field */}
@@ -79,13 +101,12 @@ export default function AdminLogin() {
                 ].join(" ")}
                 value={employeeCode}
                 onChange={(event) => {
-                  setEmployeeCode(
-                    event.target.value.toUpperCase().replace(/[^A-Z0-9]/g, "").slice(0, 6),
-                  );
+                  setEmployeeCode(event.target.value.replace(/\D/g, "").slice(0, 6));
                   setError("");
                   clearAdminLoginError();
                 }}
                 autoComplete="username"
+                inputMode="numeric"
                 maxLength={6}
                 autoFocus
               />
@@ -108,12 +129,13 @@ export default function AdminLogin() {
                 ].join(" ")}
                 value={password}
                 onChange={(event) => {
-                  setPassword(event.target.value.replace(/\s/g, "").slice(0, 6));
+                  setPassword(event.target.value.replace(/\D/g, "").slice(0, 6));
                   setError("");
                   clearAdminLoginError();
                 }}
                 type={showPassword ? "text" : "password"}
                 autoComplete="current-password"
+                inputMode="numeric"
                 maxLength={6}
               />
 
@@ -129,14 +151,14 @@ export default function AdminLogin() {
             </div>
           </label>
 
-          <PermissionErrorModal
+          <TimingMessagePopUp
             open={permissionDenied || Boolean(displayError)}
             message={
               permissionDenied
                 ? "บัญชีนี้ไม่มีสิทธิ์เข้าใช้งานระบบผู้ดูแล"
                 : displayError
             }
-            variant="warning"
+            variant={permissionDenied ? "warning" : popupVariant}
             onClose={() => {
               setError("");
               clearAdminLoginError();

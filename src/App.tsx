@@ -1,9 +1,12 @@
+import { useEffect } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 
 import AdminHome from "./pages/AdminHome";
 import AdminLogin from "./pages/AdminLogin";
 import FaceVerification from "./pages/FaceVerify";
 import Home from "./pages/Home";
+import SuperAdminHome from "./pages/SuperAdminHome";
+import SuperAdminLogin from "./pages/SuperAdminLogin";
 import { useAppStore } from "./store";
 
 function EmployeeApp() {
@@ -21,12 +24,21 @@ function EmployeeApp() {
 }
 
 export default function App() {
+  const captureReturnSite = useAppStore((state) => state.captureReturnSite);
+
+  useEffect(() => {
+    captureReturnSite();
+  }, [captureReturnSite]);
+
   return (
     <Routes>
       <Route path="/" element={<EmployeeApp />} />
       <Route path="/admin/login" element={<AdminLogin />} />
       <Route path="/admin/home" element={<AdminHome />} />
       <Route path="/admin" element={<Navigate to="/admin/login" replace />} />
+      <Route path="/super-admin/login" element={<SuperAdminLogin />} />
+      <Route path="/super-admin/home" element={<SuperAdminHome />} />
+      <Route path="/super-admin" element={<Navigate to="/super-admin/login" replace />} />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );

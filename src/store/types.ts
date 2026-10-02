@@ -6,12 +6,14 @@ import type { EmployeeSlice } from "./slices/employeeSlice";
 import type { FaceActionSlice } from "./slices/faceActionSlice";
 import type { FrontendModelSettingsSlice } from "./slices/frontendModelSettingsSlice";
 import type { ModelSettingsSlice } from "./slices/modelSettingsSlice";
+import type { ReturnSiteSlice } from "./slices/returnSiteSlice";
 
 export type AppState = AuthSlice &
   EmployeeSlice &
   AdminUsersSlice &
   ModelSettingsSlice &
   FaceActionSlice &
-  FrontendModelSettingsSlice;
+  FrontendModelSettingsSlice &
+  ReturnSiteSlice;
 
 export type AppSliceCreator<T> = StateCreator<AppState, [], [], T>;

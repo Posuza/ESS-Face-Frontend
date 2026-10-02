@@ -14,9 +14,9 @@ import PermissionErrorModal from "@/components/auth/popup/PermissionErrorModal";
 import { useAppStore } from "@/store";
 import type { AdminEmployee } from "@/types/api";
 
-import styles from "./UserManagement.module.css";
+import styles from "./SuperAdminUserManagement.module.css";
 
-export default function UserManagement() {
+export default function SuperAdminUserManagement() {
   const users = useAppStore((state) => state.adminUsers);
   const page = useAppStore((state) => state.adminUsersPage);
   const total = useAppStore((state) => state.adminUsersTotal);

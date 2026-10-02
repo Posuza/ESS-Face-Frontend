@@ -1,19 +1,19 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faRightFromBracket, faUserGroup } from "@fortawesome/free-solid-svg-icons";
-import { TbUserScan, TbUserHexagon } from "react-icons/tb";
 import { Navigate, useNavigate, useSearchParams } from "react-router-dom";
 
 import AdminHeader from "@/layout/AdminHeader";
 import ErrorBoundary from "@/components/ErrorBoundary";
-import RegisterModelSettings from "@/pages/RegisterModelSettings";
-import UserManagement from "@/pages/UserManagement";
-import VerificationModelSettings from "@/pages/VerificationModelSettings";
-import { canEditAdminModels } from "@/services/admin.service";
+import AdminUserManagement from "@/pages/AdminUserManagement";
+import {
+  canAccessAdminDashboard,
+  isSuperAdminRole,
+} from "@/services/admin.service";
 import { useAppStore } from "@/store";
 
 import styles from "./AdminHome.module.css";
 
-type AdminView = "home" | "users" | "register-model" | "verify-model";
+type AdminView = "home" | "users";
 
 export default function AdminHome() {
   const navigate = useNavigate();
@@ -21,17 +21,15 @@ export default function AdminHome() {
   const session = useAppStore((state) => state.adminSession);
   const logoutAdmin = useAppStore((state) => state.logoutAdmin);
   const section = searchParams.get("section");
-  const view: AdminView =
-    section === "users" || section === "register-model" || section === "verify-model"
-      ? section
-      : "home";
+  const view: AdminView = section === "users" ? "users" : "home";
 
   if (!session) return <Navigate to="/admin/login" replace />;
+  if (isSuperAdminRole(session.role_name)) {
+    return <Navigate to="/super-admin/home" replace />;
+  }
 
   const displayName = `${session.first_name} ${session.last_name}`.trim();
-  const canEditModels = canEditAdminModels(session);
-  const allowedView: AdminView =
-    canEditModels || view === "home" || view === "users" ? view : "users";
+  const isUserManager = canAccessAdminDashboard(session);
 
   function logout() {
     logoutAdmin();
@@ -48,34 +46,22 @@ export default function AdminHome() {
 
   return (
     <main className={styles.page}>
-      {allowedView === "home" ? (
+      {view === "home" ? (
         <div className={styles.homeShell}>
           <section className={styles.homeCard} aria-labelledby="admin-home-title">
             <AdminHeader empCode={session.employee_code} displayName={displayName} />
-            <h2 id="admin-home-title" className={styles.title}>หน้าหลักผู้ดูแลระบบ</h2>
+            <h2 id="admin-home-title" className={styles.title}>
+              {isUserManager ? "หน้าหลักผู้ดูแลระบบ" : "หน้าหลักข้อมูลพนักงาน"}
+            </h2>
             <div className={styles.menuStack}>
               <button type="button" className={styles.menuButton} onClick={() => setView("users")}>
                 <span className={styles.menuBox}>
                   <span className={styles.iconWrap} aria-hidden="true"><FontAwesomeIcon icon={faUserGroup} /></span>
-                  <span className={styles.menuText}>จัดการผู้ใช้งาน</span>
+                  <span className={styles.menuText}>
+                    {isUserManager ? "จัดการผู้ใช้งาน" : "ข้อมูลพนักงาน"}
+                  </span>
                 </span>
               </button>
-              {canEditModels ? (
-                <>
-                  <button type="button" className={styles.menuButton} onClick={() => setView("register-model")}>
-                    <span className={styles.menuBox}>
-                      <span className={styles.iconWrap} aria-hidden="true"><TbUserHexagon size={24} /></span>
-                      <span className={styles.menuText}>ตั้งค่าโมเดลลงทะเบียน</span>
-                    </span>
-                  </button>
-                  <button type="button" className={styles.menuButton} onClick={() => setView("verify-model")}>
-                    <span className={styles.menuBox}>
-                      <span className={styles.iconWrap} aria-hidden="true"><TbUserScan size={24} /></span>
-                      <span className={styles.menuText}>ตั้งค่าโมเดลยืนยันตัวตน</span>
-                    </span>
-                  </button>
-                </>
-              ) : null}
             </div>
             <div className={styles.actions}>
               <button type="button" className={styles.homeLogout} onClick={logout}>
@@ -87,19 +73,9 @@ export default function AdminHome() {
       ) : (
         <div className={styles.workspace}>
           <AdminHeader empCode={session.employee_code} displayName={displayName} />
-          {allowedView === "users" ? (
+          {view === "users" ? (
             <ErrorBoundary>
-              <UserManagement />
-            </ErrorBoundary>
-          ) : null}
-          {allowedView === "register-model" ? (
-            <ErrorBoundary>
-              <RegisterModelSettings />
-            </ErrorBoundary>
-          ) : null}
-          {allowedView === "verify-model" ? (
-            <ErrorBoundary>
-              <VerificationModelSettings />
+              <AdminUserManagement />
             </ErrorBoundary>
           ) : null}
           <div className={styles.workspaceActions}>

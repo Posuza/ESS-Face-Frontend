@@ -22,7 +22,7 @@ import {
   faRightFromBracket,
   faRotateLeft,
 } from "@fortawesome/free-solid-svg-icons";
-import { CirclePlay, Eye, EyeOff, Lock, User } from "lucide-react";
+import { ArrowLeft, CirclePlay, Eye, EyeOff, Lock, User } from "lucide-react";
 
 import styles from "./Home.module.css";
 
@@ -44,6 +44,8 @@ export default function Home({
   const getEmployeeProfileImage = useAppStore((state) => state.getEmployeeProfileImage);
   const enrollEmployeeFace = useAppStore((state) => state.enrollEmployeeFace);
   const resetFaceActionState = useAppStore((state) => state.resetFaceActionState);
+  const returnSite = useAppStore((state) => state.returnSite);
+  const returnToSource = useAppStore((state) => state.returnToSource);
   const [employeeCode, setEmployeeCode] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -103,7 +105,7 @@ export default function Home({
     if (!code && !password) {
       setLoginPopupVariant("warning");
       setErrorMessage(
-        "กรุณากรอกรหัสพนักงาน 6 หลัก\nและ\nรหัสผ่าน 6 ตัวอักษร",
+        "กรุณากรอกรหัสพนักงาน 6 หลัก\nและ\nรหัสผ่านเป็นตัวเลข 6 หลัก",
       );
       return;
     }
@@ -114,9 +116,9 @@ export default function Home({
       return;
     }
 
-    if (password.length !== 6) {
+    if (!/^\d{6}$/.test(password)) {
       setLoginPopupVariant("warning");
-      setErrorMessage("กรุณากรอกรหัสผ่าน 6 ตัวอักษร");
+      setErrorMessage("กรุณากรอกรหัสผ่านเป็นตัวเลข 6 หลัก");
       return;
     }
 
@@ -227,7 +229,7 @@ export default function Home({
 
                 <div>
                   <label className={styles.lookupLabel} htmlFor="register-password">
-                    กรอกรหัส (6 ตัวอักษร)
+                    กรอกรหัสผ่าน (6 หลัก)
                   </label>
                   <div className={styles.lookupField}>
                     <span className={styles.lookupIconLeft} aria-hidden="true">
@@ -243,15 +245,14 @@ export default function Home({
                       type={showPassword ? "text" : "password"}
                       value={password}
                       onChange={(event) => {
-                        setPassword(
-                          event.target.value.replace(/\s/g, "").slice(0, 6),
-                        );
+                        setPassword(event.target.value.replace(/\D/g, "").slice(0, 6));
                         setErrorMessage("");
                         clearEmployeeLoginError();
                       }}
                       autoComplete="current-password"
+                      inputMode="numeric"
                       maxLength={6}
-                      aria-label="Password 6 characters"
+                      aria-label="Password 6 digits"
                       disabled={employeeLoginBusy}
                     />
                     <button
@@ -278,6 +279,20 @@ export default function Home({
                   {employeeLoginBusy ? "กำลังเข้าสู่ระบบ..." : "กดเข้าสู่ระบบ"}
                 </button>
               </form>
+
+            </div>
+            <div className={styles.returnButtonContainer}>
+
+              {returnSite ? (
+                <button
+                  type="button"
+                  className={styles.returnButton}
+                  onClick={returnToSource}
+                  title={`กลับไปยัง ${returnSite.origin}`}
+                >
+                  กลับหน้าหลัก
+                </button>
+              ) : null}
             </div>
           </section>
         </div>
