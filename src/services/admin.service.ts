@@ -16,11 +16,17 @@ const USER_MANAGER_EMPLOYEE_CODES = new Set(["680708", "622057", "632070", "6220
 
 export type AdminUserListOptions = {
   isActive?: boolean;
+  includeSuperAdmins?: boolean;
   registeredFacesFirst?: boolean;
   sortEmployeeCode?: boolean;
   sortBy?: "employee_code" | "face_status";
   sortDirection?: "asc" | "desc";
   faceStatus?: "all" | "registered" | "missing";
+};
+
+export type EmployeeSummaryOptions = {
+  activeOnly?: boolean;
+  includeSuperAdmins?: boolean;
 };
 
 function normalizeRoleName(roleName: string) {
@@ -111,9 +117,18 @@ export const adminService = {
     );
   },
 
-  async getEmployeeSummary(employeeCode: string) {
+  async getEmployeeSummary(
+    employeeCode: string,
+    options: EmployeeSummaryOptions = {},
+  ) {
+    const params = new URLSearchParams({
+      active_only: String(options.activeOnly ?? true),
+    });
+    const endpoint = options.includeSuperAdmins
+      ? "super-admin/employee-summary"
+      : "employee-summary";
     return parseResponse<EmployeeSummary>(
-      await fetch(`${API_URL}/employee-summary`, {
+      await fetch(`${API_URL}/${endpoint}?${params}`, {
         headers: adminHeaders(employeeCode, false),
         cache: "no-store",
       }),
@@ -149,7 +164,7 @@ export const adminService = {
       page: number;
       page_size: number;
     }>(
-      await fetch(`${API_URL}/admin/users?${params}`, {
+      await fetch(`${API_URL}/${options.includeSuperAdmins ? "super-admin/users" : "admin/users"}?${params}`, {
         headers: adminHeaders(adminCode, false),
         cache: "no-store",
       }),

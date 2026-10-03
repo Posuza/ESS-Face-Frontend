@@ -1,4 +1,8 @@
-import { adminService, type AdminUserListOptions } from "@/services/admin.service";
+import {
+  adminService,
+  type AdminUserListOptions,
+  type EmployeeSummaryOptions,
+} from "@/services/admin.service";
 import type { AdminEmployee, DirectoryEmployee, EmployeeSummary } from "@/types/api";
 
 import type { AppSliceCreator } from "../types";
@@ -14,6 +18,7 @@ export type AdminUsersSlice = {
   adminUsersTotal: number;
   employeeDirectoryTotal: number;
   employeeSummary: EmployeeSummary;
+  employeeSummaryOptions: EmployeeSummaryOptions;
   adminUsersAppliedSearch: string;
   employeeDirectoryAppliedSearch: string;
   adminUsersListOptions: AdminUserListOptions;
@@ -30,7 +35,7 @@ export type AdminUsersSlice = {
     search?: string,
     options?: AdminUserListOptions,
   ) => Promise<void>;
-  loadEmployeeSummary: () => Promise<void>;
+  loadEmployeeSummary: (options?: EmployeeSummaryOptions) => Promise<void>;
   setAdminUsersPage: (page: number) => void;
   setEmployeeDirectoryPage: (page: number) => void;
   applyAdminUsersSearch: (search: string) => Promise<void>;
@@ -47,7 +52,8 @@ export const createAdminUsersSlice: AppSliceCreator<AdminUsersSlice> = (set, get
   employeeDirectoryPage: 1,
   adminUsersTotal: 0,
   employeeDirectoryTotal: 0,
-  employeeSummary: { total: 0, registered: 0, missing: 0 },
+  employeeSummary: { total: 0, registered: 0, missing: 0, excluded: 0 },
+  employeeSummaryOptions: { activeOnly: true },
   adminUsersAppliedSearch: "",
   employeeDirectoryAppliedSearch: "",
   adminUsersListOptions: {},
@@ -134,12 +140,13 @@ export const createAdminUsersSlice: AppSliceCreator<AdminUsersSlice> = (set, get
     }
   },
 
-  async loadEmployeeSummary() {
+  async loadEmployeeSummary(options = get().employeeSummaryOptions) {
     const employeeCode = get().adminSession?.employee_code;
     if (!employeeCode) return;
 
+    set({ employeeSummaryOptions: options });
     try {
-      const employeeSummary = await adminService.getEmployeeSummary(employeeCode);
+      const employeeSummary = await adminService.getEmployeeSummary(employeeCode, options);
       set({ employeeSummary });
     } catch (error) {
       set({

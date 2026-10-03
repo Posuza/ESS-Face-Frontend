@@ -9,6 +9,7 @@ export type DirectoryEmployee = {
   employee_code: string;
   first_name: string;
   last_name: string;
+  is_active: boolean;
   has_face_profile: boolean;
   profile_image_updated_at: string | null;
 };
@@ -17,6 +18,7 @@ export type EmployeeSummary = {
   total: number;
   registered: number;
   missing: number;
+  excluded: number;
 };
 
 export type AdminEmployee = DirectoryEmployee & {
@@ -35,7 +37,6 @@ export type AdminEmployee = DirectoryEmployee & {
   position_id: number | null;
   routes_id: number | null;
   shift_id: number | null;
-  is_active: boolean;
   start_date: string | null;
   leave_date: string | null;
   face_profile_location: string | null;

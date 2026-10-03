@@ -9,6 +9,7 @@ import {
   faXmark,
 } from "@fortawesome/free-solid-svg-icons";
 import { TiArrowSortedDown, TiArrowSortedUp } from "react-icons/ti";
+import { IoIosCheckmarkCircle, IoIosCloseCircle } from "react-icons/io";
 import {
   FaUsers,
   FaUserCheck,
@@ -71,6 +72,25 @@ function SortIndicator({
   );
 }
 
+function EmployeeStatusIcon({ isActive }: { isActive: boolean }) {
+  const label = isActive ? "เปิดใช้งาน" : "ปิดใช้งาน";
+
+  return (
+    <span
+      className={isActive ? styles.active : styles.inactive}
+      role="img"
+      aria-label={label}
+      title={label}
+    >
+      {isActive ? (
+        <IoIosCheckmarkCircle aria-hidden="true" />
+      ) : (
+        <IoIosCloseCircle aria-hidden="true" />
+      )}
+    </span>
+  );
+}
+
 const savedAtFormatter = new Intl.DateTimeFormat("th-TH", {
   day: "numeric",
   month: "numeric",
@@ -116,6 +136,7 @@ export default function AdminUserManagement() {
   const [sortBy, setSortBy] = useState<SortField>("employee_code");
   const [sortDirection, setSortDirection] = useState<SortDirection>("asc");
   const [faceFilter, setFaceFilter] = useState<FaceFilter>("all");
+  const [showActiveOnly, setShowActiveOnly] = useState(true);
   const isUserManager = Boolean(session && canAccessAdminDashboard(session));
   const users: DirectoryEmployee[] = isUserManager ? adminUsers : directoryUsers;
   const page = isUserManager ? adminPage : directoryPage;
@@ -135,6 +156,7 @@ export default function AdminUserManagement() {
   const dashboardTotal = employeeSummary.total;
   const dashboardRegistered = employeeSummary.registered;
   const dashboardMissing = employeeSummary.missing;
+  const inactiveTotal = employeeSummary.excluded;
   const registeredPercentage = dashboardTotal > 0
     ? Math.round((dashboardRegistered / dashboardTotal) * 100)
     : 0;
@@ -149,7 +171,7 @@ export default function AdminUserManagement() {
     : 0;
 
   useEffect(() => {
-    void loadEmployeeSummary();
+    void loadEmployeeSummary({ activeOnly: true });
     if (isUserManager) {
       void load(1, "", ACTIVE_EMPLOYEE_LIST);
     } else {
@@ -199,6 +221,12 @@ export default function AdminUserManagement() {
     } else {
       void loadDirectory(1, appliedSearch, options);
     }
+  }
+
+  function handlePopulationToggle() {
+    const nextActiveOnly = !showActiveOnly;
+    setShowActiveOnly(nextActiveOnly);
+    void loadEmployeeSummary({ activeOnly: nextActiveOnly });
   }
 
   function clearSearch() {
@@ -309,6 +337,19 @@ export default function AdminUserManagement() {
               : "ข้อมูลการลงทะเบียนใบหน้าของคุณ"}
           </h2>
         </div>
+        {isUserManager ? (
+          <label className={styles.populationToggle}>
+            <span>{showActiveOnly ? "เปิดใช้งาน" : "ทั้งหมด"}</span>
+            <input
+              type="checkbox"
+              checked={showActiveOnly}
+              disabled={busy}
+              onChange={handlePopulationToggle}
+              aria-label="แสดงเฉพาะผู้ใช้งานที่เปิดใช้งาน"
+            />
+            <span className={styles.populationToggleTrack} aria-hidden="true" />
+          </label>
+        ) : null}
       </div>
 
       <div className={styles.summaryGrid} aria-label="สรุปข้อมูลพนักงาน">
@@ -474,14 +515,24 @@ export default function AdminUserManagement() {
 
         <p className={styles.filterSummary}>
           <span className={styles.filterSummaryDesktop}>
-            {isUserManager ? "พนักงานทั้งหมด" : "พนักงานที่เปิดใช้งานทั้งหมด"} {total} คน
+            {isUserManager ? "พนักงานทั้งหมด" : "พนักงานที่เปิดใช้งานทั้งหมด"}{" "}
+            {total}
+            {isUserManager ? (
+              <> / <span className={styles.filterSummaryInactive}>{inactiveTotal}</span></>
+            ) : null}{" "}
+            คน
           </span>
           <span className={styles.filterSummaryMobile}>
             <FaUserFriends
               className={styles.filterSummaryIcon}
               aria-hidden="true"
             />
-            <span>{total} คน</span>
+            <span>
+              {total}
+              {isUserManager ? (
+                <> / <span className={styles.filterSummaryInactive}>{inactiveTotal}</span></>
+              ) : null}{" "}
+              คน     </span>
           </span>
         </p>
       </div>
@@ -608,9 +659,7 @@ export default function AdminUserManagement() {
                     <strong className={styles.rowId}>{rowNumber}</strong>
                   </td>
 
-                  <td>
-                    <strong>{employee.employee_code}</strong>
-                  </td>
+                  <td><strong>{employee.employee_code}</strong></td>
 
                   <td>{employee.first_name}</td>
                   <td>{employee.last_name}</td>
@@ -623,12 +672,12 @@ export default function AdminUserManagement() {
                     <td>
                       <span
                         className={
-                          adminEmployee.is_active
-                            ? styles.active
-                            : styles.inactive
+                          employee.is_active
+                            ? styles.statusTextActive
+                            : styles.statusTextInactive
                         }
                       >
-                        {adminEmployee.is_active ? "เปิดใช้งาน" : "ปิดใช้งาน"}
+                        {employee.is_active ? "เปิดใช้งาน" : "ปิดใช้งาน"}
                       </span>
                     </td>
                   ) : null}
@@ -791,8 +840,13 @@ export default function AdminUserManagement() {
                   <td className={styles.mobileNoCell}>{rowNumber}</td>
 
                   <td className={styles.mobileEmployeeCell}>
-                    <span className={styles.mobileEmployeeCode}>
-                      {employee.employee_code}
+                    <span className={styles.mobileEmployeeCodeRow}>
+                      {isUserManager ? (
+                        <EmployeeStatusIcon isActive={employee.is_active} />
+                      ) : null}
+                      <span className={styles.mobileEmployeeCode}>
+                        {employee.employee_code}
+                      </span>
                     </span>
                     <span className={styles.mobileEmployeeName}>
                       {employee.first_name} {employee.last_name}

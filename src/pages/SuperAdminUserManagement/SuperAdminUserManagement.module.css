@@ -36,12 +36,14 @@
 
 .search {
   width: 100%;
-  min-height: 48px;
-  padding: 0.4rem;
+  min-height: 44px;
+  padding: 0;
 
   display: flex;
-  align-items: center;
-  gap: 0.4rem;
+  align-items: stretch;
+  gap: 0;
+
+  overflow: hidden;
 
   border: 1px solid rgba(2, 75, 118, 0.16);
   border-radius: 12px;
@@ -58,93 +60,108 @@
 }
 
 .searchContainer {
+  min-width: 0;
+  flex: 1 1 auto;
+
   display: flex;
   align-items: center;
-  gap: 0.4rem;
-  flex-grow: 1;
-  min-width: 0;
+  gap: 0.35rem;
+
+  padding: 0 10px 0 16px;
+  background: #ffffff;
 }
 
 .searchInput {
-  flex-grow: 1;
   min-width: 0;
-  height: 36px;
-
+  width: 100%;
+  height: 42px;
   padding: 0;
 
   border: 0;
   outline: 0;
 
   background: transparent;
-
   color: #1b2b4a;
 
   font: inherit;
-  font-size: 0.85rem;
+  font-size: 0.9rem;
   font-weight: 600;
 
   appearance: none;
   -webkit-appearance: none;
 }
 
+.searchInput::-webkit-search-cancel-button {
+  display: none;
+}
+
+.clearSearchButton {
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 0;
+
+  display: inline-grid;
+  flex: 0 0 auto;
+  place-items: center;
+
+  background: transparent;
+  color: rgba(2, 75, 118, 0.72);
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.clearSearchButton:focus-visible {
+  outline: 2px solid rgba(2, 75, 118, 0.45);
+  outline-offset: -2px;
+}
+
 .searchButton {
-  flex-grow: 0;
-  flex-shrink: 0;
+  flex: 0 0 auto;
   width: auto;
-  min-width: 96px;
-  height: 36px;
-  padding: 0 0.85rem;
-  margin-left: auto;
+  min-width: 112px;
+  min-height: 44px;
+  padding: 0 18px;
+  margin: 0;
 
   border: 0;
-  border-radius: 8px;
+  border-left: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 0;
 
-  background:
-    linear-gradient(
-      135deg,
-      var(--brand, #024b76),
-      #03699e
-    );
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  background: var(--brand, #024b76);
 
   color: #ffffff;
 
   font: inherit;
-  font-size: 0.85rem;
+  font-size: 0.9rem;
   font-weight: 800;
 
   cursor: pointer;
   white-space: nowrap;
 
-  box-shadow:
-    0 4px 10px rgba(2, 75, 118, 0.15);
+  box-shadow: none;
 
   transition:
-    transform 140ms ease,
-    box-shadow 160ms ease,
+    background 160ms ease,
     opacity 140ms ease;
 }
 
-@media (max-width: 600px) {
-  .search {
-    min-height: 40px;
-    padding: 0.25rem 0.35rem 0.25rem 0.6rem;
-    gap: 0.3rem;
-  }
+.searchButtonIcon {
+  display: none;
+  font-size: 18px;
+}
 
-  .searchContainer {
-    gap: 0.3rem;
-  }
+.searchButtonText {
+  display: inline;
+}
 
-  .searchInput,
-  .searchButton {
-    height: 30px;
-    font-size: 0.75rem;
-  }
-
-  .searchButton {
-    padding: 0 0.6rem;
-    min-width: 80px;
-  }
+.searchButton:hover:not(:disabled) {
+  background: var(--brandDark, #013b5d);
 }
 
 .search:focus-within {
@@ -153,14 +170,6 @@
   box-shadow:
     0 0 0 3px rgba(2, 75, 118, 0.09),
     0 10px 25px rgba(27, 43, 74, 0.08);
-}
-
-.search > svg {
-  justify-self: center;
-
-  color: rgba(2, 75, 118, 0.68);
-
-  font-size: 16px;
 }
 
 .search input::placeholder {
@@ -172,6 +181,151 @@
   opacity: 0.5;
   cursor: not-allowed;
   box-shadow: none;
+}
+
+
+/* Below lg: compact search button with icon only, like the reference design. */
+@media (max-width: 1023px) {
+  .search {
+    min-height: 42px;
+    border-radius: 11px;
+  }
+
+  .searchContainer {
+    padding-left: 14px;
+    padding-right: 8px;
+  }
+
+  .searchInput {
+    height: 40px;
+    font-size: 0.82rem;
+  }
+
+  .searchButton {
+    width: 48px;
+    min-width: 48px;
+    min-height: 42px;
+    padding: 0;
+  }
+
+  .searchButtonText {
+    display: none;
+  }
+
+  .searchButtonIcon {
+    display: block;
+  }
+}
+
+@media (max-width: 600px) {
+  .search {
+    min-height: 40px;
+    border-radius: 10px;
+  }
+
+  .searchContainer {
+    padding-left: 12px;
+    padding-right: 6px;
+  }
+
+  .searchInput {
+    height: 38px;
+    font-size: 0.75rem;
+  }
+
+  .searchButton {
+    width: 44px;
+    min-width: 44px;
+    min-height: 40px;
+  }
+
+  .searchButtonIcon {
+    font-size: 16px;
+  }
+
+  .clearSearchButton {
+    width: 28px;
+    height: 28px;
+    font-size: 12px;
+  }
+}
+
+.filterBar {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px 24px;
+}
+
+.faceFilters {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 8px 18px;
+  flex-wrap: wrap;
+}
+
+.faceFilters legend {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.faceFilterOption {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: rgba(27, 43, 74, 0.78);
+  font-size: 13px;
+  font-weight: 700;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.faceFilterOption input {
+  width: 15px;
+  height: 15px;
+  margin: 0;
+  accent-color: var(--brand, #024b76);
+  cursor: pointer;
+}
+
+.faceFilterOption input:disabled,
+.faceFilterOption input:disabled ~ * {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.filterSummary {
+  margin: 0 0 0 auto;
+  color: rgba(27, 43, 74, 0.58);
+  font-size: 12px;
+  font-weight: 700;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.filterSummaryIcon {
+  color: #0877b8;
+}
+
+.filterSummaryDesktop {
+  display: inline;
+}
+
+.filterSummaryMobile {
+  display: none;
 }
 
 .error,
@@ -229,41 +383,112 @@
 
 .tableWrap table {
   width: 100%;
-  min-width: 900px;
+  min-width: 1320px;
 
   border-collapse: separate;
   border-spacing: 0;
 
-  table-layout: auto;
+  table-layout: fixed;
+}
+
+.tableWrap .viewerTable {
+  min-width: 880px;
+}
+
+.viewerTable .sequenceColumn {
+  width: 6%;
+}
+
+.viewerTable .employeeCodeColumn {
+  width: 18%;
+}
+
+.viewerTable .firstNameColumn,
+.viewerTable .lastNameColumn {
+  width: 17%;
+}
+
+.viewerTable .faceResultColumn {
+  width: 20%;
+}
+
+.viewerTable .savedAtColumn {
+  width: 22%;
 }
 
 .tableWrap thead {
-  background:
-    linear-gradient(
-      180deg,
-      rgba(244, 248, 253, 0.99),
-      rgba(235, 242, 250, 0.98)
-    );
+  background: var(--brand, #024b76);
 }
 
 .tableWrap th {
-  padding: 14px 15px;
+  padding: 10px 8px;
 
   border-bottom:
-    1px solid rgba(2, 75, 118, 0.12);
+    1px solid rgba(255, 255, 255, 0.2);
 
-  color: rgba(27, 43, 74, 0.8);
+  color: #ffffff;
 
   font-size: 13px;
   font-weight: 900;
-  line-height: 1.3;
-  text-align: left;
+  line-height: 1.25;
+  text-align: center;
 
   white-space: nowrap;
 }
 
+.sortHeader {
+  width: 100%;
+  padding: 4px;
+  border: 0;
+  border-radius: 4px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  line-height: inherit;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.sortHeader:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.9);
+  outline-offset: 1px;
+}
+
+.sortHeader:disabled {
+  cursor: wait;
+  opacity: 0.72;
+}
+
+.sortIndicator {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  line-height: 0.65;
+}
+
+.sortArrowActive,
+.sortArrowInactive {
+  flex: 0 0 auto;
+  margin: -3px 0;
+  font-size: 15px;
+}
+
+.sortArrowActive {
+  opacity: 1;
+}
+
+.sortArrowInactive {
+  opacity: 0.35;
+}
+
 .tableWrap td {
-  padding: 14px 15px;
+  padding: 10px 15px;
 
   border-bottom:
     1px solid rgba(27, 43, 74, 0.07);
@@ -273,6 +498,7 @@
   font-size: 14px;
   font-weight: 600;
   line-height: 1.4;
+  text-align: center;
 
   vertical-align: middle;
 }
@@ -293,9 +519,48 @@
   border-bottom: 0;
 }
 
+.sequenceColumn {
+  width: 5%;
+}
+
+.employeeCodeColumn {
+  width: 11%;
+}
+
+.firstNameColumn {
+  width: 10%;
+}
+
+.lastNameColumn {
+  width: 10%;
+}
+
+.roleColumn {
+  width: 9%;
+}
+
+.statusColumn {
+  width: 10%;
+}
+
+.faceResultColumn {
+  width: 14%;
+}
+
+.imagePathColumn {
+  width: 15%;
+}
+
+.savedAtColumn {
+  width: 15%;
+}
+
+.actionColumn {
+  width: 6%;
+}
+
 .tableWrap td:nth-child(2) strong {
   display: block;
-  margin-bottom: 3px;
 
   color: #1b2b4a;
 
@@ -303,34 +568,7 @@
   font-weight: 900;
 }
 
-.tableWrap td:nth-child(2) span {
-  display: block;
-
-  color:
-    rgba(27, 43, 74, 0.58);
-
-  font-size: 13px;
-  font-weight: 600;
-}
-
-.tableWrap td:nth-child(5) {
-  max-width: 260px;
-
-  overflow: hidden;
-
-  color:
-    rgba(27, 43, 74, 0.62);
-
-  font-size: 13px;
-
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
 .idColumn {
-  width: 72px;
-  min-width: 72px;
-
   text-align: center !important;
 }
 
@@ -354,40 +592,51 @@
 
 .active,
 .inactive {
-  min-width: 75px;
-  min-height: 20px;
-  padding: 4px 6px;
-
   display: inline-flex;
   align-items: center;
   justify-content: center;
-
-  border-radius: 999px;
-
-  font-size: 12px;
-  font-weight: 900;
-  line-height: 1.2;
-
-  white-space: nowrap;
+  flex: 0 0 auto;
+  font-size: 22px;
+  line-height: 1;
 }
 
 .active {
-  border:
-    1px solid rgba(39, 174, 96, 0.2);
-
-  background:
-    rgba(39, 174, 96, 0.1);
-
   color: #178747;
 }
 
 .inactive {
-  border:
-    1px solid rgba(192, 0, 0, 0.16);
+  color: #b42318;
+}
 
-  background:
-    rgba(192, 0, 0, 0.07);
+.mobileEmployeeCodeRow {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
 
+.statusTextActive,
+.statusTextInactive {
+  min-width: 75px;
+  padding: 4px 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 900;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+.statusTextActive {
+  border: 1px solid rgba(39, 174, 96, 0.2);
+  background: rgba(39, 174, 96, 0.1);
+  color: #178747;
+}
+
+.statusTextInactive {
+  border: 1px solid rgba(192, 0, 0, 0.16);
+  background: rgba(192, 0, 0, 0.07);
   color: #b42318;
 }
 
@@ -450,23 +699,84 @@
   box-shadow: 0 8px 18px rgba(231, 76, 60, 0.14);
 }
 
+.faceStatus {
+  width: 88px;
+  min-height: 26px;
+  padding: 2px 6px;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+.faceStatusRegistered {
+  border-color: #9ddbb7;
+  background: #ddf5e7;
+  color: #176b3a;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.45);
+}
+
+.faceStatusMissing {
+  border-color: transparent;
+  background: transparent;
+  color: #cf352b;
+}
+
+.imagePath {
+  overflow: hidden;
+  color: rgba(17, 24, 39, 0.62) !important;
+  font-size: 12px !important;
+  font-weight: 500 !important;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.savedAt {
+  overflow: hidden;
+  color: rgba(17, 24, 39, 0.62);
+  font-size: 12px !important;
+  font-weight: 500 !important;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 @media (max-width: 600px) {
-  .searchButton {
-    padding: 0.125rem;
-    font-size: 0.7rem;
+  .clearSearchButton {
+    width: 28px;
+    height: 28px;
+  }
+
+  .filterBar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+
+  .faceFilters {
+    width: 100%;
+    justify-content: flex-start;
+    gap: 8px 12px;
+  }
+
+  .faceFilterOption {
+    font-size: 12px;
+  }
+
+  .filterSummary {
+    width: 100%;
+    margin: 0;
+    text-align: right;
+    align-self: flex-end;
+    font-size: 12px;
   }
 }
 
-.searchButton:hover:not(:disabled) {
-  transform: translateY(-1px);
-
-  box-shadow:
-    0 10px 20px rgba(2, 75, 118, 0.26);
-}
-
-.searchButton:active:not(:disabled) {
-  transform: translateY(0);
-}
 
 .actions button:focus-visible {
   outline:
@@ -775,41 +1085,41 @@
     font-size: 21px;
   }
 
-  .search {
-    padding:
-      0.25rem 0.35rem 0.25rem 0.6rem;
-  }
-
-  .searchButton {
-    width: auto;
-    min-width: 80px;
-  }
 
   .tableWrap {
     border-radius: 8px;
   }
 
+  /* Keep the admin table comfortably spaced on small screens.
+     It scrolls horizontally instead of squeezing status/face columns together. */
   .tableWrap table {
-    min-width: 750px;
+    min-width: 1180px;
+  }
+
+  .tableWrap .viewerTable {
+    min-width: 820px;
   }
 
   .tableWrap th,
   .tableWrap td {
     padding: 8px 10px;
-    font-size: 12px;
-  }
-
-  .tableWrap td:nth-child(2) strong {
     font-size: 13px;
   }
 
-  .tableWrap td:nth-child(2) span {
-    font-size: 11px;
+  .tableWrap th {
+    font-size: 10px;
+  }
+
+  .tableWrap td {
+    padding-block: 6px;
+  }
+
+  .tableWrap td:nth-child(2) strong {
+    font-size: 14px;
   }
 
   .idColumn {
-    width: 44px;
-    min-width: 44px;
+    text-align: center !important;
   }
 
   .actions {
@@ -833,9 +1143,13 @@
     max-width: 120px;
   }
 
-  .tableWrap td:nth-child(5) {
-    max-width: 140px;
-    font-size: 11px;
+  .faceStatus {
+    width: 84px;
+    font-size: 10px;
+  }
+
+  .savedAt {
+    font-size: 10px !important;
   }
 
   .overlay {
@@ -853,5 +1167,2328 @@
 
   .modalActions {
     grid-template-columns: 1fr;
+  }
+}
+
+
+/* =========================================================
+   Dashboard summary cards — reference-style redesign
+========================================================= */
+.page {
+  gap: 14px;
+}
+
+.heading {
+  align-items: center;
+}
+
+.heading h2 {
+  font-size: 18px;
+  letter-spacing: 0;
+}
+
+.heading p {
+  margin-top: 4px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.summaryGrid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.summaryCard {
+  --summary-accent: #0877b8;
+  --summary-track: #d7ebf8;
+  --summary-surface: #f9fbfd;
+
+  min-width: 0;
+  min-height: 108px;
+  padding: 14px 18px;
+
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 72px;
+  align-items: center;
+  gap: 14px;
+
+  border: 1px solid color-mix(in srgb, var(--summary-accent) 34%, white);
+  border-radius: 18px;
+  background: var(--summary-surface);
+  color: #1b2b4a;
+
+  font: inherit;
+  text-align: left;
+  cursor: default;
+
+  box-shadow: 0 4px 12px rgba(27, 43, 74, 0.035);
+}
+
+.summaryCardAll {
+  --summary-accent: #247fb8;
+  --summary-track: #dceef9;
+  --summary-surface: #f7fbff;
+}
+
+.summaryCardRegistered {
+  --summary-accent: #15945c;
+  --summary-track: #d8efe3;
+  --summary-surface: #f7fcf9;
+}
+
+.summaryCardMissing {
+  --summary-accent: #ef971f;
+  --summary-track: #fce9c9;
+  --summary-surface: #fffaf4;
+}
+
+.summaryText {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  text-align: center;
+}
+
+.summaryIcon {
+  width: 68px;
+  height: 52px;
+  display: grid;
+  place-items: center;
+  color: var(--summary-accent);
+  font-size: 40px;
+}
+
+.summaryIconBlue {
+  color: var(--summary-accent);
+}
+
+.summaryIconGreen {
+  color: var(--summary-accent);
+}
+
+.summaryIconOrange {
+  color: var(--summary-accent);
+}
+
+.summaryLabel {
+  color: #1b2b4a;
+  font-size: clamp(15px, 1vw, 17px);
+  font-weight: 900;
+  line-height: 1.3;
+}
+
+.summaryCountRing {
+  position: relative;
+  width: 72px;
+  height: 72px;
+  aspect-ratio: 1;
+  border: 0.75px solid color-mix(in srgb, var(--summary-accent) 22%, var(--summary-surface));
+  border-radius: 50%;
+  box-sizing: border-box;
+  display: grid;
+  place-content: center;
+  text-align: center;
+  color: var(--summary-accent);
+  background: linear-gradient(
+    145deg,
+    color-mix(in srgb, var(--summary-accent) 30%, var(--summary-surface)) 0%,
+    color-mix(in srgb, var(--summary-accent) 18%, var(--summary-surface)) 52%,
+    color-mix(in srgb, var(--summary-accent) 8%, var(--summary-surface)) 100%
+  );
+  box-shadow:
+    inset 7px 7px 14px color-mix(in srgb, var(--summary-accent) 22%, transparent),
+    inset -7px -7px 14px rgba(255, 255, 255, 0.5),
+    5px 7px 13px rgba(27, 43, 74, 0.045);
+}
+
+.summaryCountRing::before {
+  content: "";
+  position: absolute;
+  inset: 8.2%;
+  z-index: 0;
+  border: 1.5px solid color-mix(in srgb, var(--summary-accent) 32%, var(--summary-surface));
+  border-radius: 50%;
+  background: var(--summary-surface);
+  box-shadow:
+    7px 9px 15px rgba(27, 43, 74, 0.11),
+    -4px -4px 9px rgba(255, 255, 255, 0.68),
+    inset 1px 1px 2px rgba(255, 255, 255, 0.55),
+    inset -1px -1px 2px color-mix(in srgb, var(--summary-accent) 10%, transparent);
+}
+
+.summaryCountRing::after {
+  content: none;
+}
+
+.summaryRingSvg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  overflow: visible;
+  transform: rotate(-90deg);
+  filter: drop-shadow(0 2px 2px rgba(27, 43, 74, 0.08));
+}
+
+.summaryRingValue {
+  fill: none;
+  stroke-width: 9;
+}
+
+.summaryRingValue {
+  stroke: var(--summary-accent);
+  stroke-linecap: round;
+}
+
+.summaryCountInner {
+  position: relative;
+  z-index: 3;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+}
+
+.summaryCountRing strong {
+  display: block;
+  color: #1b2b4a;
+  font-size: 20px;
+  font-weight: 950;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  transform: translateY(-1px);
+}
+
+.summaryCountRing small {
+  display: block;
+  margin-top: 3px;
+  color: rgba(27, 43, 74, 0.55);
+  font-size: 9px;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.summaryCountBlue { color: #0877b8; }
+.summaryCountGreen { color: #12a06a; }
+.summaryCountOrange { color: #e98b00; }
+
+/* Compact segmented filters like the reference */
+.faceFilters {
+  width: fit-content;
+  max-width: 100%;
+  gap: 0;
+  padding: 2px 3px;
+  border: 1px solid rgba(2, 75, 118, 0.1);
+  border-radius: 999px;
+  display: inline-flex;
+  background: #ffffff;
+  box-shadow: 0 4px 12px rgba(27, 43, 74, 0.06);
+}
+
+.faceFilterOption {
+  position: relative;
+  width: auto;
+  min-width: 0;
+  min-height: 30px;
+  padding-inline: 12px;
+  flex: 0 0 auto;
+  margin-inline: 0;
+  border-radius: 999px;
+  justify-content: center;
+  gap: 0;
+  font-size: 12px;
+  transition:
+    background 140ms ease,
+    color 140ms ease,
+    box-shadow 140ms ease;
+}
+
+.faceFilterOption + .faceFilterOption::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 1px;
+  height: 18px;
+  background: rgba(27, 43, 74, 0.15);
+  transform: translateY(-50%);
+}
+
+.faceFilterOption input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.faceFilterOption > span {
+  padding-inline: 4px;
+}
+
+.filterDot {
+  display: none;
+}
+
+.faceFilterOption:has(input:checked) {
+  background: var(--brand, #024b76);
+  color: #ffffff;
+  box-shadow:
+    0 4px 10px rgba(2, 75, 118, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.28);
+}
+
+.faceFilterOption:has(input:checked)::before,
+.faceFilterOption:has(input:checked) + .faceFilterOption::before {
+  opacity: 0;
+}
+
+.search {
+  border-radius: 11px;
+  box-shadow: 0 4px 16px rgba(27, 43, 74, 0.045);
+}
+
+.tableWrap {
+  border-radius: 11px;
+  box-shadow: 0 8px 24px rgba(27, 43, 74, 0.06);
+}
+
+.tableWrap thead {
+  background: var(--brand, #024b76);
+}
+
+.tableWrap tbody tr:hover {
+  background: #f8fbfe;
+}
+
+/* Tablet */
+@media (max-width: 1023px) {
+  .summaryGrid {
+    gap: 10px;
+  }
+
+  .summaryCard {
+    min-height: 92px;
+    padding: 12px 14px;
+    grid-template-columns: minmax(0, 1fr) 72px;
+    gap: 10px;
+    border-radius: 15px;
+  }
+
+  .summaryIcon {
+    width: 46px;
+    height: 34px;
+    font-size: 28px;
+  }
+
+  .summaryLabel {
+    font-size: 15px;
+  }
+
+  .summaryCountRing {
+    width: 72px;
+    height: 72px;
+  }
+
+  .summaryCountInner {
+    width: 56px;
+    height: 56px;
+  }
+
+  .summaryCountRing strong {
+    font-size: 17px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 700px) {
+  .page {
+    gap: 11px;
+  }
+
+  .heading {
+    align-items: flex-start;
+    justify-content: flex-start;
+    margin-top: 6px;
+    text-align: left;
+  }
+
+  .heading > div {
+    width: 100%;
+  }
+
+  .heading h2 {
+    font-size: 18px;
+    text-align: left;
+  }
+
+  .heading p {
+    font-size: 11px;
+    text-align: left;
+  }
+
+  .summaryGrid {
+    width: 100%;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    align-items: start;
+    gap: 2px;
+    padding: 4px 0;
+    border: 1px solid rgba(2, 75, 118, 0.16);
+    border-radius: 11px;
+    background: #ffffff;
+    box-shadow: 0 4px 16px rgba(27, 43, 74, 0.045);
+  }
+
+  .summaryCard {
+    width: 100%;
+    min-height: 112px;
+    padding-block: 2px;
+    padding-inline: 0;
+    border: 0;
+    border-radius: 0;
+    grid-template-columns: 1fr;
+    grid-template-rows: 92px auto;
+    justify-items: center;
+    align-items: center;
+    gap: 6px;
+    background: transparent;
+    text-align: center;
+    box-shadow: none;
+  }
+
+  .summaryText {
+    grid-row: 2;
+    align-items: center;
+    align-self: start;
+    gap: 0;
+  }
+
+  .summaryIcon {
+    display: none;
+  }
+
+  .summaryIcon svg {
+    display: none;
+  }
+
+  .summaryLabel {
+    font-size: 12px;
+    line-height: 1.25;
+    text-align: center;
+    white-space: normal;
+  }
+
+  .summaryCountRing {
+    grid-row: 1;
+    width: min(90px, 100%);
+    height: auto;
+  }
+
+  .summaryCountInner {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+  }
+
+  .summaryCountRing::before {
+    background: #ffffff;
+  }
+
+  .summaryRingValue {
+    stroke-width: 7;
+  }
+
+  .summaryCountRing strong {
+    font-size: 20px;
+  }
+
+  .filterBar {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 7px;
+  }
+
+  .faceFilters {
+    width: fit-content;
+    max-width: calc(100% - 52px);
+    flex: 0 1 auto;
+    display: inline-flex;
+    padding: 1px 2px;
+    border-radius: 999px;
+    gap: 0;
+  }
+
+  .faceFilterOption {
+    width: auto;
+    min-width: 0;
+    min-height: 26px;
+    padding-inline: 8px;
+    justify-content: center;
+    border-radius: 999px;
+    font-size: 11px;
+  }
+
+  .faceFilterOption:first-of-type {
+    border-radius: 999px;
+  }
+
+  .faceFilterOption:last-of-type {
+    border-radius: 999px;
+  }
+
+  .filterSummary {
+    width: auto;
+    margin-left: 0;
+    flex: 0 0 auto;
+    font-size: 10px;
+    text-align: right;
+  }
+
+  .filterSummaryDesktop {
+    display: none;
+  }
+
+  .filterSummaryMobile {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    line-height: 1;
+  }
+
+  .filterSummaryIcon {
+    width: 13px;
+    height: 13px;
+    font-size: 13px;
+  }
+
+  .searchButton {
+    width: 44px;
+    min-width: 44px;
+  }
+
+  .pagination {
+    justify-content: center;
+    gap: 6px;
+  }
+
+  .pagination button {
+    flex: 0 1 100px;
+  }
+}
+
+@media (max-width: 390px) {
+  .summaryCard {
+    min-height: 108px;
+    padding-inline: 0;
+    grid-template-rows: 88px auto;
+  }
+
+  .summaryCountRing {
+    width: min(86px, 100%);
+    height: auto;
+  }
+
+  .summaryCountInner {
+    width: 100%;
+    height: 100%;
+  }
+
+  .summaryLabel {
+    font-size: 11px;
+  }
+
+  .faceFilterOption {
+    font-size: 10px;
+    padding-inline: 6px;
+  }
+}
+
+/* =========================================================
+   Responsive employee tables
+   MD/LG/XL = original full table
+   XS/SM    = compact 3-column table (+ action for manager)
+========================================================= */
+
+.desktopTable {
+  display: table;
+}
+
+.mobileTable {
+  display: none;
+}
+
+/* Keep the desktop table exactly as the existing table on md/lg. */
+@media (min-width: 701px) {
+  .desktopTable {
+    display: table;
+  }
+
+  .mobileTable {
+    display: none !important;
+  }
+}
+
+/* XS / SM compact table */
+@media (max-width: 700px) {
+  .desktopTable {
+    display: none !important;
+  }
+
+  .tableWrap {
+    overflow-x: hidden;
+  }
+
+  .tableWrap .mobileTable {
+    display: table;
+    width: 100%;
+    min-width: 0;
+    table-layout: fixed;
+    border-collapse: separate;
+    border-spacing: 0;
+  }
+
+  .mobileNoColumn {
+    width: 11%;
+  }
+
+  .mobileEmployeeColumn {
+    width: 39%;
+  }
+
+  .mobileFaceColumn {
+    width: 34%;
+  }
+
+  .mobileActionColumn {
+    width: 16%;
+  }
+
+  .mobileTable th {
+    padding: 8px 5px;
+    background: var(--brand, #024b76);
+    color: #fff;
+    font-size: 10px;
+    font-weight: 600;
+    line-height: 1.2;
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  .mobileTable td {
+    min-width: 0;
+    padding: 8px 5px;
+    border-bottom: 1px solid rgba(27, 43, 74, 0.07);
+    background: #fff;
+    color: #1b2b4a;
+    font-size: 10px;
+    font-weight: 400;
+    line-height: 1.3;
+    text-align: center;
+    vertical-align: middle;
+  }
+
+  .mobileTable tbody tr:last-child td {
+    border-bottom: 0;
+  }
+
+  .mobileNoCell {
+    color: rgba(27, 43, 74, 0.68) !important;
+    font-size: 10px !important;
+    font-weight: 400 !important;
+  }
+
+  .mobileEmployeeCell {
+    padding-left: 8px !important;
+    text-align: left !important;
+  }
+
+  .mobileEmployeeCode,
+  .mobileEmployeeName,
+  .mobileFaceRegistered,
+  .mobileFaceMissing,
+  .mobileSavedAt {
+    display: block;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* first line: employee ID */
+  .mobileEmployeeCode {
+    color: #1b2b4a;
+    font-size: 10.5px;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  /* second line: first + last name */
+  .mobileEmployeeName {
+    margin-top: 2px;
+    color: rgba(27, 43, 74, 0.62);
+    font-size: 9.5px;
+    font-weight: 400;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+
+  .mobileFaceCell {
+    text-align: center !important;
+  }
+
+  /* first line: finished / pending */
+  .mobileFaceRegistered,
+  .mobileFaceMissing {
+    font-size: 9.5px;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  .mobileFaceRegistered {
+    color: #178747;
+  }
+
+  .mobileFaceMissing {
+    color: #c0392b;
+  }
+
+  /* second line: saved timestamp */
+  .mobileSavedAt {
+    margin-top: 3px;
+    color: rgba(27, 43, 74, 0.5);
+    font-size: 8.5px;
+    font-weight: 400;
+    line-height: 1.2;
+    white-space: nowrap;
+  }
+
+  .mobileActionCell {
+    padding-inline: 3px !important;
+  }
+
+  .mobileActionCell button {
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    border-radius: 50%;
+    display: inline-grid;
+    place-items: center;
+    font-size: 12px;
+  }
+
+  .mobileEmpty {
+    padding: 24px 8px !important;
+    color: rgba(27, 43, 74, 0.48) !important;
+    font-size: 10px !important;
+    font-weight: 400 !important;
+    text-align: center !important;
+  }
+}
+
+@media (max-width: 390px) {
+  .mobileTable th {
+    padding: 7px 3px;
+    font-size: 9px;
+  }
+
+  .mobileTable td {
+    padding: 7px 3px;
+    font-size: 9px;
+  }
+
+  .mobileEmployeeCode {
+    font-size: 9.5px;
+  }
+
+  .mobileEmployeeName,
+  .mobileFaceRegistered,
+  .mobileFaceMissing {
+    font-size: 8.5px;
+  }
+
+  .mobileSavedAt {
+    font-size: 7.5px;
+  }
+
+  .mobileActionCell button {
+    width: 28px;
+    height: 28px;
+    font-size: 11px;
+  }
+}
+
+
+/* =========================================================
+   Mobile table readability refinement
+   - slightly larger text
+   - left aligned headers
+   - status shown as a soft pill
+   - status content aligned top-left
+========================================================= */
+@media (max-width: 700px) {
+  .mobileTable th {
+    padding: 9px 8px;
+    font-size: 11px;
+    font-weight: 600;
+    text-align: left;
+    vertical-align: middle;
+  }
+
+  .mobileTable th:first-child {
+    text-align: center;
+  }
+
+  .mobileTable td {
+    padding: 10px 8px;
+    font-size: 11px;
+    font-weight: 400;
+  }
+
+  .mobileNoCell {
+    font-size: 11px !important;
+  }
+
+  .mobileEmployeeCode {
+    font-size: 11.5px;
+    font-weight: 600;
+  }
+
+  .mobileEmployeeName {
+    margin-top: 3px;
+    font-size: 10.5px;
+    line-height: 1.35;
+  }
+
+  .mobileFaceCell {
+    text-align: left !important;
+    vertical-align: top !important;
+  }
+
+  .mobileFaceRegistered,
+  .mobileFaceMissing {
+    width: fit-content;
+    max-width: 100%;
+    min-height: 24px;
+    padding: 4px 8px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    border-radius: 999px;
+
+    font-size: 10.5px;
+    font-weight: 600;
+    line-height: 1.15;
+    white-space: nowrap;
+  }
+
+  .mobileFaceRegistered {
+    border: 1px solid rgba(39, 174, 96, 0.2);
+    background: rgba(39, 174, 96, 0.1);
+    color: #178747;
+  }
+
+  .mobileFaceMissing {
+    border: 1px solid rgba(231, 76, 60, 0.16);
+    background: rgba(231, 76, 60, 0.08);
+    color: #c0392b;
+  }
+
+  .mobileSavedAt {
+    margin-top: 5px;
+    font-size: 9.5px;
+    line-height: 1.25;
+    text-align: left;
+    white-space: normal;
+  }
+
+  .mobileActionCell {
+    vertical-align: top !important;
+    padding-top: 9px !important;
+  }
+}
+
+@media (max-width: 390px) {
+  .mobileTable th {
+    padding: 8px 6px;
+    font-size: 10px;
+  }
+
+  .mobileTable td {
+    padding: 9px 6px;
+    font-size: 10px;
+  }
+
+  .mobileEmployeeCode {
+    font-size: 10.5px;
+  }
+
+  .mobileEmployeeName {
+    font-size: 9.5px;
+  }
+
+  .mobileFaceRegistered,
+  .mobileFaceMissing {
+    min-height: 22px;
+    padding: 3px 7px;
+    font-size: 9.5px;
+  }
+
+  .mobileSavedAt {
+    font-size: 8.8px;
+  }
+}
+
+
+/* =========================================================
+   SM/XS table density refinement
+   - larger header/body text
+   - tighter vertical row padding
+   - smaller table corner radius
+========================================================= */
+@media (max-width: 700px) {
+  .tableWrap {
+    border-radius: 6px;
+  }
+
+  .mobileTable th {
+    padding: 7px 8px;
+    font-size: 12px;
+    line-height: 1.15;
+  }
+
+  .mobileTable td {
+    padding: 6px 8px;
+    font-size: 11.5px;
+    line-height: 1.22;
+  }
+
+  .mobileNoCell {
+    font-size: 11.5px !important;
+  }
+
+  .mobileEmployeeCode {
+    font-size: 12px;
+    line-height: 1.15;
+  }
+
+  .mobileEmployeeName {
+    margin-top: 2px;
+    font-size: 11px;
+    line-height: 1.2;
+  }
+
+  .mobileFaceRegistered,
+  .mobileFaceMissing {
+    min-height: 22px;
+    padding: 3px 8px;
+    font-size: 10.8px;
+    line-height: 1.05;
+  }
+
+  .mobileSavedAt {
+    margin-top: 3px;
+    font-size: 10px;
+    line-height: 1.15;
+  }
+
+  .mobileActionCell {
+    padding-top: 5px !important;
+    padding-bottom: 5px !important;
+  }
+
+  .mobileActionCell button {
+    width: 28px;
+    height: 28px;
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 390px) {
+  .tableWrap {
+    border-radius: 5px;
+  }
+
+  .mobileTable th {
+    padding: 6px 6px;
+    font-size: 11px;
+  }
+
+  .mobileTable td {
+    padding: 5px 6px;
+    font-size: 10.5px;
+  }
+
+  .mobileEmployeeCode {
+    font-size: 11px;
+  }
+
+  .mobileEmployeeName {
+    font-size: 10px;
+  }
+
+  .mobileFaceRegistered,
+  .mobileFaceMissing {
+    min-height: 20px;
+    padding: 3px 6px;
+    font-size: 9.8px;
+  }
+
+  .mobileSavedAt {
+    font-size: 9px;
+  }
+}
+
+
+/* =========================================================
+   SM/XS table spacing adjustment
+   Slightly increase header/body vertical padding from v2
+========================================================= */
+@media (max-width: 700px) {
+  .mobileTable th {
+    padding-top: 9px;
+    padding-bottom: 9px;
+  }
+
+  .mobileTable td {
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
+
+  .mobileActionCell {
+    padding-top: 7px !important;
+    padding-bottom: 7px !important;
+  }
+}
+
+@media (max-width: 390px) {
+  .mobileTable th {
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
+
+  .mobileTable td {
+    padding-top: 7px;
+    padding-bottom: 7px;
+  }
+}
+
+
+/* =========================================================
+   SM/XS table typography increase
+   Increase readable text size without changing desktop table
+========================================================= */
+@media (max-width: 700px) {
+  .mobileTable th {
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  .mobileTable td {
+    font-size: 12.5px;
+  }
+
+  .mobileNoCell {
+    font-size: 12.5px !important;
+  }
+
+  .mobileEmployeeCode {
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  .mobileEmployeeName {
+    font-size: 12px;
+  }
+
+  .mobileFaceRegistered,
+  .mobileFaceMissing {
+    font-size: 11.5px;
+  }
+
+  .mobileSavedAt {
+    font-size: 10.8px;
+  }
+
+  .mobileActionCell button {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 390px) {
+  .mobileTable th {
+    font-size: 12px;
+  }
+
+  .mobileTable td {
+    font-size: 11.5px;
+  }
+
+  .mobileNoCell {
+    font-size: 11.5px !important;
+  }
+
+  .mobileEmployeeCode {
+    font-size: 12px;
+  }
+
+  .mobileEmployeeName {
+    font-size: 11px;
+  }
+
+  .mobileFaceRegistered,
+  .mobileFaceMissing {
+    font-size: 10.5px;
+  }
+
+  .mobileSavedAt {
+    font-size: 9.8px;
+  }
+}
+
+
+/* =========================================================
+   SM table typography — larger readable version
+========================================================= */
+@media (max-width: 700px) {
+  .mobileTable th {
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  .mobileTable td {
+    font-size: 14px;
+    line-height: 1.28;
+  }
+
+  .mobileNoCell {
+    font-size: 14px !important;
+  }
+
+  .mobileEmployeeCode {
+    font-size: 14.5px;
+    font-weight: 600;
+  }
+
+  .mobileEmployeeName {
+    font-size: 13.5px;
+    line-height: 1.25;
+  }
+
+  .mobileFaceRegistered,
+  .mobileFaceMissing {
+    font-size: 13px;
+  }
+
+  .mobileSavedAt {
+    font-size: 12px;
+  }
+
+  .mobileActionCell button {
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 390px) {
+  .mobileTable th {
+    font-size: 13px;
+  }
+
+  .mobileTable td {
+    font-size: 12.5px;
+  }
+
+  .mobileNoCell {
+    font-size: 12.5px !important;
+  }
+
+  .mobileEmployeeCode {
+    font-size: 13px;
+  }
+
+  .mobileEmployeeName {
+    font-size: 12px;
+  }
+
+  .mobileFaceRegistered,
+  .mobileFaceMissing {
+    font-size: 11.5px;
+  }
+
+  .mobileSavedAt {
+    font-size: 10.5px;
+  }
+}
+
+
+/* =========================================================
+   SM table typography — extra large readable version
+========================================================= */
+@media (max-width: 700px) {
+  .mobileTable th {
+    font-size: 17px;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  .mobileTable td {
+    font-size: 15.5px;
+    line-height: 1.3;
+  }
+
+  .mobileNoCell {
+    font-size: 15.5px !important;
+  }
+
+  .mobileEmployeeCode {
+    font-size: 16px;
+    font-weight: 600;
+  }
+
+  .mobileEmployeeName {
+    font-size: 14.5px;
+    line-height: 1.28;
+  }
+
+  .mobileFaceRegistered,
+  .mobileFaceMissing {
+    font-size: 14px;
+  }
+
+  .mobileSavedAt {
+    font-size: 13px;
+  }
+
+  .mobileActionCell button {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 390px) {
+  .mobileTable th {
+    font-size: 14px;
+  }
+
+  .mobileTable td {
+    font-size: 13.5px;
+  }
+
+  .mobileNoCell {
+    font-size: 13.5px !important;
+  }
+
+  .mobileEmployeeCode {
+    font-size: 14px;
+  }
+
+  .mobileEmployeeName {
+    font-size: 13px;
+  }
+
+  .mobileFaceRegistered,
+  .mobileFaceMissing {
+    font-size: 12.5px;
+  }
+
+  .mobileSavedAt {
+    font-size: 11.5px;
+  }
+}
+
+
+/* =========================================================
+   SM filter / summary bar typography increase
+   Matches the larger SM table typography
+========================================================= */
+@media (max-width: 700px) {
+  .faceFilterOption {
+    min-height: 34px;
+    padding-inline: 12px;
+    font-size: 14px;
+    font-weight: 700;
+  }
+
+  .faceFilterOption > span {
+    padding-inline: 5px;
+  }
+
+  .filterSummary {
+    font-size: 13.5px;
+    font-weight: 700;
+  }
+
+  .filterSummaryMobile {
+    gap: 6px;
+  }
+
+  .filterSummaryIcon {
+    width: 16px;
+    height: 16px;
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 390px) {
+  .faceFilterOption {
+    min-height: 32px;
+    padding-inline: 9px;
+    font-size: 12.5px;
+  }
+
+  .filterSummary {
+    font-size: 12px;
+  }
+
+  .filterSummaryIcon {
+    width: 14px;
+    height: 14px;
+    font-size: 14px;
+  }
+}
+
+
+/* =========================================================
+   XS filter bar fit fix
+   Prevent segmented filters from wrapping/colliding on narrow phones
+========================================================= */
+@media (max-width: 390px) {
+  .filterBar {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 5px;
+  }
+
+  .faceFilters {
+    width: auto;
+    max-width: calc(100% - 58px);
+    flex: 1 1 auto;
+    display: inline-flex;
+    flex-wrap: nowrap;
+    overflow: hidden;
+    padding: 1px 2px;
+  }
+
+  .faceFilterOption {
+    min-height: 28px;
+    padding-inline: 6px;
+    font-size: 10.5px;
+    font-weight: 700;
+    line-height: 1;
+    flex: 1 1 auto;
+  }
+
+  .faceFilterOption > span {
+    padding-inline: 2px;
+    white-space: nowrap;
+  }
+
+  .filterSummary {
+    flex: 0 0 auto;
+    width: auto;
+    margin: 0;
+    font-size: 10.5px;
+    white-space: nowrap;
+  }
+
+  .filterSummaryMobile {
+    gap: 4px;
+  }
+
+  .filterSummaryIcon {
+    width: 12px;
+    height: 12px;
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 340px) {
+  .faceFilters {
+    max-width: calc(100% - 52px);
+  }
+
+  .faceFilterOption {
+    min-height: 26px;
+    padding-inline: 4px;
+    font-size: 9.5px;
+  }
+
+  .filterSummary {
+    font-size: 9.5px;
+  }
+
+  .filterSummaryIcon {
+    width: 11px;
+    height: 11px;
+    font-size: 11px;
+  }
+}
+
+
+/* =========================================================
+   Table header column separators
+   Add subtle left/right borders for clearer header grouping
+   Applies to LG / MD / SM, including compact mobile table.
+========================================================= */
+
+/* Full table: MD / LG / XL */
+@media (min-width: 701px) {
+  .tableWrap thead th {
+    position: relative;
+    border-right: 1px solid rgba(255, 255, 255, 0.18);
+  }
+
+  .tableWrap thead th:first-child {
+    border-left: 1px solid rgba(255, 255, 255, 0.12);
+  }
+
+  .tableWrap thead th:last-child {
+    border-right: 0;
+  }
+}
+
+/* Compact SM / XS table */
+@media (max-width: 700px) {
+  .mobileTable thead th {
+    border-right: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .mobileTable thead th:first-child {
+    border-left: 1px solid rgba(255, 255, 255, 0.12);
+  }
+
+  .mobileTable thead th:last-child {
+    border-right: 0;
+  }
+}
+
+
+/* =========================================================
+   SM table body typography — slightly smaller and lighter
+========================================================= */
+@media (max-width: 700px) {
+  .mobileTable td {
+    font-size: 14.5px;
+    font-weight: 400;
+  }
+
+  .mobileNoCell {
+    font-size: 14.5px !important;
+    font-weight: 400 !important;
+  }
+
+  .mobileEmployeeCode {
+    font-size: 15px;
+    font-weight: 500;
+  }
+
+  .mobileEmployeeName {
+    font-size: 13.5px;
+    font-weight: 400;
+  }
+
+  .mobileFaceRegistered,
+  .mobileFaceMissing {
+    font-size: 13px;
+    font-weight: 500;
+  }
+
+  .mobileSavedAt {
+    font-size: 12px;
+    font-weight: 400;
+  }
+}
+
+@media (max-width: 390px) {
+  .mobileTable td {
+    font-size: 13px;
+    font-weight: 400;
+  }
+
+  .mobileNoCell {
+    font-size: 13px !important;
+    font-weight: 400 !important;
+  }
+
+  .mobileEmployeeCode {
+    font-size: 13.5px;
+    font-weight: 500;
+  }
+
+  .mobileEmployeeName {
+    font-size: 12.5px;
+    font-weight: 400;
+  }
+
+  .mobileFaceRegistered,
+  .mobileFaceMissing {
+    font-size: 12px;
+    font-weight: 500;
+  }
+
+  .mobileSavedAt {
+    font-size: 11px;
+    font-weight: 400;
+  }
+}
+
+
+/* =========================================================
+   Employee count indicator — larger on SM / MD
+   Increases the people icon + "x คน" text only
+========================================================= */
+
+/* MD / tablet */
+@media (min-width: 701px) and (max-width: 1023px) {
+  .filterSummary {
+    font-size: 14px;
+    font-weight: 700;
+  }
+
+  .filterSummaryMobile {
+    gap: 7px;
+  }
+
+  .filterSummaryIcon {
+    width: 18px;
+    height: 18px;
+    font-size: 18px;
+  }
+}
+
+/* SM */
+@media (min-width: 391px) and (max-width: 700px) {
+  .filterSummary {
+    font-size: 14.5px;
+    font-weight: 700;
+  }
+
+  .filterSummaryMobile {
+    gap: 7px;
+  }
+
+  .filterSummaryIcon {
+    width: 18px;
+    height: 18px;
+    font-size: 18px;
+  }
+}
+
+/* XS: still compact so it does not collide */
+@media (max-width: 390px) {
+  .filterSummary {
+    font-size: 11.5px;
+  }
+
+  .filterSummaryMobile {
+    gap: 5px;
+  }
+
+  .filterSummaryIcon {
+    width: 14px;
+    height: 14px;
+    font-size: 14px;
+  }
+}
+
+
+/* =========================================================
+   Filter selector + employee summary count refinements
+========================================================= */
+
+/* MD: make selector a little tighter horizontally and
+   make the employee summary text smaller + not bold */
+@media (min-width: 701px) and (max-width: 1023px) {
+  .faceFilters {
+    gap: 0;
+    padding: 1px 2px;
+  }
+
+  .faceFilterOption {
+    min-height: 32px;
+    padding-inline: 9px;
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  .faceFilterOption > span {
+    padding-inline: 2px;
+  }
+
+  .filterSummary {
+    font-size: 12.5px;
+    font-weight: 400;
+  }
+
+  .filterSummaryDesktop {
+    font-weight: 400;
+  }
+
+  .filterSummaryMobile {
+    gap: 6px;
+    font-weight: 400;
+  }
+
+  .filterSummaryIcon {
+    width: 19px;
+    height: 19px;
+    font-size: 19px;
+  }
+}
+
+/* SM: make the count indicator a bit larger */
+@media (min-width: 391px) and (max-width: 700px) {
+  .filterSummary {
+    font-size: 15.5px;
+    font-weight: 600;
+  }
+
+  .filterSummaryMobile {
+    gap: 7px;
+  }
+
+  .filterSummaryIcon {
+    width: 20px;
+    height: 20px;
+    font-size: 20px;
+  }
+}
+
+
+/* =========================================================
+   SM table column width refinement
+   Give the NO./ลำดับ column a little more width
+========================================================= */
+@media (min-width: 391px) and (max-width: 700px) {
+  .mobileNoColumn {
+    width: 14%;
+  }
+
+  .mobileEmployeeColumn {
+    width: 37%;
+  }
+
+  .mobileFaceColumn {
+    width: 33%;
+  }
+
+  .mobileActionColumn {
+    width: 16%;
+  }
+}
+
+
+/* =========================================================
+   SM sequence-column spacing refinement
+   Give "ลำดับ" more breathing room and reduce oversized feel
+========================================================= */
+@media (min-width: 391px) and (max-width: 700px) {
+  .mobileNoColumn {
+    width: 16%;
+  }
+
+  .mobileEmployeeColumn {
+    width: 35%;
+  }
+
+  .mobileFaceColumn {
+    width: 33%;
+  }
+
+  .mobileActionColumn {
+    width: 16%;
+  }
+
+  .mobileTable th:first-child {
+    padding:auto;
+    font-size: 16px;
+  }
+
+  .mobileNoCell {
+    padding-left: 10px !important;
+    padding-right: 12px !important;
+    font-size: 14px !important;
+    font-weight: 400 !important;
+  }
+
+  .mobileTable th:nth-child(2),
+  .mobileEmployeeCell {
+    padding-left: 12px !important;
+  }
+}
+
+
+/* =========================================================
+   SM sequence-column padding refinement
+   More right-side breathing room between ลำดับ and ข้อมูลพนักงาน
+========================================================= */
+@media (min-width: 391px) and (max-width: 700px) {
+  .mobileTable th:first-child {
+    padding-left: 6px;
+    padding-right: 14px;
+  }
+
+  .mobileNoCell {
+    padding-left: 6px !important;
+    padding-right: 14px !important;
+  }
+
+  .mobileTable th:nth-child(2),
+  .mobileEmployeeCell {
+    padding-left: 12px !important;
+  }
+}
+
+
+/* =========================================================
+   SM mobile table column rebalance
+   IMPORTANT:
+   Padding alone will not visibly move the divider because the
+   <col> widths control the column positions. These overrides
+   change the actual column widths.
+========================================================= */
+@media (min-width: 391px) and (max-width: 700px) {
+  /* 3-column viewer table: NO. / employee / status */
+  .mobileTable:not(:has(.mobileActionColumn)) .mobileNoColumn {
+    width: 18%;
+  }
+
+  .mobileTable:not(:has(.mobileActionColumn)) .mobileEmployeeColumn {
+    width: 44%;
+  }
+
+  .mobileTable:not(:has(.mobileActionColumn)) .mobileFaceColumn {
+    width: 38%;
+  }
+
+  /* 4-column manager table: NO. / employee / status / action */
+  .mobileTable:has(.mobileActionColumn) .mobileNoColumn {
+    width: 15%;
+  }
+
+  .mobileTable:has(.mobileActionColumn) .mobileEmployeeColumn {
+    width: 37%;
+  }
+
+  .mobileTable:has(.mobileActionColumn) .mobileFaceColumn {
+    width: 33%;
+  }
+
+  .mobileTable:has(.mobileActionColumn) .mobileActionColumn {
+    width: 15%;
+  }
+
+  /* Alignment and breathing room */
+  .mobileTable th:first-child,
+  .mobileNoCell {
+    text-align: center !important;
+    padding-left: 6px !important;
+    padding-right: 8px !important;
+  }
+
+  .mobileTable th:nth-child(2),
+  .mobileEmployeeCell {
+    text-align: left !important;
+    padding-left: 16px !important;
+    padding-right: 10px !important;
+  }
+
+  .mobileTable th:nth-child(3),
+  .mobileFaceCell {
+    text-align: left !important;
+    padding-left: 14px !important;
+    padding-right: 8px !important;
+  }
+}
+
+/* Extra-small phones: keep it compact while preserving separation */
+@media (max-width: 390px) {
+  .mobileTable:not(:has(.mobileActionColumn)) .mobileNoColumn {
+    width: 17%;
+  }
+
+  .mobileTable:not(:has(.mobileActionColumn)) .mobileEmployeeColumn {
+    width: 45%;
+  }
+
+  .mobileTable:not(:has(.mobileActionColumn)) .mobileFaceColumn {
+    width: 38%;
+  }
+
+  .mobileTable:has(.mobileActionColumn) .mobileNoColumn {
+    width: 14%;
+  }
+
+  .mobileTable:has(.mobileActionColumn) .mobileEmployeeColumn {
+    width: 37%;
+  }
+
+  .mobileTable:has(.mobileActionColumn) .mobileFaceColumn {
+    width: 33%;
+  }
+
+  .mobileTable:has(.mobileActionColumn) .mobileActionColumn {
+    width: 16%;
+  }
+
+  .mobileTable th:nth-child(2),
+  .mobileEmployeeCell {
+    padding-left: 12px !important;
+  }
+
+  .mobileTable th:nth-child(3),
+  .mobileFaceCell {
+    padding-left: 10px !important;
+  }
+}
+
+
+/* =========================================================
+   SM compact row refinement
+   - reduce horizontal/vertical padding slightly
+   - keep timestamp on one line
+   - give status column a little more room
+========================================================= */
+@media (min-width: 391px) and (max-width: 700px) {
+  /* 3-column viewer table */
+  .mobileTable:not(:has(.mobileActionColumn)) .mobileNoColumn {
+    width: 17%;
+  }
+
+  .mobileTable:not(:has(.mobileActionColumn)) .mobileEmployeeColumn {
+    width: 41%;
+  }
+
+  .mobileTable:not(:has(.mobileActionColumn)) .mobileFaceColumn {
+    width: 42%;
+  }
+
+  .mobileTable th {
+    padding-top: 7px;
+    padding-bottom: 7px;
+  }
+
+  .mobileTable td {
+    padding-top: 6px;
+    padding-bottom: 6px;
+  }
+
+  .mobileTable th:first-child,
+  .mobileNoCell {
+    padding-left: 4px !important;
+    padding-right: 5px !important;
+  }
+
+  .mobileTable th:nth-child(2),
+  .mobileEmployeeCell {
+    padding-left: 10px !important;
+    padding-right: 6px !important;
+  }
+
+  .mobileTable th:nth-child(3),
+  .mobileFaceCell {
+    padding-left: 10px !important;
+    padding-right: 6px !important;
+  }
+
+  .mobileEmployeeName {
+    margin-top: 1px;
+  }
+
+  .mobileFaceRegistered,
+  .mobileFaceMissing {
+    min-height: 21px;
+    padding: 2px 7px;
+  }
+
+  .mobileSavedAt {
+    margin-top: 3px;
+    font-size: 11.5px;
+    line-height: 1.1;
+    white-space: nowrap;
+    overflow: visible;
+    text-overflow: clip;
+  }
+}
+
+@media (max-width: 390px) {
+  .mobileTable:not(:has(.mobileActionColumn)) .mobileNoColumn {
+    width: 16%;
+  }
+
+  .mobileTable:not(:has(.mobileActionColumn)) .mobileEmployeeColumn {
+    width: 41%;
+  }
+
+  .mobileTable:not(:has(.mobileActionColumn)) .mobileFaceColumn {
+    width: 43%;
+  }
+
+  .mobileTable th,
+  .mobileTable td {
+    padding-top: 6px;
+    padding-bottom: 6px;
+  }
+
+  .mobileTable th:nth-child(2),
+  .mobileEmployeeCell,
+  .mobileTable th:nth-child(3),
+  .mobileFaceCell {
+    padding-left: 8px !important;
+    padding-right: 4px !important;
+  }
+
+  .mobileSavedAt {
+    font-size: 10.5px;
+    white-space: nowrap;
+    overflow: visible;
+    text-overflow: clip;
+  }
+}
+
+
+/* =========================================================
+   Face filter selector — fit-content buttons
+   Prevent buttons from stretching and remove excess left/right padding
+========================================================= */
+
+/* Base / desktop / tablet */
+.faceFilters {
+  width: fit-content;
+  max-width: 100%;
+  display: inline-flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 0;
+  padding: 2px;
+}
+
+.faceFilterOption {
+  width: auto;
+  min-width: 0;
+  flex: 0 0 auto;
+  padding-inline: 8px;
+}
+
+.faceFilterOption > span {
+  padding-inline: 0;
+  white-space: nowrap;
+}
+
+/* SM */
+@media (min-width: 391px) and (max-width: 700px) {
+  .faceFilters {
+    width: fit-content;
+    max-width: 100%;
+    flex: 0 0 auto;
+  }
+
+  .faceFilterOption {
+    flex: 0 0 auto;
+    min-width: 0;
+    padding-inline: 7px;
+  }
+
+  .faceFilterOption > span {
+    padding-inline: 0;
+  }
+}
+
+/* XS */
+@media (max-width: 390px) {
+  .faceFilters {
+    width: fit-content;
+    max-width: calc(100% - 54px);
+    flex: 0 1 auto;
+    overflow: hidden;
+  }
+
+  .faceFilterOption {
+    flex: 0 0 auto;
+    min-width: 0;
+    padding-inline: 5px;
+  }
+
+  .faceFilterOption > span {
+    padding-inline: 0;
+  }
+}
+
+
+/* =========================================================
+   Face filter selector spacing refinement
+   - a little more left/right padding
+   - a little less top/bottom padding
+========================================================= */
+
+.faceFilters {
+  padding: 1px 2px;
+}
+
+.faceFilterOption {
+  min-height: 28px;
+  padding: 3px 10px;
+}
+
+@media (min-width: 391px) and (max-width: 700px) {
+  .faceFilters {
+    padding: 1px 2px;
+  }
+
+  .faceFilterOption {
+    min-height: 27px;
+    padding: 2px 9px;
+  }
+}
+
+@media (max-width: 390px) {
+  .faceFilters {
+    padding: 1px;
+  }
+
+  .faceFilterOption {
+    min-height: 26px;
+    padding: 2px 7px;
+  }
+}
+
+
+/* =========================================================
+   Face filter selector — slightly more horizontal padding
+========================================================= */
+
+.faceFilterOption {
+  padding-left: 12px;
+  padding-right: 12px;
+}
+
+@media (min-width: 391px) and (max-width: 700px) {
+  .faceFilterOption {
+    padding-left: 11px;
+    padding-right: 11px;
+  }
+}
+
+@media (max-width: 390px) {
+  .faceFilterOption {
+    padding-left: 9px;
+    padding-right: 9px;
+  }
+}
+
+/* =========================================================
+   SM / XS mobile table sorting
+   Same employee-code / face-status sorting behavior as MD/LG
+========================================================= */
+@media (max-width: 700px) {
+  .mobileSortHeader {
+    width: 100%;
+    min-width: 0;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 4px;
+
+    background: transparent;
+    color: inherit;
+
+    font: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    line-height: inherit;
+    text-align: left;
+    white-space: nowrap;
+
+    cursor: pointer;
+  }
+
+  .mobileSortHeader .sortIndicator {
+    flex: 0 0 auto;
+    transform: scale(0.86);
+    transform-origin: center;
+  }
+
+  .mobileSortHeader .sortArrowActive,
+  .mobileSortHeader .sortArrowInactive {
+    font-size: 13px;
+  }
+
+  .mobileSortHeader:focus-visible {
+    outline: 2px solid rgba(255, 255, 255, 0.88);
+    outline-offset: 2px;
+  }
+
+  /* Status sort button should align with the left-aligned status column. */
+  .mobileTable th:nth-child(3) .mobileSortHeader {
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 390px) {
+  .mobileSortHeader {
+    gap: 2px;
+  }
+
+  .mobileSortHeader .sortIndicator {
+    transform: scale(0.78);
+  }
+
+  .mobileSortHeader .sortArrowActive,
+  .mobileSortHeader .sortArrowInactive {
+    font-size: 12px;
+  }
+}
+
+/* Keep the employee code and name visually grouped on compact tables. */
+@media (max-width: 700px) {
+  .mobileEmployeeCodeRow {
+    gap: 4px;
+    line-height: 1;
+  }
+
+  .mobileEmployeeCodeRow .active,
+  .mobileEmployeeCodeRow .inactive {
+    font-size: 18px;
+  }
+
+  .mobileEmployeeName {
+    margin-top: 0;
+    line-height: 1.1;
+  }
+}
+
+/* Keep compact table headers uniform with viewport-responsive spacing. */
+@media (min-width: 391px) and (max-width: 700px) {
+  .mobileTable th,
+  .mobileTable th:first-child {
+    padding: 10px 0 !important;
+    font-size: 16px;
+    font-weight: 400;
+    text-align: center !important;
+  }
+}
+
+@media (max-width: 390px) {
+  .mobileTable th,
+  .mobileTable th:first-child {
+    padding: 9px 0 !important;
+    font-size: 13px;
+    font-weight: 400;
+    text-align: center !important;
+  }
+}
+
+@media (max-width: 700px) {
+  .mobileTable th .mobileSortHeader,
+  .mobileTable th:nth-child(3) .mobileSortHeader {
+    justify-content: center;
+  }
+
+  .mobileActionCell {
+    padding: 0 !important;
+    text-align: center !important;
+    vertical-align: middle !important;
+  }
+
+  .mobileActionCell button,
+  .mobileActionCell button:hover,
+  .mobileActionCell button:active {
+    margin: 0 auto;
+    border: 0;
+    border-radius: 50%;
+    transform: translateX(2px);
+  }
+}
+
+@media (min-width: 391px) and (max-width: 700px) {
+  .mobileEmployeeCell,
+  .mobileFaceCell {
+    padding-left: 6px !important;
+    padding-right: 3px !important;
+    text-align: left !important;
+  }
+}
+
+@media (max-width: 390px) {
+  .mobileEmployeeCell,
+  .mobileFaceCell {
+    padding-left: 4px !important;
+    padding-right: 2px !important;
+    text-align: left !important;
+  }
+}
+
+.filterSummaryInactive {
+  color: #c0392b;
+}
+
+.filterSummaryCounts {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+@media (max-width: 700px) {
+  .filterSummaryMobile {
+    gap: 3px;
+  }
+}
+
+@media (min-width: 391px) and (max-width: 700px) {
+  .filterSummaryIcon {
+    width: 22px;
+    height: 22px;
+    font-size: 22px;
+  }
+}
+
+@media (max-width: 390px) {
+  .filterSummaryIcon {
+    width: 17px;
+    height: 17px;
+    font-size: 17px;
+  }
+
+  .faceFilterOption {
+    font-size: 11px;
+  }
+}
+/* Active/all population switch. */
+.populationToggle {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 3px;
+  color: rgba(27, 43, 74, 0.78);
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+  transform: translateY(4px);
+}
+
+.populationToggle input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.populationToggleTrack {
+  position: relative;
+  width: 38px;
+  height: 20px;
+  box-sizing: border-box;
+  border: 1px solid var(--brand, #024b76);
+  border-radius: 999px;
+  background: var(--brand, #024b76);
+  box-shadow:
+    inset 2px 2px 4px rgba(0, 35, 58, 0.35),
+    inset -2px -2px 4px rgba(255, 255, 255, 0.2),
+    0 2px 5px rgba(2, 75, 118, 0.18);
+  transition: border-color 160ms ease;
+}
+
+.populationToggleTrack::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 1px;
+  width: 16px;
+  height: 16px;
+  box-sizing: border-box;
+  border: 0;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 2px 2px 5px rgba(0, 35, 58, 0.32);
+  transform: translateY(-50%);
+  transition: transform 160ms ease, border-color 160ms ease;
+}
+
+.populationToggle input:checked + .populationToggleTrack {
+  border-color: var(--brand, #024b76);
+  background: var(--brand, #024b76);
+}
+
+.populationToggle input:checked + .populationToggleTrack::after {
+  transform: translate(18px, -50%);
+}
+
+.populationToggle:has(input:focus-visible) .populationToggleTrack {
+  outline: 2px solid rgba(36, 127, 184, 0.35);
+  outline-offset: 2px;
+}
+
+.populationToggle:has(input:disabled) {
+  cursor: wait;
+  opacity: 0.55;
+}
+
+@media (max-width: 700px) {
+  .heading {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+  }
+
+  .heading > div {
+    width: auto;
+    min-width: 0;
+    flex: 1 1 auto;
+  }
+
+  .populationToggle {
+    gap: 3px;
+  }
+
+  .populationToggleTrack {
+    width: 38px;
+    height: 20px;
+  }
+
+  .populationToggleTrack::after {
+    width: 16px;
+    height: 16px;
+  }
+
+  .populationToggle input:checked + .populationToggleTrack::after {
+    transform: translate(18px, -50%);
+  }
+}
+
+@media (min-width: 701px) and (max-width: 1023px) {
+  .populationToggle {
+    font-size: 13px;
+  }
+}
+
+@media (min-width: 391px) and (max-width: 700px) {
+  .populationToggle {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 390px) {
+  .populationToggle {
+    font-size: 11px;
   }
 }
