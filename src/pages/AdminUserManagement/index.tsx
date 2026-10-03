@@ -9,7 +9,6 @@ import {
   faXmark,
 } from "@fortawesome/free-solid-svg-icons";
 import { TiArrowSortedDown, TiArrowSortedUp } from "react-icons/ti";
-import { IoIosCheckmarkCircle, IoIosCloseCircle } from "react-icons/io";
 import {
   FaUsers,
   FaUserCheck,
@@ -29,6 +28,7 @@ import type { AdminEmployee, DirectoryEmployee } from "@/types/api";
 import styles from "./AdminUserManagement.module.css";
 
 const ACTIVE_EMPLOYEE_LIST = {
+  isActive: true,
   sortBy: "employee_code",
   sortDirection: "asc",
 } as const;
@@ -42,7 +42,7 @@ function getListOptions(
   sortDirection: SortDirection,
   faceStatus: FaceFilter = "all",
 ): AdminUserListOptions {
-  return { sortBy, sortDirection, faceStatus };
+  return { isActive: true, sortBy, sortDirection, faceStatus };
 }
 
 function SortIndicator({
@@ -68,25 +68,6 @@ function SortIndicator({
             : styles.sortArrowInactive
         }
       />
-    </span>
-  );
-}
-
-function EmployeeStatusIcon({ isActive }: { isActive: boolean }) {
-  const label = isActive ? "เปิดใช้งาน" : "ปิดใช้งาน";
-
-  return (
-    <span
-      className={isActive ? styles.active : styles.inactive}
-      role="img"
-      aria-label={label}
-      title={label}
-    >
-      {isActive ? (
-        <IoIosCheckmarkCircle aria-hidden="true" />
-      ) : (
-        <IoIosCloseCircle aria-hidden="true" />
-      )}
     </span>
   );
 }
@@ -136,7 +117,6 @@ export default function AdminUserManagement() {
   const [sortBy, setSortBy] = useState<SortField>("employee_code");
   const [sortDirection, setSortDirection] = useState<SortDirection>("asc");
   const [faceFilter, setFaceFilter] = useState<FaceFilter>("all");
-  const [showActiveOnly, setShowActiveOnly] = useState(true);
   const isUserManager = Boolean(session && canAccessAdminDashboard(session));
   const users: DirectoryEmployee[] = isUserManager ? adminUsers : directoryUsers;
   const page = isUserManager ? adminPage : directoryPage;
@@ -156,7 +136,6 @@ export default function AdminUserManagement() {
   const dashboardTotal = employeeSummary.total;
   const dashboardRegistered = employeeSummary.registered;
   const dashboardMissing = employeeSummary.missing;
-  const inactiveTotal = employeeSummary.excluded;
   const registeredPercentage = dashboardTotal > 0
     ? Math.round((dashboardRegistered / dashboardTotal) * 100)
     : 0;
@@ -221,12 +200,6 @@ export default function AdminUserManagement() {
     } else {
       void loadDirectory(1, appliedSearch, options);
     }
-  }
-
-  function handlePopulationToggle() {
-    const nextActiveOnly = !showActiveOnly;
-    setShowActiveOnly(nextActiveOnly);
-    void loadEmployeeSummary({ activeOnly: nextActiveOnly });
   }
 
   function clearSearch() {
@@ -337,19 +310,6 @@ export default function AdminUserManagement() {
               : "ข้อมูลการลงทะเบียนใบหน้าของคุณ"}
           </h2>
         </div>
-        {isUserManager ? (
-          <label className={styles.populationToggle}>
-            <span>{showActiveOnly ? "เปิดใช้งาน" : "ทั้งหมด"}</span>
-            <input
-              type="checkbox"
-              checked={showActiveOnly}
-              disabled={busy}
-              onChange={handlePopulationToggle}
-              aria-label="แสดงเฉพาะผู้ใช้งานที่เปิดใช้งาน"
-            />
-            <span className={styles.populationToggleTrack} aria-hidden="true" />
-          </label>
-        ) : null}
       </div>
 
       <div className={styles.summaryGrid} aria-label="สรุปข้อมูลพนักงาน">
@@ -516,23 +476,14 @@ export default function AdminUserManagement() {
         <p className={styles.filterSummary}>
           <span className={styles.filterSummaryDesktop}>
             {isUserManager ? "พนักงานทั้งหมด" : "พนักงานที่เปิดใช้งานทั้งหมด"}{" "}
-            {total}
-            {isUserManager ? (
-              <> / <span className={styles.filterSummaryInactive}>{inactiveTotal}</span></>
-            ) : null}{" "}
-            คน
+            {total} คน
           </span>
           <span className={styles.filterSummaryMobile}>
             <FaUserFriends
               className={styles.filterSummaryIcon}
               aria-hidden="true"
             />
-            <span>
-              {total}
-              {isUserManager ? (
-                <> / <span className={styles.filterSummaryInactive}>{inactiveTotal}</span></>
-              ) : null}{" "}
-              คน     </span>
+            <span>{total} คน</span>
           </span>
         </p>
       </div>
@@ -574,11 +525,9 @@ export default function AdminUserManagement() {
             <col className={styles.employeeCodeColumn} />
             <col className={styles.firstNameColumn} />
             <col className={styles.lastNameColumn} />
-            {isUserManager ? <col className={styles.roleColumn} /> : null}
-            {isUserManager ? <col className={styles.statusColumn} /> : null}
             <col className={styles.faceResultColumn} />
-            {isUserManager ? <col className={styles.imagePathColumn} /> : null}
             <col className={styles.savedAtColumn} />
+            {isUserManager ? <col className={styles.imagePathColumn} /> : null}
             {isUserManager ? <col className={styles.actionColumn} /> : null}
           </colgroup>
 
@@ -613,9 +562,6 @@ export default function AdminUserManagement() {
               <th>ชื่อ</th>
               <th>นามสกุล</th>
 
-              {isUserManager ? <th>บทบาท</th> : null}
-              {isUserManager ? <th>สถานะ</th> : null}
-
               <th
                 aria-sort={
                   sortBy === "face_status"
@@ -640,8 +586,8 @@ export default function AdminUserManagement() {
                 </button>
               </th>
 
-              {isUserManager ? <th>พาธรูปใบหน้า</th> : null}
               <th>บันทึกล่าสุด</th>
+              {isUserManager ? <th>พาธรูปใบหน้า</th> : null}
               {isUserManager ? <th>การจัดการ</th> : null}
             </tr>
           </thead>
@@ -664,24 +610,6 @@ export default function AdminUserManagement() {
                   <td>{employee.first_name}</td>
                   <td>{employee.last_name}</td>
 
-                  {adminEmployee ? (
-                    <td>{adminEmployee.role_name ?? adminEmployee.role_id}</td>
-                  ) : null}
-
-                  {adminEmployee ? (
-                    <td>
-                      <span
-                        className={
-                          employee.is_active
-                            ? styles.statusTextActive
-                            : styles.statusTextInactive
-                        }
-                      >
-                        {employee.is_active ? "เปิดใช้งาน" : "ปิดใช้งาน"}
-                      </span>
-                    </td>
-                  ) : null}
-
                   <td>
                     <span
                       className={
@@ -696,6 +624,10 @@ export default function AdminUserManagement() {
                     </span>
                   </td>
 
+                  <td className={styles.savedAt}>
+                    {formatSavedAt(employee.profile_image_updated_at)}
+                  </td>
+
                   {adminEmployee ? (
                     <td
                       className={styles.imagePath}
@@ -704,10 +636,6 @@ export default function AdminUserManagement() {
                       {adminEmployee.face_profile_location ?? "-"}
                     </td>
                   ) : null}
-
-                  <td className={styles.savedAt}>
-                    {formatSavedAt(employee.profile_image_updated_at)}
-                  </td>
 
                   {adminEmployee ? (
                     <td className={styles.actions}>
@@ -753,7 +681,7 @@ export default function AdminUserManagement() {
             {!busy && users.length === 0 ? (
               <tr>
                 <td
-                  colSpan={isUserManager ? 10 : 6}
+                  colSpan={isUserManager ? 8 : 6}
                   className={styles.empty}
                 >
                   ไม่พบข้อมูลพนักงาน
@@ -841,9 +769,6 @@ export default function AdminUserManagement() {
 
                   <td className={styles.mobileEmployeeCell}>
                     <span className={styles.mobileEmployeeCodeRow}>
-                      {isUserManager ? (
-                        <EmployeeStatusIcon isActive={employee.is_active} />
-                      ) : null}
                       <span className={styles.mobileEmployeeCode}>
                         {employee.employee_code}
                       </span>
