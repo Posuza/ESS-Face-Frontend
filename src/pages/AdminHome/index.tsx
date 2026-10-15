@@ -3,7 +3,7 @@ import { faRightFromBracket, faUserGroup } from "@fortawesome/free-solid-svg-ico
 import { Navigate, useNavigate, useSearchParams } from "react-router-dom";
 
 import AdminHeader from "@/layout/AdminHeader";
-import ErrorBoundary from "@/components/ErrorBoundary";
+import ErrorBoundary from "@/components/registeration/ErrorBoundary";
 import AdminUserManagement from "@/pages/AdminUserManagement";
 import {
   canAccessAdminDashboard,

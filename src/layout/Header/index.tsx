@@ -6,10 +6,10 @@ type Props = {
   empCode?: string;
   displayName?: string;
   showUserCard?: boolean;
+  showDivider?: boolean;
 };
 
-export default function Header(props: Props) {
-  void props;
+export default function Header({ showDivider = false }: Props) {
 
   return (
     <header className={styles.header}>
@@ -24,6 +24,8 @@ export default function Header(props: Props) {
       </div>
 
       <div className={styles.subTh}>ระบบบริการตนเอง</div>
+
+      {showDivider ? <div className={styles.divider} /> : null}
     </header>
   );
 }

@@ -7,6 +7,7 @@ export type ReturnSite = {
   origin: string;
   section: string | null;
   capturedAt: string;
+  navigation: "url" | "history";
 };
 
 function parseWebUrl(value: string | null): URL | null {
@@ -40,6 +41,7 @@ function loadReturnSite(): ReturnSite | null {
         typeof value.capturedAt === "string"
           ? value.capturedAt
           : new Date().toISOString(),
+      navigation: value.navigation === "history" ? "history" : "url",
     };
   } catch {
     sessionStorage.removeItem(RETURN_SITE_SESSION_KEY);
@@ -69,30 +71,22 @@ export const createReturnSiteSlice: AppSliceCreator<ReturnSiteSlice> = (set, get
     const params = new URLSearchParams(window.location.search);
     const hasRequestedReturn = params.has("return_to");
     const requested = parseWebUrl(params.get("return_to"));
-    const referrer = parseWebUrl(document.referrer);
     const section = params.get("return_section")?.trim() || null;
 
-    // When both are available, the requested destination must belong to the
-    // site that actually sent the browser here. Otherwise, return to the
-    // referrer itself. This supports any source site without a fixed list.
-    const target =
-      requested && (!referrer || requested.origin === referrer.origin)
-        ? requested
-        : referrer;
-
-    if (!target || target.origin === window.location.origin) {
-      if (hasRequestedReturn) {
-        persistReturnSite(null);
-        set({ returnSite: null });
-      }
+    // External authentication requires an explicit callback. Clearing stale
+    // state here prevents an internal login from returning to an earlier app.
+    if (!hasRequestedReturn || !requested || requested.origin === window.location.origin) {
+      persistReturnSite(null);
+      set({ returnSite: null });
       return;
     }
 
     const returnSite: ReturnSite = {
-      url: target.href,
-      origin: target.origin,
+      url: requested.href,
+      origin: requested.origin,
       section,
       capturedAt: new Date().toISOString(),
+      navigation: "url",
     };
 
     persistReturnSite(returnSite);
@@ -110,6 +104,12 @@ export const createReturnSiteSlice: AppSliceCreator<ReturnSiteSlice> = (set, get
 
     persistReturnSite(null);
     set({ returnSite: null });
+
+    if (returnSite.navigation === "history" && window.history.length > 1) {
+      window.history.back();
+      return;
+    }
+
     window.location.assign(returnSite.url);
   },
 });

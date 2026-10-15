@@ -9,7 +9,7 @@ type Props = {
 };
 
 const tutorialVideoUrl = new URL(
-  "../../../assets/common/tutorial.mp4",
+  "../../../../assets/common/tutorial.mp4",
   import.meta.url,
 ).href;
 

@@ -1,19 +1,30 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faRightFromBracket, faUserGroup } from "@fortawesome/free-solid-svg-icons";
 import { TbUserScan, TbUserHexagon } from "react-icons/tb";
+import { Activity, KeyRound, ShieldBan } from "lucide-react";
 import { Navigate, useNavigate, useSearchParams } from "react-router-dom";
 
 import AdminHeader from "@/layout/AdminHeader";
-import ErrorBoundary from "@/components/ErrorBoundary";
+import ErrorBoundary from "@/components/registeration/ErrorBoundary";
 import RegisterModelSettings from "@/pages/SuperAdminRegisterModelSettings";
 import SuperAdminUserManagement from "@/pages/SuperAdminUserManagement";
+import SuperAdminClientApplications from "@/pages/SuperAdminClientApplications";
+import SuperAdminBlockClientIP from "@/pages/SuperAdminBlockClientIP";
+import SuperAdminPresenceMonitor from "@/pages/SuperAdminPresenceMonitor";
 import VerificationModelSettings from "@/pages/SuperAdminVerificationModelSettings";
 import { isSuperAdminRole } from "@/services/admin.service";
 import { useAppStore } from "@/store";
 
 import styles from "./SuperAdminHome.module.css";
 
-type AdminView = "home" | "users" | "register-model" | "verify-model";
+type AdminView =
+  | "home"
+  | "users"
+  | "client-applications"
+  | "blocked-client-ips"
+  | "presence-monitor"
+  | "register-model"
+  | "verify-model";
 
 export default function SuperAdminHome() {
   const navigate = useNavigate();
@@ -22,7 +33,12 @@ export default function SuperAdminHome() {
   const logoutAdmin = useAppStore((state) => state.logoutAdmin);
   const section = searchParams.get("section");
   const view: AdminView =
-    section === "users" || section === "register-model" || section === "verify-model"
+    section === "users" ||
+    section === "client-applications" ||
+    section === "blocked-client-ips" ||
+    section === "presence-monitor" ||
+    section === "register-model" ||
+    section === "verify-model"
       ? section
       : "home";
 
@@ -61,6 +77,24 @@ export default function SuperAdminHome() {
                   <span className={styles.menuText}>จัดการผู้ใช้งาน</span>
                 </span>
               </button>
+              <button type="button" className={styles.menuButton} onClick={() => setView("client-applications")}>
+                <span className={styles.menuBox}>
+                  <span className={styles.iconWrap} aria-hidden="true"><KeyRound size={22} /></span>
+                  <span className={styles.menuText}>จัดการแอปไคลเอนต์</span>
+                </span>
+              </button>
+              <button type="button" className={styles.menuButton} onClick={() => setView("blocked-client-ips")}>
+                <span className={styles.menuBox}>
+                  <span className={styles.iconWrap} aria-hidden="true"><ShieldBan size={22} /></span>
+                  <span className={styles.menuText}>จัดการ IP ที่ถูกบล็อก</span>
+                </span>
+              </button>
+              <button type="button" className={styles.menuButton} onClick={() => setView("presence-monitor")}>
+                <span className={styles.menuBox}>
+                  <span className={styles.iconWrap} aria-hidden="true"><Activity size={22} /></span>
+                  <span className={styles.menuText}>ติดตามการเชื่อมต่อ</span>
+                </span>
+              </button>
               <button type="button" className={styles.menuButton} onClick={() => setView("register-model")}>
                 <span className={styles.menuBox}>
                   <span className={styles.iconWrap} aria-hidden="true"><TbUserHexagon size={24} /></span>
@@ -87,6 +121,21 @@ export default function SuperAdminHome() {
           {allowedView === "users" ? (
             <ErrorBoundary>
               <SuperAdminUserManagement />
+            </ErrorBoundary>
+          ) : null}
+          {allowedView === "client-applications" ? (
+            <ErrorBoundary>
+              <SuperAdminClientApplications />
+            </ErrorBoundary>
+          ) : null}
+          {allowedView === "blocked-client-ips" ? (
+            <ErrorBoundary>
+              <SuperAdminBlockClientIP />
+            </ErrorBoundary>
+          ) : null}
+          {allowedView === "presence-monitor" ? (
+            <ErrorBoundary>
+              <SuperAdminPresenceMonitor />
             </ErrorBoundary>
           ) : null}
           {allowedView === "register-model" ? (

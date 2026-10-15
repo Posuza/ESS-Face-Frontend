@@ -9,7 +9,7 @@ import {
 import { Navigate, useNavigate } from "react-router-dom";
 
 import Header from "@/layout/Header";
-import TimingMessagePopUp from "@/components/auth/popup/TimingMessagePopUp";
+import TimingMessagePopUp from "@/components/registeration/auth/popup/TimingMessagePopUp";
 import { isSuperAdminRole } from "@/services/admin.service";
 import { useAppStore } from "@/store";
 

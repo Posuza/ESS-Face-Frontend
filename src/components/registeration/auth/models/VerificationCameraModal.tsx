@@ -1,22 +1,18 @@
 import { useEffect, useRef, useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faRotateLeft, faSave } from "@fortawesome/free-solid-svg-icons";
-import styles from "./RegisterCameraModal.module.css";
+import styles from "./VerificationCameraModal.module.css";
 import {
   getFaceAttributeMessage,
   loadFaceAttributeModel,
-} from "@/components/ai/ailoader/faceAttributeModel";
+} from "@/components/registeration/ai/ailoader/faceAttributeModel";
 import {
   getAntiSpoofResult,
   loadAntiSpoofModel,
   updateAntiSpoofDecision,
-} from "@/components/ai/ailoader/antiSpoofModel";
-import { loadFaceLandmarker, type LoadedFaceLandmarker } from "@/components/ai/ailoader/faceLandmarkerModel";
-import {
-  FACE_GUIDE_OUTLINE,
-  FACE_GUIDE_WIREFRAME_PATH,
-} from "@/components/ai/FaceVisualGuide";
-import { getFaceModelValueForMode, isFaceModelActive, loadFaceModelSettings } from "@/components/ai/faceModelSettings";
+} from "@/components/registeration/ai/ailoader/antiSpoofModel";
+import { loadFaceLandmarker, type LoadedFaceLandmarker } from "@/components/registeration/ai/ailoader/faceLandmarkerModel";
+import { loadFaceDetector } from "@/components/registeration/ai/ailoader/faceDetectorModel";
+import { FACE_GUIDE_OUTLINE } from "@/components/registeration/ai/FaceVisualGuide";
+import { getFaceModelValueForMode, isFaceModelActive, loadFaceModelSettings } from "@/components/registeration/ai/faceModelSettings";
 
 export type CameraModalProps = {
   open: boolean;
@@ -50,14 +46,11 @@ const ATTRIBUTE_CLEAR_CONFIRMATIONS = 2;
 const ANTI_SPOOF_INTERVAL_MS = 450;
 const LANDMARK_SMOOTHING_ALPHA = 0.35;
 const SMOOTHING_RESET_MISS_FRAMES = 10;
-
 const REQUIRE_FEATURE_TARGET_ALIGNMENT = true;
-
 const EYE_CENTER_X_TOLERANCE = 10;
 const EYE_CENTER_Y_TOLERANCE = 8;
 const MIN_EYE_DISTANCE = 56;
 const MAX_EYE_DISTANCE = 89;
-
 const MIN_FACE_GUIDE_HEIGHT = 164;
 const MAX_FACE_GUIDE_HEIGHT = 199;
 const MIN_AVERAGE_BRIGHTNESS = 50;
@@ -65,37 +58,17 @@ const MAX_AVERAGE_BRIGHTNESS = 214;
 const MAX_DARK_PIXEL_RATIO = 0.48;
 const MAX_BRIGHT_PIXEL_RATIO = 0.42;
 const LOW_LIGHT_GUIDE_AVERAGE = 120;
-
 const OVERLAY_WIDTH = 240;
 const OVERLAY_HEIGHT = 320;
-
-const FACE_FEATURE_ALIGNMENT_PATH =
-  // EYE HORIZONTAL REFERENCES
-  "M74 138 L94 138 " +
-  "M147 138 L166 138 " +
-
-  // NOSE AND MOUTH VERTICAL REFERENCES
-  "M120 175 L120 184 " +
-  "M120 213 L120 222";
-
-// Uniformly fits the 710 x 868 reference geometry without changing its proportions.
 const FACE_GUIDE_TRANSFORM = "translate(18.8 30.2) scale(0.285)";
-
-const GUIDE_CENTER = {
-  x: 120,
-  y: 155.5,
-};
-
-const GUIDE_RADIUS = {
-  x: 88.3,
-  y: 109.8,
-};
+const GUIDE_CENTER = { x: 120, y: 155.5 };
+const GUIDE_RADIUS = { x: 88.3, y: 109.8 };
 const GUIDE_BOUNDARY_TOLERANCE = 1.16;
 const CORE_FACE_LANDMARK_INDICES = [10, 152, 33, 263, 234, 454, 1, 13, 14];
 const DEFAULT_SHOW_FACE_DEBUG = false;
 
 function faceLandmarkerSetting(settingKey: string, fallback: number) {
-  return getFaceModelValueForMode("face_landmarker", "register", settingKey, fallback);
+  return getFaceModelValueForMode("face_landmarker", "verify", settingKey, fallback);
 }
 
 function showFaceDebugMarkers() {
@@ -109,29 +82,11 @@ function requireFeatureTargetAlignment() {
 function faceLandmarkerToggle(key: string) {
   return faceLandmarkerSetting(key, 1) >= 1;
 }
-
 const GUIDE_TARGETS: FeaturePoints = {
-  leftEye: {
-    x: 83.3,
-    y: 137.7,
-  },
-
-  rightEye: {
-    x: 156.7,
-    y: 137.7,
-  },
-
-  // Kept only as reference coordinates.
-  // We do NOT force the user's nose/mouth onto these exact points.
-  nose: {
-    x: 120,
-    y: 179.8,
-  },
-
-  mouth: {
-    x: 120,
-    y: 217.6,
-  },
+  leftEye: { x: 83.3, y: 137.7 },
+  rightEye: { x: 156.7, y: 137.7 },
+  nose: { x: 120, y: 179.8 },
+  mouth: { x: 120, y: 217.6 },
 };
 
 function averagePoint(points: Point[]): Point {
@@ -329,13 +284,11 @@ function getGuideCheck(
   const coreFacePoints = CORE_FACE_LANDMARK_INDICES.map((idx) =>
     mapLandmarkToOverlay(video, landmarks[idx]),
   );
-
   if (coreFacePoints.some((point) => !isInsideGuide(point))) {
     return { message: "จัดใบหน้าให้อยู่ในกรอบทั้งหมด", points };
   }
 
   if (requireFeatureTargetAlignment()) {
-    // Align the midpoint and scale without assuming identical eye spacing.
     const eyeCenter = {
       x: (points.leftEye.x + points.rightEye.x) / 2,
       y: (points.leftEye.y + points.rightEye.y) / 2,
@@ -378,11 +331,8 @@ function getGuideCheck(
       }
     }
 
-    const noseHorizontalOffset =
-      Math.abs(points.nose.x - eyeCenter.x);
-
-    const noseBelowEyes =
-      points.nose.y - eyeCenter.y;
+    const noseHorizontalOffset = Math.abs(points.nose.x - eyeCenter.x);
+    const noseBelowEyes = points.nose.y - eyeCenter.y;
 
     if (faceLandmarkerToggle("require_nose_zone")) {
       if (
@@ -393,18 +343,12 @@ function getGuideCheck(
         noseBelowEyes >
           eyeDistance * faceLandmarkerSetting("max_nose_below_eyes_ratio", 1.0)
       ) {
-        return {
-          message: "จัดใบหน้าให้อยู่กึ่งกลางและมองตรง",
-          points,
-        };
+        return { message: "จัดใบหน้าให้อยู่กึ่งกลางและมองตรง", points };
       }
     }
 
-    const mouthHorizontalOffset =
-      Math.abs(points.mouth.x - eyeCenter.x);
-
-    const mouthBelowNose =
-      points.mouth.y - points.nose.y;
+    const mouthHorizontalOffset = Math.abs(points.mouth.x - eyeCenter.x);
+    const mouthBelowNose = points.mouth.y - points.nose.y;
 
     if (faceLandmarkerToggle("require_mouth_zone")) {
       if (
@@ -415,10 +359,7 @@ function getGuideCheck(
         mouthBelowNose >
           eyeDistance * faceLandmarkerSetting("max_mouth_below_nose_ratio", 0.80)
       ) {
-        return {
-          message: "จัดใบหน้าให้ตรงและเห็นครบ",
-          points,
-        };
+        return { message: "จัดใบหน้าให้ตรงและเห็นครบ", points };
       }
     }
   }
@@ -463,7 +404,7 @@ function getLandmarkQualityMessage(
   return null;
 }
 
-export default function RegisterCameraModal({
+export default function VerificationCameraModal({
   open,
   onClose,
   onCaptured,
@@ -497,10 +438,10 @@ export default function RegisterCameraModal({
   const antiSpoofPassedRef = useRef(false);
   const antiSpoofCheckInFlightRef = useRef(false);
   const antiSpoofCheckGenerationRef = useRef(0);
+  const complianceReadyRef = useRef(false);
   const detectingRef = useRef(false);
   const smoothingMissCountRef = useRef(0);
   const autoCaptureTriggeredRef = useRef(false);
-  const capturedPhotoRef = useRef("");
 
   const [busy, setBusy] = useState(false);
   const [isReady, setIsReady] = useState(false);
@@ -510,7 +451,6 @@ export default function RegisterCameraModal({
   const [faceMessage, setFaceMessage] = useState("กำลังเปิดกล้อง...");
   const [debugPoints, setDebugPoints] = useState<FeaturePoints | null>(null);
   const [guideContrast, setGuideContrast] = useState<GuideContrast>("dark");
-  const [capturedPhoto, setCapturedPhoto] = useState("");
 
   function resetAttributeCheck() {
     attributeCheckGenerationRef.current += 1;
@@ -562,7 +502,7 @@ export default function RegisterCameraModal({
 
     setCaptureReady(true);
     setFaceMessage("พร้อมถ่ายภาพ");
-    if (!capturedPhotoRef.current && !autoCaptureTriggeredRef.current) {
+    if (!autoCaptureTriggeredRef.current) {
       autoCaptureTriggeredRef.current = true;
       void capture(true);
     }
@@ -589,8 +529,6 @@ export default function RegisterCameraModal({
     setCaptureReady(false);
     setDebugPoints(null);
     setGuideContrast("dark");
-    setCapturedPhoto("");
-    capturedPhotoRef.current = "";
     validSinceRef.current = null;
     smoothedPointsRef.current = null;
     latestLandmarksRef.current = null;
@@ -600,6 +538,7 @@ export default function RegisterCameraModal({
     lightingMessageRef.current = null;
     resetAttributeCheck();
     resetAntiSpoofCheck();
+    complianceReadyRef.current = false;
     detectingRef.current = false;
     smoothingMissCountRef.current = 0;
     autoCaptureTriggeredRef.current = false;
@@ -610,7 +549,7 @@ export default function RegisterCameraModal({
         setBusy(true);
 
         if (!modelSettingsPreloaded) {
-          await loadFaceModelSettings("register");
+          await loadFaceModelSettings("verify");
         }
 
         const aiStartedAt = performance.now();
@@ -618,20 +557,24 @@ export default function RegisterCameraModal({
           landmarkerRef.current
             ? Promise.resolve(landmarkerRef.current)
             : loadFaceLandmarker(),
+          isFaceModelActive("face_detector")
+            ? loadFaceDetector()
+            : Promise.resolve(null),
           loadFaceAttributeModel({
             skipSettingsReload: true,
-            mode: "register",
+            mode: "verify",
           }),
           isFaceModelActive("minifasnet_v2")
             ? loadAntiSpoofModel()
             : Promise.resolve(null),
         ]);
-        console.info("[RegisterCameraModal] Parallel frontend AI preload ready", {
+        console.info("[VerificationCameraModal] Parallel frontend AI preload ready", {
           aiLoadMs: Math.round(performance.now() - aiStartedAt),
           cached: modelSettingsPreloaded,
         });
         landmarkerRef.current = landmarker;
         if (canceled) return;
+        complianceReadyRef.current = true;
 
         if (!navigator.mediaDevices?.getUserMedia) {
           setFaceMessage("อุปกรณ์นี้ไม่รองรับการใช้งานกล้อง");
@@ -698,14 +641,13 @@ export default function RegisterCameraModal({
       setCaptureReady(false);
       setDebugPoints(null);
       setGuideContrast("dark");
-      setCapturedPhoto("");
-      capturedPhotoRef.current = "";
       validSinceRef.current = null;
       smoothedPointsRef.current = null;
       latestLandmarksRef.current = null;
       invalidReadingRef.current = null;
       attributeCheckGenerationRef.current += 1;
       antiSpoofCheckGenerationRef.current += 1;
+      complianceReadyRef.current = false;
 
       if (streamRef.current) {
         streamRef.current.getTracks().forEach((track) => track.stop());
@@ -761,10 +703,6 @@ export default function RegisterCameraModal({
       detectingRef.current = true;
 
       try {
-        if (capturedPhotoRef.current) {
-          return;
-        }
-
         if (!drawMirroredCoverFrame(video, previewCanvas)) {
           setInvalidFaceMessage("กล้องกำลังเริ่มทำงาน...", true);
           return;
@@ -837,6 +775,12 @@ export default function RegisterCameraModal({
         if (lightingMessage) {
           resetAntiSpoofCheck();
           setInvalidFaceMessage(lightingMessage);
+          return;
+        }
+
+        if (!complianceReadyRef.current) {
+          resetAntiSpoofCheck();
+          setInvalidFaceMessage("กำลังตรวจแว่นตาและการบังใบหน้า...", true);
           return;
         }
 
@@ -947,9 +891,9 @@ export default function RegisterCameraModal({
     };
   }, [open, isReady]);
 
-  const capture = async (auto = false) => {
-    if (capturedPhotoRef.current) return;
+  const canCapture = isReady && !busy && captureReady;
 
+  const capture = async (auto = false) => {
     const video = videoRef.current;
     const previewCanvas = previewCanvasRef.current;
     const canvas = canvasRef.current;
@@ -988,35 +932,9 @@ export default function RegisterCameraModal({
     if (!ctx) return;
 
     ctx.drawImage(video, 0, 0, width, height);
-    const dataUrl = canvas.toDataURL("image/jpeg", 0.92);
-    capturedPhotoRef.current = dataUrl;
-    setCapturedPhoto(dataUrl);
-    setCaptureReady(false);
-    setFaceInCircle(false);
-    setFaceMessage("");
-  };
-
-  function saveCapturedPhoto() {
-    if (!capturedPhotoRef.current) return;
-    onCaptured(capturedPhotoRef.current);
+    onCaptured(canvas.toDataURL("image/jpeg", 0.92));
     onClose();
-  }
-
-  function takeNewPhoto() {
-    capturedPhotoRef.current = "";
-    setCapturedPhoto("");
-    setCaptureReady(false);
-    setFaceInCircle(false);
-    setDebugPoints(null);
-    validSinceRef.current = null;
-    latestLandmarksRef.current = null;
-    smoothedPointsRef.current = null;
-    invalidReadingRef.current = null;
-    resetAttributeCheck();
-    resetAntiSpoofCheck();
-    autoCaptureTriggeredRef.current = false;
-    setFaceMessage("จัดใบหน้าให้อยู่ในกรอบ");
-  }
+  };
 
   if (!open) return null;
 
@@ -1050,19 +968,11 @@ export default function RegisterCameraModal({
               playsInline
               muted
             />
-            {capturedPhoto ? (
-              <img
-                className={styles.capturedImage}
-                src={capturedPhoto}
-                alt="รูปภาพที่ถ่ายแล้ว"
-              />
-            ) : null}
             <canvas ref={previewCanvasRef} className={styles.analysisCanvas} />
 
             <div
               className={[
                 styles.overlayContainer,
-                capturedPhoto ? styles.overlayHidden : "",
                 faceInCircle ? styles.perfectMatch : "",
                 !faceInCircle && guideContrast === "light" ? styles.lightGuide : "",
                 hasFace && !faceInCircle ? styles.pendingMatch : "",
@@ -1099,16 +1009,6 @@ export default function RegisterCameraModal({
                   transform={FACE_GUIDE_TRANSFORM}
                   vectorEffect="non-scaling-stroke"
                 />
-                <path
-                  className={styles.wireframeMesh}
-                  d={FACE_GUIDE_WIREFRAME_PATH}
-                  transform={FACE_GUIDE_TRANSFORM}
-                  vectorEffect="non-scaling-stroke"
-                />
-                <path
-                  className={styles.featureAlignmentGuide}
-                  d={FACE_FEATURE_ALIGNMENT_PATH}
-                />
                 {showFaceDebugMarkers() && debugPoints ? (
                   <g aria-hidden="true">
                     <circle cx={debugPoints.leftEye.x} cy={debugPoints.leftEye.y} r="1.6" fill="#00e5ff" stroke="#101114" strokeWidth="0.6" opacity="0.7" />
@@ -1125,39 +1025,22 @@ export default function RegisterCameraModal({
             <span className={`guts-fv-corner bl ${styles.corner} ${styles.bl}`} aria-hidden="true" />
             <span className={`guts-fv-corner br ${styles.corner} ${styles.br}`} aria-hidden="true" />
 
-            {faceMessage ? (
-              <div
-                className={styles.status}
-                style={{ color: faceInCircle ? "#00FF00" : hasFace ? "#FFB020" : "#fff" }}
-              >
-                {faceMessage}
-              </div>
-            ) : null}
+            <div
+              className={styles.status}
+              style={{ color: faceInCircle ? "#00FF00" : hasFace ? "#FFB020" : "#fff" }}
+            >
+              {isReady ? faceMessage : faceMessage}
+            </div>
+
             <canvas ref={canvasRef} className={styles.canvas} />
           </div>
-        </div>
 
-        <div className={styles.buttonContainer}>
-          {capturedPhoto ? (
-            <div className={styles.reviewActions}>
-              <button
-                type="button"
-                className={styles.captureBtn}
-                onClick={saveCapturedPhoto}
-              >
-                <FontAwesomeIcon icon={faSave} />
-                บันทึกรูปภาพ
-              </button>
-              <button
-                type="button"
-                className={styles.retakeBtn}
-                onClick={takeNewPhoto}
-              >
-                <FontAwesomeIcon icon={faRotateLeft} />
-                ถ่ายรูปใหม่
-              </button>
-            </div>
-          ) : null}
+          {/*
+          <button type="button" className={styles.captureBtn} onClick={() => void capture()} disabled={!canCapture}>
+            <FontAwesomeIcon icon={faCamera} />
+            ถ่ายภาพ
+          </button>
+          */}
         </div>
       </div>
     </div>

@@ -2,6 +2,37 @@
    Shared result / identity / failed panel
 ========================================================= */
 
+.pageShell {
+  width: min(430px, calc(100vw - 24px));
+  max-width: 430px;
+  margin-inline: auto;
+  overflow-x: hidden;
+}
+
+.pageShell :global(.guts-home-card) {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.fvCard {
+  width: 100%;
+  max-width: 100%;
+  margin-top: 8px;
+  margin-bottom: 0;
+  padding: 12px;
+  border-radius: 16px;
+  box-shadow: none;
+}
+
+.fvFrame {
+  width: 100%;
+  max-width: 360px;
+  margin: 10px auto;
+  border-radius: 8px;
+}
+
 .statusPanel {
   margin-top: 12px;
   overflow: hidden;
@@ -287,9 +318,9 @@
   transform: translateY(1px);
 }
 
-.fvBackButton {
-  margin: 12px 3px 18px 6px;
-  width: calc(100% - 9px);
+.fvBackButton.fvBackButton {
+  margin: 12px 6px 18px;
+  width: calc(100% - 12px);
   height: clamp(50px, 6vw, 56px);
   border: 0;
   border-radius: 30px;

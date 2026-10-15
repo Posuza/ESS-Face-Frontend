@@ -3,16 +3,22 @@
 // The frontend captures a guided photo; backend extracts and compares
 // the face embedding so enrollment and verification use the same model.
 import { useEffect, useRef, useState, type FormEvent } from "react";
+import { useNavigate } from "react-router-dom";
 
 import Header from "@/layout/Header";
-import LoadingModal from "@/components/LoadingModal";
-import PermissionErrorModal from "@/components/auth/popup/PermissionErrorModal";
-import TimingMessagePopUp from "@/components/auth/popup/TimingMessagePopUp";
-import TutorialModal from "@/components/auth/models/TutorialModal";
-import RegisterCameraModal from "@/components/RegisterCameraModal";
-import { scheduleIdleModelPreload } from "@/components/ai/modelPreloadScheduler";
-import { preloadRegisterCameraModels } from "@/components/ai/registerCameraPreloader";
+import LoadingModal from "@/components/registeration/LoadingModal";
+import PermissionErrorModal from "@/components/registeration/auth/popup/PermissionErrorModal";
+import TimingMessagePopUp from "@/components/registeration/auth/popup/TimingMessagePopUp";
+import TutorialModal from "@/components/registeration/auth/models/TutorialModal";
+import RegisterCameraModal from "@/components/registeration/RegisterCameraModal";
+import { scheduleIdleModelPreload } from "@/components/registeration/ai/modelPreloadScheduler";
+import { preloadRegisterCameraModels } from "@/components/registeration/ai/registerCameraPreloader";
 import { useAppStore } from "@/store";
+import {
+  buildClientAuthReturnUrl,
+  clearClientAuthReturn,
+  getClientAuthReturn,
+} from "@/store/clientReturnSite";
 import type { EmployeeProfile } from "@/types/api";
 import faceScan from "@/assets/common/face-scan2.svg";
 
@@ -22,7 +28,7 @@ import {
   faRightFromBracket,
   faRotateLeft,
 } from "@fortawesome/free-solid-svg-icons";
-import { ArrowLeft, CirclePlay, Eye, EyeOff, Lock, User } from "lucide-react";
+import { ArrowLeft, CirclePlay, Eye, EyeOff, Lock, ScanFace, User } from "lucide-react";
 
 import styles from "./Home.module.css";
 
@@ -33,9 +39,19 @@ type Props = {
 type Status = "idle" | "submitting" | "success" | "failed";
 type LoginPopupVariant = "warning" | "error";
 
+function getEmployeeCodeFromUrl(): string {
+  const value = new URLSearchParams(window.location.search)
+    .get("employee_code")
+    ?.trim();
+
+  if (value && /^\d{6}$/.test(value)) return value;
+  return getClientAuthReturn()?.empCode || "";
+}
+
 export default function Home({
   employee,
 }: Props) {
+  const navigate = useNavigate();
   const loginEmployee = useAppStore((state) => state.loginEmployee);
   const employeeLoginBusy = useAppStore((state) => state.employeeLoginBusy);
   const clearEmployeeLoginError = useAppStore((state) => state.clearEmployeeLoginError);
@@ -46,7 +62,7 @@ export default function Home({
   const resetFaceActionState = useAppStore((state) => state.resetFaceActionState);
   const returnSite = useAppStore((state) => state.returnSite);
   const returnToSource = useAppStore((state) => state.returnToSource);
-  const [employeeCode, setEmployeeCode] = useState("");
+  const [employeeCode, setEmployeeCode] = useState(getEmployeeCodeFromUrl);
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [status, setStatus] = useState<Status>("idle");
@@ -61,13 +77,30 @@ export default function Home({
   const [loginPopupVariant, setLoginPopupVariant] =
     useState<LoginPopupVariant>("warning");
   const [tutorialOpen, setTutorialOpen] = useState(false);
+  const [clientAuthReturn] = useState(getClientAuthReturn);
 
   const verifyReqRef = useRef(0);
+
+  function returnToClientAuth() {
+    if (!clientAuthReturn) return;
+    clearEmployeeSession();
+    clearClientAuthReturn();
+    navigate(buildClientAuthReturnUrl(clientAuthReturn), { replace: true });
+  }
 
   useEffect(
     () => scheduleIdleModelPreload(preloadRegisterCameraModels, "registration models"),
     [],
   );
+
+  useEffect(() => {
+    const url = new URL(window.location.href);
+    if (!clientAuthReturn || url.searchParams.get("fresh_login") !== "1") return;
+
+    url.searchParams.delete("fresh_login");
+    window.history.replaceState(window.history.state, "", url.href);
+    clearEmployeeSession();
+  }, [clearEmployeeSession, clientAuthReturn]);
 
   useEffect(() => {
     if (!employee) return;
@@ -222,7 +255,7 @@ export default function Home({
                       maxLength={6}
                       aria-label="Employee code 6 digits"
                       disabled={employeeLoginBusy}
-                      autoFocus
+                      autoFocus={!employeeCode}
                     />
                   </div>
                 </div>
@@ -254,6 +287,7 @@ export default function Home({
                       maxLength={6}
                       aria-label="Password 6 digits"
                       disabled={employeeLoginBusy}
+                      autoFocus={Boolean(employeeCode)}
                     />
                     <button
                       type="button"
@@ -278,22 +312,36 @@ export default function Home({
                 >
                   {employeeLoginBusy ? "กำลังเข้าสู่ระบบ..." : "กดเข้าสู่ระบบ"}
                 </button>
+
               </form>
 
             </div>
-            <div className={styles.returnButtonContainer}>
 
-              {returnSite ? (
-                <button
-                  type="button"
-                  className={styles.returnButton}
-                  onClick={returnToSource}
-                  title={`กลับไปยัง ${returnSite.origin}`}
-                >
-                  กลับหน้าหลัก
-                </button>
-              ) : null}
-            </div>
+            {clientAuthReturn || returnSite ? (
+              <div className={styles.returnButtonContainer}>
+                {clientAuthReturn ? (
+                  <button
+                    type="button"
+                    className={styles.returnButton}
+                    onClick={returnToClientAuth}
+                    disabled={employeeLoginBusy}
+                  >
+                    กลับหน้าหลัก
+                  </button>
+                ) : returnSite ? (
+                  <button
+                    type="button"
+                    className={styles.returnButton}
+                    onClick={returnToSource}
+                    disabled={employeeLoginBusy}
+                    title={`กลับไปยัง ${returnSite.origin}`}
+                  >
+                    <ArrowLeft size={18} aria-hidden="true" />
+                    กลับหน้าหลัก
+                  </button>
+                ) : null}
+              </div>
+            ) : null}
           </section>
         </div>
 
@@ -448,7 +496,9 @@ export default function Home({
                 message="บันทึกรูปใบหน้าสำเร็จ"
                 variant="success"
                 showCloseButton
-                onClose={() => setStatus("idle")}
+                onClose={() => {
+                  setStatus("idle");
+                }}
               />
             ) : null}
 
@@ -506,6 +556,7 @@ export default function Home({
                 onClick={() => setEmployeeRoute("verify")}
                 disabled={photoLoading || isBusy}
               >
+                <ScanFace className={styles.fvPrimaryIcon} aria-hidden="true" />
                 ทดสอบสแกนใบหน้า
               </button>
             ) : status !== "failed" ? (
@@ -534,12 +585,13 @@ export default function Home({
           <button
             type="button"
             className={styles.logoutButton}
-            onClick={logout}
+            onClick={clientAuthReturn ? returnToClientAuth : logout}
             disabled={isBusy}
           >
             ออกจากระบบ
             <FontAwesomeIcon icon={faRightFromBracket} />
           </button>
+
         </section>
       </div>
 

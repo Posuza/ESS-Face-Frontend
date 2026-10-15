@@ -17,8 +17,8 @@ import {
   FaUserFriends,
 } from "react-icons/fa";
 
-import RegisterCameraModal from "@/components/RegisterCameraModal";
-import PermissionErrorModal from "@/components/auth/popup/PermissionErrorModal";
+import RegisterCameraModal from "@/components/registeration/RegisterCameraModal";
+import PermissionErrorModal from "@/components/registeration/auth/popup/PermissionErrorModal";
 import {
   isSuperAdminRole,
   type AdminUserListOptions,

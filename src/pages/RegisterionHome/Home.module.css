@@ -199,7 +199,7 @@
   display: grid;
   place-items: center;
   border: 0;
-  border-radius: 8px;
+  border-radius: 999px;
   background: transparent;
   color: #07577d;
   cursor: pointer;
@@ -620,13 +620,13 @@
   color: #b54708 !important;
 }
 
-.fvPrimary {
+.fvPrimary.fvPrimary {
   margin-top: 12px;
   width: 100%;
   max-width: 100%;
   height: clamp(50px, 6vw, 56px);
   border: 0;
-  border-radius: 8px;
+  border-radius: 999px;
   cursor: pointer;
 
   color: #fff;
@@ -636,7 +636,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 12px;
+  gap: 6px;
   padding: 0 14px;
   line-height: 1.18;
   text-align: center;
@@ -653,7 +653,10 @@
 }
 
 .fvPrimaryIcon {
-  font-size: 20px;
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+  flex: 0 0 auto;
 }
 
 /* Logout button — deliberately a different (neutral/dark) color from the
@@ -778,7 +781,7 @@
     font-size: 14px;
   }
 
-  .fvPrimary,
+  .fvPrimary.fvPrimary,
   .logoutButton {
     font-size: 16px;
   }

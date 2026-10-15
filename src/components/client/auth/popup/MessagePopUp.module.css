@@ -1,0 +1,353 @@
+.backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    background: rgba(0, 0, 0, 0.45);
+    backdrop-filter: blur(4px);
+    display: grid;
+    place-items: center;
+    animation: fadeIn 0.25s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.modal {
+    position: relative;
+    width: min(440px, 90vw);
+    background: #ebedf2;
+    border-radius: 24px;
+    box-shadow:
+        0 20px 40px rgba(0, 0, 0, 0.18),
+        0 1px 3px rgba(0, 0, 0, 0.05);
+    padding: 32px 32px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    animation: scaleUp 0.2s ease-out both;
+    box-sizing: border-box;
+}
+
+@keyframes scaleUp {
+    from {
+        transform: scale(0.9);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.closeButton {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: transparent;
+    color: #596579;
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    transition:
+        background-color 0.15s ease,
+        color 0.15s ease;
+}
+
+.closeButton:hover {
+    background: rgba(255, 255, 255, 0.65);
+    color: #334155;
+}
+
+.closeButton:focus-visible {
+    outline: 2px solid var(--blueText);
+    outline-offset: 2px;
+}
+
+.closeIcon {
+    width: 24px;
+    height: 24px;
+    stroke-width: 2;
+}
+
+.badge {
+    width: 51px;
+    height: 51px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.5);
+    border: 1.5px solid rgba(255, 255, 255, 0.75);
+    display: grid;
+    place-items: center;
+    margin-bottom: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
+}
+
+.badgeIcon {
+    width: 29px;
+    height: 29px;
+    color: var(--blueText);
+    stroke-width: 2.15;
+}
+
+.warningTitle,
+.errorTitle {
+    font-size: 18px;
+    font-weight: 700;
+    margin: 0 0 10px;
+    letter-spacing: 0.2px;
+    font-family: "Prompt", sans-serif;
+}
+
+.warningTitle {
+    color: #ab6b0e;
+}
+
+.errorTitle {
+    color: #cc0000;
+}
+
+.body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    flex: 1;
+    min-height: 45px;
+}
+
+.messageArea {
+    margin-top: auto;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    min-height: 20px;
+}
+
+.messageLine {
+    font-size: 12px;
+    font-weight: 500;
+    color: #e60000;
+    line-height: 1.35;
+    margin: 0;
+    word-break: break-word;
+    white-space: pre-wrap;
+    font-family: "Prompt", sans-serif;
+}
+
+.contacts {
+    margin-top: 10px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.contact {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+}
+
+.contactEmail {
+    color: #526f84;
+    font-size: 11px;
+    font-weight: 500;
+    line-height: 1.35;
+    opacity: 0.9;
+    font-family: "Prompt", sans-serif;
+}
+
+/* "หรือ" between contact information and action */
+.orDivider {
+    width: min(100%, 210px);
+    margin-top: 9px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    font-family: "Prompt", sans-serif;
+}
+
+.orLine {
+    width: 10px;
+    height: 1.5px;
+    background: var(--blueText)
+}
+
+.orText {
+    font-size: 16px;
+    font-weight: 500;
+    color:var(--blueText);
+}
+
+/* Action button */
+.actionLink {
+    position: relative;
+    width: min(100%, 300px);
+    min-height: 48px;
+    margin-top: 10px;
+    padding: 6px 14px;
+    box-sizing: border-box;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1.5px solid #9eb5c8;
+    border-radius: 25px;
+    background: transparent;
+
+    color: #24597f;
+    text-decoration: none;
+    font-family: "Prompt", sans-serif;
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 1.2;
+
+    transition:
+        background-color 0.15s ease,
+        border-color 0.15s ease,
+        box-shadow 0.15s ease,
+        transform 0.15s ease,
+        color 0.15s ease;
+}
+
+.actionLink:hover {
+    background: rgba(255, 255, 255, 0.78);
+    border-color: #8da9bf;
+    color: #24597f;
+    box-shadow: 0 4px 10px rgba(45, 98, 138, 0.10);
+    transform: translateY(-1px);
+}
+
+.actionLink:active {
+    transform: translateY(0);
+    box-shadow: none;
+}
+
+.actionLink:focus-visible {
+    outline: 2px solid rgba(45, 98, 138, 0.35);
+    outline-offset: 3px;
+}
+
+/* Icon + text remain visually centered */
+.actionCenter {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    pointer-events: none;
+}
+
+.actionIconWrap {
+    width: 24px;
+    height: 24px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.actionIcon {
+    width: 22px;
+    height: 22px;
+    display: block;
+    object-fit: contain;
+    opacity: 1;
+    filter:
+        brightness(0)
+        saturate(100%)
+        invert(30%)
+        sepia(29%)
+        saturate(1187%)
+        hue-rotate(173deg)
+        brightness(92%)
+        contrast(92%);
+}
+
+.actionLabel {
+    display: inline-block;
+    white-space: nowrap;
+    text-align: center;
+}
+
+/* Arrow fixed close to right edge */
+.actionChevron {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 18px;
+    height: 18px;
+    stroke-width: 2.15px;
+    opacity: 1;
+    pointer-events: none;
+}
+
+@media (max-width: 480px) {
+    .modal {
+        width: min(400px, calc(100vw - 28px));
+        padding: 30px 22px 18px;
+        border-radius: 22px;
+    }
+
+    .orDivider {
+        margin-top: 8px;
+        gap: 6px;
+    }
+
+    .orLine {
+        width: 15px;
+    }
+
+    .orText {
+        font-size: 13px;
+    }
+
+    .actionLink {
+        width: min(100%, 290px);
+        min-height: 44px;
+        margin-top: 9px;
+        padding: 6px 13px;
+        font-size: 14px;
+    }
+
+    .actionCenter {
+        gap: 6px;
+    }
+
+    .actionIconWrap {
+        width: 22px;
+        height: 22px;
+    }
+
+    .actionIcon {
+        width: 20px;
+        height: 20px;
+    }
+
+    .actionChevron {
+        right: 11px;
+        width: 17px;
+        height: 17px;
+        stroke-width: 2px;
+    }
+}

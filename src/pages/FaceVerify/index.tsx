@@ -5,11 +5,11 @@
 import { useEffect, useRef, useState, type FormEvent } from "react";
 
 import Header from "@/layout/Header";
-import LoadingModal from "@/components/LoadingModal";
-import PermissionErrorModal from "@/components/auth/popup/PermissionErrorModal";
-import VerificationCameraModal from "@/components/auth/models/VerificationCameraModal1";
-import { scheduleIdleModelPreload } from "@/components/ai/modelPreloadScheduler";
-import { preloadVerificationCameraModels } from "@/components/ai/verificationCameraPreloader";
+import LoadingModal from "@/components/registeration/LoadingModal";
+import PermissionErrorModal from "@/components/registeration/auth/popup/PermissionErrorModal";
+import VerificationCameraModal from "@/components/registeration/auth/models/VerificationCameraModal1";
+import { scheduleIdleModelPreload } from "@/components/registeration/ai/modelPreloadScheduler";
+import { preloadVerificationCameraModels } from "@/components/registeration/ai/verificationCameraPreloader";
 import { useAppStore } from "@/store";
 import type { EmployeeProfile } from "@/types/api";
 

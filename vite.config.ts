@@ -9,6 +9,7 @@ export default defineConfig({
   plugins: [react()],
   server: {
     host: true,
+    cors: true,
     allowedHosts: [".trycloudflare.com", ".loca.lt", "guts.n6t.online"],
     hmr: usePublicHmr
       ? {
@@ -26,6 +27,7 @@ export default defineConfig({
   },
   preview: {
     host: true,
+    cors: true,
     allowedHosts: [".trycloudflare.com", ".loca.lt", "guts.n6t.online"],
   },
   resolve: {

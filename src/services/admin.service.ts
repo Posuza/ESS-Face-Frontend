@@ -2,12 +2,19 @@ import { API_URL } from "@/config/api.config";
 import type {
   AdminEmployee,
   AdminSession,
+  BlockedClientIp,
+  ClientIpBlockCreate,
+  ClientApplication,
+  ClientApplicationCreate,
+  ClientApplicationUpdate,
   DirectoryEmployee,
   EmployeeSummary,
   FaceMode,
   ModelGroup,
   ModelSchema,
   ModelSettingsDocument,
+  PresenceSnapshot,
+  PresenceSettings,
 } from "@/types/api";
 
 export const ADMIN_SESSION_KEY = "guts-face.admin.v1";
@@ -64,6 +71,15 @@ function adminHeaders(adminCode: string, json = true): HeadersInit {
   };
 }
 
+function presenceWebSocketUrl(adminCode: string) {
+  const url = new URL(API_URL, window.location.origin);
+  url.protocol = url.protocol === "https:" ? "wss:" : "ws:";
+  url.pathname = `${url.pathname.replace(/\/+$/, "")}/admin/client-applications/presence/ws`;
+  url.search = "";
+  url.searchParams.set("employee_code", adminCode);
+  return url;
+}
+
 async function parseResponse<T>(response: Response): Promise<T> {
   if (response.ok) {
     return (response.status === 204 ? undefined : await response.json()) as T;
@@ -80,6 +96,44 @@ async function parseResponse<T>(response: Response): Promise<T> {
 }
 
 export const adminService = {
+  watchClientPresence(
+    adminCode: string,
+    onSnapshot: (snapshot: PresenceSnapshot) => void,
+    onError: () => void,
+  ) {
+    let stopped = false;
+    let socket: WebSocket | null = null;
+    let reconnectTimer: number | null = null;
+
+    const connect = () => {
+      reconnectTimer = null;
+      if (stopped) return;
+      socket = new WebSocket(presenceWebSocketUrl(adminCode));
+      socket.onmessage = (event) => {
+        try {
+          onSnapshot(JSON.parse(event.data) as PresenceSnapshot);
+        } catch {
+          onError();
+        }
+      };
+      socket.onerror = onError;
+      socket.onclose = (event) => {
+        socket = null;
+        if (stopped || event.code === 1008) return;
+        reconnectTimer = window.setTimeout(connect, 2_000);
+      };
+    };
+
+    // Let React's development-only StrictMode cleanup cancel the discarded mount
+    // before it creates a short-lived WebSocket through the Vite proxy.
+    reconnectTimer = window.setTimeout(connect, 0);
+    return () => {
+      stopped = true;
+      if (reconnectTimer !== null) window.clearTimeout(reconnectTimer);
+      socket?.close(1000, "Monitor closed");
+    };
+  },
+
   async login(employeeCode: string, password: string): Promise<AdminSession> {
     const response = await fetch(`${API_URL}/auth/login`, {
       method: "POST",
@@ -88,6 +142,152 @@ export const adminService = {
     });
     const data = await parseResponse<{ employee: AdminSession }>(response);
     return data.employee;
+  },
+
+  async listClientApplications(adminCode: string) {
+    return parseResponse<ClientApplication[]>(
+      await fetch(`${API_URL}/admin/client-applications`, {
+        headers: adminHeaders(adminCode, false),
+        cache: "no-store",
+      }),
+    );
+  },
+
+  async getClientPresence(adminCode: string) {
+    return parseResponse<PresenceSnapshot>(
+      await fetch(`${API_URL}/admin/client-applications/presence`, {
+        headers: adminHeaders(adminCode, false),
+        cache: "no-store",
+      }),
+    );
+  },
+
+  async getClientPresenceSettings(adminCode: string) {
+    return parseResponse<PresenceSettings>(
+      await fetch(`${API_URL}/admin/client-applications/presence/settings`, {
+        headers: adminHeaders(adminCode, false),
+        cache: "no-store",
+      }),
+    );
+  },
+
+  async updateClientPresenceSettings(adminCode: string, enabled: boolean) {
+    return parseResponse<PresenceSettings>(
+      await fetch(`${API_URL}/admin/client-applications/presence/settings`, {
+        method: "PUT",
+        headers: adminHeaders(adminCode),
+        body: JSON.stringify({ enabled }),
+      }),
+    );
+  },
+
+  async generateClientApplicationKeyPair(adminCode: string) {
+    return parseResponse<{ public_key: string; private_key: string }>(
+      await fetch(`${API_URL}/admin/client-applications/generate-key-pair`, {
+        method: "POST",
+        headers: adminHeaders(adminCode, false),
+      }),
+    );
+  },
+
+  async createClientApplication(adminCode: string, payload: ClientApplicationCreate) {
+    return parseResponse<ClientApplication>(
+      await fetch(`${API_URL}/admin/client-applications`, {
+        method: "POST",
+        headers: adminHeaders(adminCode),
+        body: JSON.stringify(payload),
+      }),
+    );
+  },
+
+  async updateClientApplication(
+    adminCode: string,
+    appRegistrationId: number,
+    payload: ClientApplicationUpdate,
+  ) {
+    return parseResponse<ClientApplication>(
+      await fetch(`${API_URL}/admin/client-applications/${appRegistrationId}`, {
+        method: "PATCH",
+        headers: adminHeaders(adminCode),
+        body: JSON.stringify(payload),
+      }),
+    );
+  },
+
+  async deleteClientApplication(adminCode: string, appRegistrationId: number) {
+    return parseResponse<{ message: string }>(
+      await fetch(`${API_URL}/admin/client-applications/${appRegistrationId}`, {
+        method: "DELETE",
+        headers: adminHeaders(adminCode, false),
+      }),
+    );
+  },
+
+  async rotateClientApplicationSigningKey(adminCode: string, appRegistrationId: number) {
+    return parseResponse<{ message: string; updated_at: string }>(
+      await fetch(
+        `${API_URL}/admin/client-applications/${appRegistrationId}/rotate-signing-key`,
+        {
+          method: "POST",
+          headers: adminHeaders(adminCode, false),
+        },
+      ),
+    );
+  },
+
+  async revealClientApplicationSigningKey(adminCode: string, appRegistrationId: number) {
+    return parseResponse<{ private_key: string }>(
+      await fetch(
+        `${API_URL}/admin/client-applications/${appRegistrationId}/signing-key`,
+        {
+          headers: adminHeaders(adminCode, false),
+          cache: "no-store",
+        },
+      ),
+    );
+  },
+
+  async listBlockedClientIps(adminCode: string) {
+    return parseResponse<BlockedClientIp[]>(
+      await fetch(`${API_URL}/admin/blocked-client-ips`, {
+        headers: adminHeaders(adminCode, false),
+        cache: "no-store",
+      }),
+    );
+  },
+
+  async blockClientIp(adminCode: string, payload: ClientIpBlockCreate) {
+    return parseResponse<BlockedClientIp>(
+      await fetch(`${API_URL}/admin/blocked-client-ips`, {
+        method: "POST",
+        headers: adminHeaders(adminCode),
+        body: JSON.stringify(payload),
+      }),
+    );
+  },
+
+  async unblockClientIp(adminCode: string, ipAddress: string) {
+    return parseResponse<BlockedClientIp>(
+      await fetch(
+        `${API_URL}/admin/blocked-client-ips/${encodeURIComponent(ipAddress)}/unblock`,
+        {
+          method: "PATCH",
+          headers: adminHeaders(adminCode, false),
+        },
+      ),
+    );
+  },
+
+  async deleteBlockedClientIp(adminCode: string, ipAddress: string) {
+    return parseResponse<void>(
+      await fetch(
+        `${API_URL}/admin/blocked-client-ips/${encodeURIComponent(ipAddress)}`,
+        {
+          method: "DELETE",
+          headers: adminHeaders(adminCode, false),
+        },
+      ),
+    );
   },
 
   async listEmployeeDirectory(

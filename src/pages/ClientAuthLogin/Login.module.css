@@ -1,0 +1,40 @@
+/* src/pages/Login/Login.module.css */
+/* Page shell only. Each Login child component owns its own CSS module. */
+.guts-bg {
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  justify-items: center;
+  align-content: start;
+  row-gap: clamp(6px, 1.2vh, 10px);
+  padding: clamp(8px, 1.5vw, 14px) clamp(14px, 3.5vw, 40px)
+    clamp(14px, 3.5vw, 40px);
+}
+
+.guts-app-header,
+.login-stage {
+  width: min(640px, 92vw);
+}
+
+.guts-app-header {
+  --header-logo-width: 180px;
+  --header-logo-max-height: 86px;
+  --header-sub-en-size: 16px;
+  --header-sub-th-size: 16px;
+  --header-sub-en-weight: 900;
+  --header-sub-th-weight: 900;
+
+  text-align: center;
+  margin-top: 0;
+}
+
+.login-stage {
+  width: min(640px, 92vw);
+  display: grid;
+  justify-items: center;
+  align-items: start;
+}
+
+.login-stage > * {
+  max-width: 100%;
+}

@@ -2,11 +2,11 @@ import { useEffect, useState, type CSSProperties } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faRotateLeft, faSave, faServer, faWindowMaximize, faXmark } from "@fortawesome/free-solid-svg-icons";
 
-import PermissionErrorModal from "@/components/auth/popup/PermissionErrorModal";
+import PermissionErrorModal from "@/components/registeration/auth/popup/PermissionErrorModal";
 import {
   AdminFaceVisualGuide,
   type AdminFaceVisualGuideValues,
-} from "@/components/ai/FaceVisualGuide";
+} from "@/components/registeration/ai/FaceVisualGuide";
 import { useAppStore } from "@/store";
 import type { ModelGroup, ModelSchema, SettingMetadata } from "@/types/api";
 

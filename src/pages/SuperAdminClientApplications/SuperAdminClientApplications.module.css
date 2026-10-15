@@ -1,0 +1,2956 @@
+.page {
+  width: 100%;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  color: #1b2b4a;
+}
+
+.heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.heading h2,
+.modalHeader h3 {
+  margin: 0;
+  color: rgba(27, 43, 74, 0.94);
+  font-size: 18px;
+  font-weight: 900;
+}
+
+.heading p {
+  margin: 5px 0 0;
+  color: rgba(27, 43, 74, 0.62);
+  font-size: 13px;
+  font-weight: 650;
+}
+
+.addButton,
+.primaryButton,
+.secondaryButton {
+  min-height: 40px;
+  padding: 0 14px;
+  border: 1px solid transparent;
+  border-radius: 7px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.toolbar {
+  width: 100%;
+  min-width: 0;
+  display: grid;
+  grid-template-columns: minmax(260px, 1fr) auto;
+  align-items: center;
+  gap: 10px;
+}
+
+.searchBox {
+  min-width: 0;
+  height: 42px;
+  padding: 0 8px 0 13px;
+  border: 1px solid rgba(2, 75, 118, 0.18);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #fff;
+  color: rgba(2, 75, 118, 0.68);
+  box-shadow: 0 3px 10px rgba(27, 43, 74, 0.04);
+}
+
+.searchBox:focus-within {
+  border-color: rgba(2, 75, 118, 0.48);
+  box-shadow: 0 0 0 3px rgba(2, 75, 118, 0.09);
+}
+
+.searchBox input {
+  min-width: 0;
+  width: 100%;
+  height: 40px;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: #1b2b4a;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 650;
+}
+
+.searchBox input::-webkit-search-cancel-button { display: none; }
+
+.searchBox > button {
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: 0;
+  border-radius: 5px;
+  display: inline-grid;
+  flex: 0 0 28px;
+  place-items: center;
+  background: transparent;
+  color: #024b76;
+  cursor: pointer;
+}
+
+.searchBox > button:hover { background: #edf6fb; }
+
+.toolbarActions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.statusFilters {
+  min-height: 42px;
+  padding: 3px;
+  border: 1px solid rgba(2, 75, 118, 0.16);
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  background: #e8eef4;
+}
+
+.statusFilters button {
+  min-height: 34px;
+  padding: 0 10px;
+  border: 0;
+  border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  background: transparent;
+  color: rgba(27, 43, 74, 0.68);
+  font: inherit;
+  font-size: 12px;
+  font-weight: 800;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.statusFilters button span {
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: 9px;
+  display: inline-grid;
+  place-items: center;
+  background: rgba(27, 43, 74, 0.1);
+  font-size: 10px;
+}
+
+.statusFilters .filterActive {
+  background: #fff;
+  color: #024b76;
+  box-shadow: 0 1px 4px rgba(27, 43, 74, 0.14);
+}
+
+.addButton,
+.primaryButton {
+  background: var(--brand, #024b76);
+  color: #fff;
+}
+
+.secondaryButton {
+  border-color: rgba(27, 43, 74, 0.2);
+  background: #fff;
+  color: #1b2b4a;
+}
+
+.error,
+.notice {
+  padding: 11px 14px;
+  border: 1px solid;
+  border-radius: 7px;
+  font-size: 13px;
+  font-weight: 750;
+}
+
+.error {
+  border-color: rgba(180, 35, 24, 0.2);
+  background: #fef3f2;
+  color: #b42318;
+}
+
+.notice {
+  border-color: rgba(6, 118, 71, 0.2);
+  background: #ecfdf3;
+  color: #067647;
+}
+
+.tableWrap {
+  width: 100%;
+  min-width: 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  border: 1px solid rgba(2, 75, 118, 0.12);
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0 10px 28px rgba(27, 43, 74, 0.07);
+  -webkit-overflow-scrolling: touch;
+}
+
+.tableWrap table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  table-layout: fixed;
+  font-size: 13px;
+}
+
+.desktopTable { min-width: 1000px; }
+.mobileTable { display: none; }
+
+.sequenceColumn { width: 5%; }
+.applicationColumn { width: 25%; }
+.publicKeyColumn { width: 20%; }
+.actorColumn { width: 15%; }
+.updatedColumn { width: 15%; }
+.statusColumn { width: 9%; }
+.actionColumn { width: 11%; }
+
+.sequenceHeader,
+.sequenceCell {
+  text-align: center !important;
+}
+
+.sequenceCell {
+  color: rgba(27, 43, 74, 0.66);
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+}
+
+.tableWrap th,
+.tableWrap td {
+  padding: 11px 10px;
+  border-bottom: 1px solid rgba(27, 43, 74, 0.08);
+  text-align: center;
+  vertical-align: middle;
+}
+
+.tableWrap th {
+  background: var(--brand, #024b76);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 900;
+  white-space: nowrap;
+}
+
+.tableWrap th:first-child { border-radius: 9px 0 0; }
+.tableWrap th:last-child { border-radius: 0 9px 0 0; }
+
+.tableWrap tbody tr:last-child td { border-bottom: 0; }
+.tableWrap tbody tr { background: #fff; transition: background 130ms ease; }
+.tableWrap tbody tr:hover { background: rgba(2, 75, 118, 0.027); }
+
+.keyCell,
+.rowActions {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+
+.rowActions { flex-wrap: nowrap; }
+
+.keyCell code,
+.origin {
+  color: #153653;
+  font-size: 12px;
+}
+
+.keyCell code {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.actorCell {
+  display: grid;
+  gap: 3px;
+  color: rgba(27, 43, 74, 0.65);
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.actorCell strong { color: #1b2b4a; }
+
+.origin {
+  display: block;
+  width: 100%;
+  overflow-wrap: anywhere;
+  text-align: left;
+}
+
+.iconButton {
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 1px solid rgba(27, 43, 74, 0.16);
+  border-radius: 6px;
+  display: inline-grid;
+  place-items: center;
+  background: #fff;
+  color: #024b76;
+  cursor: pointer;
+}
+
+.iconButton:hover:not(:disabled) { background: #edf6fb; }
+.iconButton:disabled,
+.addButton:disabled,
+.primaryButton:disabled,
+.secondaryButton:disabled { opacity: 0.52; cursor: not-allowed; }
+
+.statusToggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  cursor: pointer;
+}
+
+.mobileStatusToggle { display: none; }
+
+.statusToggle input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.statusToggle > span {
+  width: 34px;
+  height: 20px;
+  padding: 2px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  background: #98a2b3;
+  transition: background 140ms ease;
+}
+
+.statusToggle > span::after {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #fff;
+  content: "";
+  transition: transform 140ms ease;
+}
+
+.statusToggle input:checked + span { background: #16834b; }
+.statusToggle input:checked + span::after { transform: translateX(14px); }
+.statusToggle input:focus-visible + span { outline: 3px solid rgba(2, 75, 118, 0.24); }
+.statusToggle em { font-style: normal; font-size: 12px; font-weight: 750; }
+
+.empty {
+  min-height: 150px;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 8px;
+  color: rgba(27, 43, 74, 0.52);
+  font-size: 13px;
+  font-weight: 750;
+}
+
+.modalBackdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  padding: 20px;
+  display: grid;
+  place-items: center;
+  background: rgba(10, 23, 38, 0.56);
+}
+
+.modal {
+  width: min(520px, 100%);
+  max-height: calc(100dvh - 40px);
+  overflow-y: auto;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.24);
+}
+
+.modalHeader {
+  padding: 16px 18px;
+  border-bottom: 1px solid rgba(27, 43, 74, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.modal form {
+  padding: 18px;
+  display: grid;
+  gap: 16px;
+}
+
+.modal label {
+  display: grid;
+  gap: 7px;
+  color: #1b2b4a;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.modal input {
+  width: 100%;
+  height: 42px;
+  padding: 0 11px;
+  border: 1px solid rgba(27, 43, 74, 0.24);
+  border-radius: 6px;
+  color: #1b2b4a;
+  font: inherit;
+}
+
+.modal input:focus {
+  border-color: #0877b8;
+  outline: 3px solid rgba(8, 119, 184, 0.12);
+}
+
+.modal small { color: rgba(27, 43, 74, 0.58); font-weight: 600; }
+
+.formStepContent {
+  min-width: 0;
+  display: grid;
+  gap: 16px;
+}
+
+.formStepSection {
+  position: relative;
+  min-width: 0;
+  display: grid;
+  grid-template-columns: 32px minmax(0, 1fr);
+  align-items: start;
+  gap: 14px;
+}
+
+.formStepConnected::after {
+  position: absolute;
+  z-index: 0;
+  top: 28px;
+  bottom: -17px;
+  left: 13px;
+  width: 2px;
+  background: #dfe6ec;
+  content: "";
+}
+
+.formStepMarker {
+  position: relative;
+  z-index: 1;
+  width: 28px;
+  height: 28px;
+  border: 1px solid rgba(27, 43, 74, 0.16);
+  border-radius: 50%;
+  display: inline-grid;
+  place-items: center;
+  background: #ffffff;
+  color: rgba(27, 43, 74, 0.48);
+  font-size: 11px;
+  font-weight: 900;
+}
+
+.formStepCurrent {
+  border-color: #024b76;
+  background: #024b76;
+  color: #ffffff;
+  box-shadow: 0 3px 8px rgba(2, 75, 118, 0.18);
+}
+
+.formStepComplete {
+  border-color: rgba(22, 131, 75, 0.28);
+  background: #eaf7ef;
+  color: #16834b;
+}
+
+.formStepPanel {
+  min-width: 0;
+  display: grid;
+  gap: 16px;
+}
+
+.formKeySection {
+  min-width: 0;
+  padding-top: 12px;
+  border-top: 1px solid rgba(27, 43, 74, 0.12);
+  display: grid;
+  gap: 8px;
+}
+
+.formKeyHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.formKeyHeader strong {
+  color: #1b2b4a;
+  font-size: 13px;
+  font-weight: 850;
+}
+
+.generateKeyButton {
+  min-height: 30px;
+  padding: 0 9px;
+  border: 1px solid rgba(2, 75, 118, 0.18);
+  border-radius: 7px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  background: #ffffff;
+  color: #024b76;
+  font: inherit;
+  font-size: 11px;
+  font-weight: 800;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.generateKeyButton:hover:not(:disabled) {
+  background: #edf6fb;
+}
+
+.generateKeyButton:disabled,
+.formKeyIconButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.formKeyRow {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: 74px minmax(0, 1fr) auto;
+  align-items: start;
+  gap: 8px;
+}
+
+.formKeyRow > span:first-child {
+  align-self: start;
+  padding-top: 1px;
+  color: rgba(27, 43, 74, 0.62);
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 1.15;
+  white-space: nowrap;
+}
+
+.modal .formKeyTextarea {
+  min-width: 0;
+  width: 100%;
+  min-height: 34px;
+  padding: 8px 9px;
+  border: 1px solid rgba(27, 43, 74, 0.12);
+  border-radius: 6px;
+  overflow: hidden;
+  resize: none;
+  background: #f7f9fc;
+  color: #153653;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 12px;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}
+
+.modal .formKeyTextarea:focus {
+  border-color: rgba(2, 75, 118, 0.3);
+  outline: 2px solid rgba(8, 119, 184, 0.08);
+}
+
+.modal .formKeyTextarea::placeholder {
+  color: rgba(27, 43, 74, 0.38);
+  font-family: inherit;
+}
+
+.formKeyControls {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.formKeyIconButton {
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: 1px solid rgba(27, 43, 74, 0.14);
+  border-radius: 6px;
+  display: inline-grid;
+  place-items: center;
+  background: #ffffff;
+  color: #024b76;
+  cursor: pointer;
+}
+
+.formKeyIconButton:hover:not(:disabled) {
+  background: #edf6fb;
+}
+
+.formActions {
+  padding-top: 4px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.spinning { animation: spin 800ms linear infinite; }
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+@media (max-width: 1023px) {
+  .heading {
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .heading p { max-width: 360px; }
+
+  .toolbar {
+    grid-template-columns: 1fr;
+    align-items: stretch;
+  }
+
+  .toolbarActions { justify-content: space-between; }
+
+  .tableWrap { overflow-x: hidden; }
+  .desktopTable { display: none; }
+
+  .tableWrap .mobileTable {
+    display: table;
+    min-width: 0;
+  }
+
+  .mobileStatusColumn { width: 76px; }
+  .mobileActionColumn { width: 86px; }
+
+  .mobileTable th {
+    height: 42px;
+    padding: 8px;
+    font-size: 12px;
+  }
+
+  .mobileTable th:first-child,
+  .mobileTable td:first-child { text-align: left; }
+
+  .mobileTable td {
+    padding: 14px 10px;
+  }
+
+  .mobileTable th:nth-child(2),
+  .mobileTable th:nth-child(3),
+  .mobileTable td:nth-child(2),
+  .mobileTable td:nth-child(3) {
+    text-align: center;
+  }
+
+  .mobileTable td:nth-child(2),
+  .mobileTable td:nth-child(3) {
+    border-left: 1px solid rgba(27, 43, 74, 0.07);
+  }
+
+  .mobileApplication {
+    min-width: 0;
+    display: grid;
+    gap: 5px;
+  }
+
+  .mobileApplication > strong {
+    color: #1b2b4a;
+    font-size: 14px;
+    font-weight: 900;
+    line-height: 1.25;
+  }
+
+  .mobileOrigin {
+    min-width: 0;
+    overflow: hidden;
+    color: #31516f;
+    font-size: 12px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .mobileKeyRow {
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .mobileKeyRow code {
+    min-width: 0;
+    overflow: hidden;
+    color: rgba(27, 43, 74, 0.76);
+    font-size: 11px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .mobileKeyRow .iconButton {
+    width: 28px;
+    height: 28px;
+    flex: 0 0 28px;
+  }
+
+  .mobileMetadata {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    color: rgba(27, 43, 74, 0.52);
+    font-size: 10px;
+    font-weight: 650;
+    line-height: 1.3;
+  }
+
+  .mobileStatusToggle {
+    display: inline-grid;
+    justify-items: center;
+    gap: 5px;
+    cursor: pointer;
+  }
+
+  .mobileStatusToggle input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .mobileStatusToggle > span {
+    width: 38px;
+    height: 22px;
+    padding: 2px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    background: #98a2b3;
+    transition: background 140ms ease;
+  }
+
+  .mobileStatusToggle > span::after {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #fff;
+    content: "";
+    transition: transform 140ms ease;
+  }
+
+  .mobileStatusToggle input:checked + span { background: #178747; }
+  .mobileStatusToggle input:checked + span::after { transform: translateX(16px); }
+  .mobileStatusToggle input:focus-visible + span { outline: 3px solid rgba(2, 75, 118, 0.24); }
+  .mobileStatusToggle input:disabled ~ * { opacity: 0.58; cursor: wait; }
+
+  .mobileStatusToggle em {
+    color: #b42318;
+    font-size: 11px;
+    font-style: normal;
+    font-weight: 800;
+  }
+
+  .mobileStatusToggle input:checked ~ em { color: #178747; }
+
+  .mobileRowActions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+  }
+
+  .mobileRowActions .iconButton {
+    width: 34px;
+    height: 34px;
+    flex: 0 0 34px;
+    background: #edf6fb;
+    border-color: rgba(2, 75, 118, 0.18);
+  }
+
+  .mobileRowActions .iconButton:last-child {
+    border-color: rgba(180, 122, 0, 0.22);
+    background: #fff8e8;
+    color: #8a5b00;
+  }
+
+  .modalBackdrop { padding: 12px; }
+  .formActions > button { flex: 1; }
+}
+
+@media (max-width: 520px) {
+  .heading p {
+    max-width: 230px;
+    font-size: 12px;
+  }
+
+  .addButton {
+    min-width: 42px;
+    padding: 0 10px;
+    white-space: nowrap;
+  }
+
+  .toolbarActions {
+    align-items: stretch;
+    gap: 8px;
+  }
+
+  .statusFilters {
+    min-width: 0;
+    flex: 1;
+  }
+
+  .statusFilters button {
+    min-width: 0;
+    padding: 0 7px;
+    flex: 1;
+  }
+
+  .statusFilters button span { display: none; }
+
+  .mobileStatusColumn { width: 64px; }
+  .mobileActionColumn { width: 78px; }
+
+  .mobileTable td { padding: 11px 6px; }
+
+  .metadataSeparator { display: none; }
+  .mobileMetadata { display: grid; gap: 2px; }
+}
+
+
+/* =========================================================
+   Client application UI refinement
+   - cleaner toolbar/search
+   - responsive add button
+   - structured table with serial/data/status/action
+========================================================= */
+
+.toolbar {
+  gap: 12px;
+}
+
+.searchBox {
+  min-height: 44px;
+  height: 44px;
+  padding: 0 10px 0 14px;
+  border-radius: 11px;
+  border-color: rgba(2, 75, 118, 0.16);
+  box-shadow:
+    0 4px 14px rgba(27, 43, 74, 0.045),
+    inset 0 1px 0 rgba(255, 255, 255, 0.78);
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease,
+    background 160ms ease;
+}
+
+.searchBox > svg {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 auto;
+}
+
+.searchBox input {
+  height: 42px;
+  font-size: 13.5px;
+  font-weight: 600;
+}
+
+.searchBox > button {
+  width: 30px;
+  height: 30px;
+  flex-basis: 30px;
+  border-radius: 7px;
+}
+
+.statusFilters {
+  min-height: 44px;
+  padding: 3px;
+  border-radius: 11px;
+  background: #edf2f6;
+}
+
+.statusFilters button {
+  min-height: 36px;
+  padding-inline: 11px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 750;
+}
+
+.addButton {
+  min-height: 44px;
+  padding-inline: 15px;
+  border-radius: 11px;
+  gap: 7px;
+  box-shadow: 0 5px 14px rgba(2, 75, 118, 0.16);
+  transition:
+    transform 130ms ease,
+    box-shadow 130ms ease,
+    background 130ms ease;
+}
+
+.addButton:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 18px rgba(2, 75, 118, 0.2);
+}
+
+.addButton:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.addButtonIcon {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 auto;
+}
+
+.addButtonText {
+  display: inline;
+  white-space: nowrap;
+}
+
+.tableWrap {
+  border-radius: 12px;
+  border-color: rgba(2, 75, 118, 0.14);
+  background: #f8fbfd;
+  box-shadow:
+    0 10px 26px rgba(27, 43, 74, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.72);
+}
+
+.tableWrap thead th {
+  border-right: 1px solid rgba(255, 255, 255, 0.16);
+}
+
+.tableWrap thead th:last-child {
+  border-right: 0;
+}
+
+.tableWrap tbody tr {
+  background: #ffffff;
+}
+
+.tableWrap tbody tr:nth-child(even) {
+  background: #fbfdff;
+}
+
+.tableWrap tbody tr:hover {
+  background: #f4f9fc;
+}
+
+.iconButton {
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+}
+
+.rowActions {
+  gap: 7px;
+}
+
+/* Tablet / small desktop */
+@media (max-width: 1023px) {
+  .toolbar {
+    gap: 9px;
+  }
+
+  .toolbarActions {
+    gap: 8px;
+  }
+
+  .mobileSequenceColumn {
+    width: 62px;
+  }
+
+  .mobileDataColumn {
+    width: auto;
+  }
+
+  .mobileStatusColumn {
+    width: 86px;
+  }
+
+  .mobileActionColumn {
+    width: 92px;
+  }
+
+  .mobileTable th {
+    height: 44px;
+    padding: 9px 8px;
+    font-size: 12px;
+    font-weight: 800;
+    border-right: 1px solid rgba(255, 255, 255, 0.16);
+  }
+
+  .mobileTable th:last-child {
+    border-right: 0;
+  }
+
+  .mobileTable td {
+    padding: 12px 9px;
+    border-bottom-color: rgba(27, 43, 74, 0.075);
+    background: transparent;
+  }
+
+  .mobileTable tbody tr {
+    background: #ffffff;
+  }
+
+  .mobileTable tbody tr:nth-child(even) {
+    background: #fbfdff;
+  }
+
+  .mobileTable tbody tr:hover {
+    background: #f4f9fc;
+  }
+
+  .mobileSequenceHeader,
+  .mobileSequenceCell {
+    text-align: center !important;
+  }
+
+  .mobileSequenceCell {
+    color: rgba(27, 43, 74, 0.64);
+    font-size: 12px;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .mobileDataCell {
+    min-width: 0;
+    text-align: left !important;
+  }
+
+  .mobileApplication {
+    gap: 4px;
+  }
+
+  .mobileApplication > strong {
+    font-size: 13.5px;
+  }
+
+  .mobileOrigin {
+    font-size: 11.5px;
+  }
+
+  .mobileKeyRow code {
+    font-size: 10.5px;
+  }
+
+  .mobileMetadata {
+    font-size: 9.5px;
+  }
+
+  .mobileRowActions {
+    gap: 5px;
+  }
+
+  .mobileRowActions .iconButton {
+    width: 32px;
+    height: 32px;
+    flex-basis: 32px;
+    border-radius: 8px;
+  }
+}
+
+/* SM / phones */
+@media (max-width: 600px) {
+  .page {
+    gap: 13px;
+  }
+
+  .heading h2 {
+    font-size: 17px;
+  }
+
+  .heading p {
+    font-size: 11.5px;
+  }
+
+  .toolbar {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .searchBox {
+    grid-column: 1 / 2;
+    height: 40px;
+    min-height: 40px;
+    padding-left: 11px;
+    padding-right: 6px;
+    border-radius: 9px;
+  }
+
+  .searchBox > svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .searchBox input {
+    height: 38px;
+    font-size: 12px;
+  }
+
+  .searchBox > button {
+    width: 28px;
+    height: 28px;
+    flex-basis: 28px;
+  }
+
+  .toolbarActions {
+    display: contents;
+  }
+
+  .addButton {
+    grid-column: 2 / 3;
+    grid-row: 1;
+    width: 40px;
+    min-width: 40px;
+    min-height: 40px;
+    height: 40px;
+    padding: 0;
+    border-radius: 9px;
+  }
+
+  .addButtonText {
+    display: none;
+  }
+
+  .addButtonIcon {
+    width: 18px;
+    height: 18px;
+  }
+
+  .statusFilters {
+    grid-column: 1 / -1;
+    min-height: 38px;
+    width: 100%;
+    padding: 2px;
+    border-radius: 9px;
+  }
+
+  .statusFilters button {
+    min-height: 32px;
+    padding: 0 6px;
+    flex: 1 1 0;
+    font-size: 11px;
+    border-radius: 7px;
+  }
+
+  .statusFilters button span {
+    display: inline-grid;
+    min-width: 16px;
+    height: 16px;
+    padding: 0 4px;
+    font-size: 9px;
+  }
+
+  .tableWrap {
+    border-radius: 8px;
+    overflow-x: hidden;
+  }
+
+  .mobileSequenceColumn {
+    width: 11%;
+  }
+
+  .mobileDataColumn {
+    width: 49%;
+  }
+
+  .mobileStatusColumn {
+    width: 18%;
+  }
+
+  .mobileActionColumn {
+    width: 22%;
+  }
+
+  .mobileTable th {
+    height: auto;
+    padding: 9px 4px;
+    font-size: 11.5px;
+    line-height: 1.15;
+  }
+
+  .mobileTable td {
+    padding: 9px 5px;
+    font-size: 11px;
+    line-height: 1.25;
+    vertical-align: middle;
+  }
+
+  .mobileSequenceCell {
+    padding-inline: 3px !important;
+    font-size: 11px;
+  }
+
+  .mobileDataCell {
+    padding-left: 7px !important;
+    padding-right: 4px !important;
+  }
+
+  .mobileApplication {
+    gap: 3px;
+  }
+
+  .mobileApplication > strong {
+    font-size: 12px;
+    font-weight: 800;
+  }
+
+  .mobileOrigin {
+    font-size: 10px;
+  }
+
+  .mobileKeyRow {
+    gap: 3px;
+  }
+
+  .mobileKeyRow code {
+    font-size: 9.5px;
+  }
+
+  .mobileKeyRow .iconButton {
+    width: 24px;
+    height: 24px;
+    flex-basis: 24px;
+    border-radius: 6px;
+  }
+
+  .mobileMetadata {
+    display: grid;
+    gap: 1px;
+    font-size: 8.5px;
+    line-height: 1.2;
+  }
+
+  .metadataSeparator {
+    display: none;
+  }
+
+  .mobileStatusToggle {
+    gap: 4px;
+  }
+
+  .mobileStatusToggle > span {
+    width: 34px;
+    height: 20px;
+    padding: 2px;
+  }
+
+  .mobileStatusToggle > span::after {
+    width: 16px;
+    height: 16px;
+  }
+
+  .mobileStatusToggle input:checked + span::after {
+    transform: translateX(14px);
+  }
+
+  .mobileStatusToggle em {
+    font-size: 9.5px;
+  }
+
+  .mobileRowActions {
+    gap: 4px;
+  }
+
+  .mobileRowActions .iconButton {
+    width: 29px;
+    height: 29px;
+    flex-basis: 29px;
+    border-radius: 7px;
+  }
+
+  .mobileRowActions .iconButton svg {
+    width: 14px;
+    height: 14px;
+  }
+}
+
+/* XS */
+@media (max-width: 390px) {
+  .searchBox {
+    min-height: 38px;
+    height: 38px;
+  }
+
+  .searchBox input {
+    height: 36px;
+    font-size: 11.5px;
+  }
+
+  .addButton {
+    width: 38px;
+    min-width: 38px;
+    min-height: 38px;
+    height: 38px;
+  }
+
+  .statusFilters {
+    min-height: 36px;
+  }
+
+  .statusFilters button {
+    min-height: 30px;
+    padding-inline: 4px;
+    font-size: 10px;
+  }
+
+  .statusFilters button span {
+    display: none;
+  }
+
+  .mobileSequenceColumn {
+    width: 12%;
+  }
+
+  .mobileDataColumn {
+    width: 48%;
+  }
+
+  .mobileStatusColumn {
+    width: 18%;
+  }
+
+  .mobileActionColumn {
+    width: 22%;
+  }
+
+  .mobileTable th {
+    padding: 8px 2px;
+    font-size: 10.5px;
+  }
+
+  .mobileTable td {
+    padding: 8px 3px;
+  }
+
+  .mobileApplication > strong {
+    font-size: 11.5px;
+  }
+
+  .mobileOrigin {
+    font-size: 9.5px;
+  }
+
+  .mobileKeyRow code {
+    font-size: 9px;
+  }
+
+  .mobileMetadata {
+    font-size: 8px;
+  }
+
+  .mobileRowActions .iconButton {
+    width: 27px;
+    height: 27px;
+    flex-basis: 27px;
+  }
+
+  .mobileRowActions .iconButton svg {
+    width: 13px;
+    height: 13px;
+  }
+}
+
+
+/* =========================================================
+   v2 refinement requested
+   - search same feel as user management
+   - segmented status options
+   - add button next to filters
+   - better mobile status/action alignment
+========================================================= */
+
+.search {
+  width: 100%;
+  min-height: 44px;
+  padding: 0;
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+  overflow: hidden;
+  border: 1px solid rgba(2, 75, 118, 0.16);
+  border-radius: 12px;
+  background: #ffffff;
+  box-shadow:
+    0 4px 12px rgba(27, 43, 74, 0.04),
+    0 1px 0 rgba(255, 255, 255, 0.8) inset;
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.search:focus-within {
+  border-color: rgba(2, 75, 118, 0.45);
+  box-shadow:
+    0 0 0 3px rgba(2, 75, 118, 0.09),
+    0 10px 25px rgba(27, 43, 74, 0.08);
+}
+
+.searchContainer {
+  min-width: 0;
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0 10px 0 16px;
+  background: #ffffff;
+}
+
+.searchIcon {
+  flex: 0 0 auto;
+  color: rgba(2, 75, 118, 0.68);
+}
+
+.searchInput {
+  min-width: 0;
+  width: 100%;
+  height: 42px;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: #1b2b4a;
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.searchInput::-webkit-search-cancel-button {
+  display: none;
+}
+
+.searchInput::placeholder {
+  color: rgba(27, 43, 74, 0.38);
+  font-weight: 500;
+}
+
+.clearSearchButton {
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 0;
+  display: inline-grid;
+  flex: 0 0 auto;
+  place-items: center;
+  border-radius: 8px;
+  background: transparent;
+  color: rgba(2, 75, 118, 0.72);
+  cursor: pointer;
+}
+
+.clearSearchButton:hover {
+  background: #edf6fb;
+}
+
+.searchButton {
+  flex: 0 0 auto;
+  width: auto;
+  min-width: 112px;
+  min-height: 44px;
+  padding: 0 18px;
+  margin: 0;
+  border: 0;
+  border-left: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: var(--brand, #024b76);
+  color: #ffffff;
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 800;
+  cursor: pointer;
+  white-space: nowrap;
+  box-shadow: none;
+  transition:
+    background 160ms ease,
+    opacity 140ms ease;
+}
+
+.searchButton:hover:not(:disabled) {
+  background: var(--brandDark, #013b5d);
+}
+
+.searchButtonIcon {
+  display: none;
+  font-size: 18px;
+}
+
+.searchButtonText {
+  display: inline;
+}
+
+.toolbar {
+  display: grid;
+  grid-template-columns: minmax(260px, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+}
+
+.toolbarActions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.statusFilters {
+  min-height: 44px;
+  padding: 2px 3px;
+  border: 1px solid rgba(2, 75, 118, 0.1);
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0;
+  background: #ffffff;
+  box-shadow: 0 4px 12px rgba(27, 43, 74, 0.06);
+}
+
+.statusFilters button {
+  position: relative;
+  min-height: 36px;
+  padding: 0 14px;
+  border: 0;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: transparent;
+  color: rgba(27, 43, 74, 0.74);
+  font: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    background 140ms ease,
+    color 140ms ease,
+    box-shadow 140ms ease;
+}
+
+.statusFilters button + button::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 1px;
+  height: 18px;
+  background: rgba(27, 43, 74, 0.15);
+  transform: translateY(-50%);
+}
+
+.statusFilters .filterActive {
+  background: var(--brand, #024b76);
+  color: #ffffff;
+  box-shadow:
+    0 4px 10px rgba(2, 75, 118, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.28);
+}
+
+.statusFilters .filterActive::before,
+.statusFilters .filterActive + button::before {
+  opacity: 0;
+}
+
+.statusFilterLabel {
+  display: inline;
+}
+
+.statusFilterCount {
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: 999px;
+  display: inline-grid;
+  place-items: center;
+  background: rgba(27, 43, 74, 0.1);
+  color: inherit;
+  font-size: 10px;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.statusFilters .filterActive .statusFilterCount {
+  background: rgba(255, 255, 255, 0.16);
+}
+
+.addButton {
+  min-height: 44px;
+  padding: 0 15px;
+  border-radius: 11px;
+}
+
+.mobileStatusCell,
+.mobileActionCell {
+  vertical-align: middle !important;
+}
+
+.mobileStatusCell {
+  text-align: center !important;
+}
+
+.mobileActionCell {
+  text-align: center !important;
+}
+
+.mobileStatusToggle {
+  display: inline-grid;
+  justify-items: center;
+  gap: 6px;
+}
+
+.mobileStatusToggle em {
+  display: block;
+  text-align: center;
+}
+
+.mobileRowActions {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+@media (max-width: 1023px) {
+  .toolbar {
+    grid-template-columns: 1fr;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  .toolbarActions {
+    justify-content: space-between;
+  }
+}
+
+@media (max-width: 700px) {
+  .search {
+    min-height: 42px;
+    border-radius: 11px;
+  }
+
+  .searchContainer {
+    padding-left: 14px;
+    padding-right: 8px;
+  }
+
+  .searchInput {
+    height: 40px;
+    font-size: 0.82rem;
+  }
+
+  .searchButton {
+    width: 48px;
+    min-width: 48px;
+    min-height: 42px;
+    padding: 0;
+  }
+
+  .searchButtonText {
+    display: none;
+  }
+
+  .searchButtonIcon {
+    display: block;
+  }
+
+  .toolbarActions {
+    width: 100%;
+    justify-content: space-between;
+    gap: 8px;
+  }
+
+  .statusFilters {
+    flex: 1 1 auto;
+    min-width: 0;
+    max-width: calc(100% - 52px);
+  }
+
+  .statusFilters button {
+    min-width: 0;
+    flex: 1 1 0;
+    padding-inline: 10px;
+    font-size: 11px;
+  }
+
+  .statusFilterCount {
+    display: none;
+  }
+
+  .addButton {
+    width: 44px;
+    min-width: 44px;
+    min-height: 42px;
+    padding: 0;
+  }
+
+  .addButtonText {
+    display: none;
+  }
+
+  .mobileStatusColumn {
+    width: 78px;
+  }
+
+  .mobileActionColumn {
+    width: 84px;
+  }
+
+  .mobileStatusToggle {
+    gap: 5px;
+  }
+
+  .mobileRowActions {
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .mobileRowActions .iconButton {
+    width: 32px;
+    height: 32px;
+    flex: 0 0 32px;
+  }
+}
+
+@media (max-width: 600px) {
+  .search {
+    min-height: 40px;
+    border-radius: 10px;
+  }
+
+  .searchContainer {
+    padding-left: 12px;
+    padding-right: 6px;
+  }
+
+  .searchInput {
+    height: 38px;
+    font-size: 0.75rem;
+  }
+
+  .searchButton {
+    width: 44px;
+    min-width: 44px;
+    min-height: 40px;
+  }
+
+  .searchButtonIcon {
+    font-size: 16px;
+  }
+
+  .clearSearchButton {
+    width: 28px;
+    height: 28px;
+  }
+
+  .statusFilters {
+    max-width: calc(100% - 48px);
+    padding: 1px 2px;
+  }
+
+  .statusFilters button {
+    min-height: 32px;
+    padding-inline: 8px;
+    font-size: 10.5px;
+  }
+
+  .mobileStatusColumn {
+    width: 74px;
+  }
+
+  .mobileActionColumn {
+    width: 78px;
+  }
+}
+
+@media (max-width: 390px) {
+  .statusFilters button {
+    padding-inline: 6px;
+    font-size: 10px;
+  }
+
+  .mobileRowActions .iconButton {
+    width: 28px;
+    height: 28px;
+    flex-basis: 28px;
+  }
+}
+
+/* Keep the search and actions on separate rows, matching AdminUserManagement. */
+.toolbar {
+  grid-template-columns: minmax(0, 1fr);
+  align-items: stretch;
+  gap: 12px;
+}
+
+.toolbarActions {
+  width: 100%;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.searchRow {
+  width: 100%;
+  min-width: 0;
+  display: flex;
+  align-items: stretch;
+  gap: 10px;
+}
+
+.searchRow .search {
+  min-width: 0;
+  flex: 1 1 auto;
+  border-radius: 11px;
+}
+
+.statusFilters {
+  width: fit-content;
+  max-width: calc(100% - 48px);
+  flex: 0 1 auto;
+  min-height: 0;
+  padding: 1px 2px;
+}
+
+.statusFilters button {
+  width: auto;
+  min-width: 0;
+  flex: 0 0 auto;
+  min-height: 28px;
+  padding: 3px 12px;
+  font-size: 12px;
+}
+
+.statusFilters button .statusFilterLabel {
+  min-width: 0;
+  height: auto;
+  padding: 0;
+  border-radius: 0;
+  display: inline;
+  background: transparent;
+  font-size: inherit;
+}
+
+.filterSummary {
+  margin: 0 0 0 auto;
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 5px;
+  color: rgba(27, 43, 74, 0.58);
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.filterSummaryIcon {
+  color: #0877b8;
+}
+
+.filterSummaryCounts {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  line-height: 1;
+}
+
+.filterSummaryInactive {
+  color: #c0392b;
+}
+
+.desktopKeyStack,
+.desktopKeyItem {
+  min-width: 0;
+  display: grid;
+}
+
+.desktopKeyStack {
+  width: 100%;
+  max-width: 100%;
+  margin-inline: 0;
+  gap: 5px;
+  text-align: left;
+}
+
+.desktopApplication {
+  width: 100%;
+  max-width: 100%;
+  margin-inline: 0;
+  min-width: 0;
+  display: grid;
+  gap: 5px;
+  text-align: left;
+}
+
+.desktopKeyItem {
+  grid-template-columns: minmax(0, 1fr);
+  align-items: start;
+  gap: 0;
+}
+
+.desktopKeyItem > small {
+  color: rgba(27, 43, 74, 0.52);
+  font-size: 10.5px;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.protectedKey {
+  width: 100%;
+  min-width: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: rgba(27, 43, 74, 0.52);
+  font-size: 9.5px;
+  font-weight: 700;
+  line-height: 1.3;
+  white-space: nowrap;
+}
+
+.privateKeyAction {
+  width: 100%;
+  min-width: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 5px;
+}
+
+.privateKeyAction > code {
+  color: rgba(27, 43, 74, 0.52);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  line-height: 1;
+}
+
+.protectedKey code {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  color: inherit;
+  font: inherit;
+  letter-spacing: 1px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.revealKeyButton {
+  margin-left: auto;
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  border: 0;
+  border-radius: 6px;
+  display: inline-grid;
+  flex: 0 0 22px;
+  place-items: center;
+  background: transparent;
+  color: rgba(2, 75, 118, 0.72);
+  cursor: pointer;
+}
+
+.revealKeyButton:hover:not(:disabled) {
+  background: #edf6fb;
+}
+
+.revealKeyButton:disabled {
+  opacity: 0.5;
+  cursor: wait;
+}
+
+.privateKeyModal {
+  width: min(460px, 100%);
+}
+
+.privateKeyPreview {
+  padding: 18px;
+  display: grid;
+  gap: 12px;
+}
+
+.privateKeyPreview > strong {
+  color: #1b2b4a;
+  font-size: 14px;
+  font-weight: 900;
+}
+
+.privateKeyPreview > code {
+  padding: 12px;
+  border: 1px solid rgba(27, 43, 74, 0.14);
+  border-radius: 7px;
+  background: #f7f9fc;
+  color: #153653;
+  font-size: 12px;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}
+
+.privateKeyPreview > button {
+  width: fit-content;
+  justify-self: end;
+}
+
+.confirmModal {
+  width: min(440px, 100%);
+}
+
+.confirmBody {
+  padding: 20px 20px 16px;
+  display: grid;
+  grid-template-columns: 42px minmax(0, 1fr);
+  align-items: start;
+  gap: 12px;
+}
+
+.confirmIcon {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  display: inline-grid;
+  place-items: center;
+  background: #fef0ef;
+  color: #b42318;
+}
+
+.confirmBody h3 {
+  margin: 0;
+  color: #1b2b4a;
+  font-size: 17px;
+  font-weight: 900;
+}
+
+.confirmBody p {
+  margin: 6px 0 0;
+  color: rgba(27, 43, 74, 0.68);
+  font-size: 13px;
+  font-weight: 650;
+  line-height: 1.55;
+}
+
+.confirmActions {
+  padding: 12px 20px 18px;
+  border-top: 1px solid rgba(27, 43, 74, 0.1);
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.confirmActions > button {
+  min-width: 100px;
+}
+
+.dangerButton {
+  min-height: 40px;
+  padding: 0 14px;
+  border: 1px solid #b42318;
+  border-radius: 7px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  background: #b42318;
+  color: #ffffff;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.dangerButton:hover:not(:disabled) {
+  background: #912018;
+}
+
+.dangerButton:disabled {
+  opacity: 0.52;
+  cursor: not-allowed;
+}
+
+.desktopKeyItem .keyCell {
+  width: 100%;
+  min-width: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 22px;
+  align-items: center;
+  justify-content: stretch;
+}
+
+.desktopKeyItem .iconButton {
+  width: 22px;
+  height: 22px;
+  flex: 0 0 22px;
+}
+
+.desktopKeyItem .iconButton svg,
+.desktopKeyItem .revealKeyButton svg {
+  width: 13px;
+  height: 13px;
+}
+
+.desktopKeyItem .keyCell code {
+  font-size: 11px;
+}
+
+.timeCell,
+.timeCell > span {
+  display: grid;
+}
+
+.timeHeader {
+  display: inline-block;
+  line-height: 1.35;
+  white-space: normal;
+}
+
+.timeCell {
+  width: fit-content;
+  max-width: 100%;
+  margin-inline: auto;
+  gap: 0;
+  text-align: left;
+}
+
+.actorCell {
+  width: fit-content;
+  max-width: 100%;
+  margin-inline: auto;
+  justify-items: start;
+  text-align: left;
+}
+
+.timeCell > span {
+  grid-template-columns: 42px minmax(0, 1fr);
+  align-items: center;
+  gap: 0;
+}
+
+.timeCell small {
+  color: rgba(27, 43, 74, 0.52);
+  font-size: 10.5px;
+  font-weight: 800;
+}
+
+.timeCell time {
+  color: #1b2b4a;
+  font-size: 10px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.mobileTimes {
+  display: grid;
+  gap: 1px;
+}
+
+.desktopTable td {
+  padding-top: 7px;
+  padding-bottom: 7px;
+}
+
+.mobileConnectionDetails {
+  min-width: 0;
+  display: grid;
+  gap: 5px;
+}
+
+.mobileConnectionItem {
+  min-width: 0;
+  display: grid;
+  gap: 2px;
+}
+
+.mobileConnectionItem > small {
+  color: rgba(27, 43, 74, 0.52);
+  font-size: 9px;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.pagination {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.pagination span {
+  color: rgba(27, 43, 74, 0.7);
+  font-size: 14px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.pagination button {
+  min-width: 88px;
+  height: 40px;
+  padding: 0 14px;
+  border: 1px solid rgba(2, 75, 118, 0.16);
+  border-radius: 10px;
+  background: #ffffff;
+  color: var(--brand, #024b76);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 800;
+  cursor: pointer;
+  transition:
+    background 130ms ease,
+    border-color 130ms ease,
+    transform 130ms ease,
+    opacity 130ms ease;
+}
+
+.pagination button:hover:not(:disabled) {
+  border-color: rgba(2, 75, 118, 0.24);
+  background: rgba(2, 75, 118, 0.055);
+  transform: translateY(-1px);
+}
+
+.pagination button:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.pagination button:disabled {
+  opacity: 0.42;
+  cursor: not-allowed;
+}
+
+.addButton {
+  width: auto;
+  min-width: 96px;
+  height: 44px;
+  min-height: 44px;
+  padding: 0 14px;
+  border-radius: 11px;
+}
+
+.addButtonText {
+  display: inline;
+}
+
+@media (max-width: 1023px) {
+  .searchRow .search {
+    min-height: 42px;
+  }
+
+  .searchRow .searchContainer {
+    padding-left: 14px;
+    padding-right: 8px;
+  }
+
+  .searchRow .searchInput {
+    height: 40px;
+    font-size: 0.82rem;
+  }
+
+  .searchRow .searchButton {
+    width: 48px;
+    min-width: 48px;
+    min-height: 42px;
+    padding: 0;
+  }
+
+  .searchRow .searchButtonText {
+    display: none;
+  }
+
+  .searchRow .searchButtonIcon {
+    display: block;
+  }
+
+  .addButton {
+    width: 42px;
+    min-width: 42px;
+    height: 42px;
+    min-height: 42px;
+  }
+}
+
+@media (max-width: 700px) {
+  .toolbar {
+    gap: 10px;
+  }
+
+  .toolbarActions {
+    gap: 8px;
+  }
+
+  .statusFilters button {
+    min-height: 27px;
+    padding: 2px 11px;
+    font-size: 12px;
+  }
+
+  .addButton {
+    width: 42px;
+    min-width: 42px;
+    padding: 0;
+  }
+
+  .addButtonText {
+    display: none;
+  }
+
+}
+
+@media (min-width: 701px) and (max-width: 1023px) {
+  .addButton {
+    width: auto;
+    min-width: 96px;
+    padding: 0 14px;
+  }
+}
+
+@media (max-width: 1023px) {
+  .mobileStatusColumn {
+    width: 82px;
+  }
+
+  .mobileActionColumn {
+    width: 70px;
+  }
+
+  .mobileActionCell {
+    text-align: center !important;
+    vertical-align: middle !important;
+  }
+
+  .mobileManagement {
+    display: inline-grid;
+    justify-items: center;
+    gap: 6px;
+  }
+
+  .mobileStatusToggle.mobileStatusToggleXs {
+    display: none;
+  }
+
+  .mobileRowActions {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+  }
+}
+
+@media (max-width: 600px) {
+  .searchRow {
+    gap: 8px;
+  }
+
+  .addButton {
+    width: 40px;
+    min-width: 40px;
+    height: 40px;
+    min-height: 40px;
+    border-radius: 10px;
+  }
+
+  .statusFilters {
+    padding: 1px 2px;
+  }
+
+  .statusFilters button {
+    min-height: 27px;
+    padding: 2px 11px;
+    font-size: 12px;
+  }
+
+  .pagination {
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .pagination span {
+    font-size: 12px;
+  }
+
+  .pagination button {
+    min-width: 0;
+    min-height: 34px;
+    height: 34px;
+    padding: 0 10px;
+    flex: 1 1 100px;
+    max-width: 120px;
+    font-size: 11px;
+  }
+
+}
+
+@media (max-width: 390px) {
+  .mobileStatusColumn {
+    width: 0;
+    visibility: collapse;
+  }
+
+  .mobileStatusHeader,
+  .mobileStatusCell {
+    display: none;
+  }
+
+  .mobileActionColumn {
+    width: 64px;
+  }
+
+  .mobileStatusToggle.mobileStatusToggleXs {
+    display: inline-grid;
+  }
+
+  .mobileStatusToggleXs em {
+    display: none;
+  }
+
+  .statusFilters button {
+    min-height: 26px;
+    padding: 2px 9px;
+    font-size: 11px;
+  }
+
+  .filterSummary {
+    gap: 3px;
+    font-size: 11px;
+  }
+
+  .filterSummaryIcon {
+    width: 17px;
+    height: 17px;
+  }
+}
+
+/* Compact modal controls without stretching action buttons on smaller screens. */
+@media (max-width: 1023px) {
+  .formActions > button {
+    width: auto;
+    min-width: 104px;
+    flex: 0 0 auto;
+  }
+}
+
+@media (max-width: 600px) {
+  .modalBackdrop {
+    padding: 10px;
+  }
+
+  .modalHeader {
+    padding: 12px 14px;
+  }
+
+  .modalHeader h3 {
+    font-size: 16px;
+  }
+
+  .modal form {
+    padding: 14px;
+    gap: 12px;
+  }
+
+  .formStepContent {
+    gap: 12px;
+  }
+
+  .formStepSection {
+    grid-template-columns: 26px minmax(0, 1fr);
+    gap: 10px;
+  }
+
+  .formStepMarker {
+    width: 24px;
+    height: 24px;
+    font-size: 10px;
+  }
+
+  .formStepConnected::after {
+    top: 24px;
+    bottom: -13px;
+    left: 11px;
+  }
+
+  .formStepPanel {
+    gap: 12px;
+  }
+
+  .formKeySection {
+    padding-top: 10px;
+    gap: 7px;
+  }
+
+  .formKeyHeader strong {
+    font-size: 12px;
+  }
+
+  .formKeyRow {
+    grid-template-columns: 72px minmax(0, 1fr) auto;
+    gap: 6px;
+  }
+
+  .modal .formKeyTextarea {
+    min-height: 32px;
+    padding-inline: 7px;
+    font-size: 11px;
+  }
+
+  .formKeyIconButton {
+    width: 26px;
+    height: 26px;
+  }
+
+  .formKeyIconButton svg,
+  .generateKeyButton svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .generateKeyButton {
+    min-height: 28px;
+    padding-inline: 8px;
+    font-size: 10px;
+  }
+
+  .formActions {
+    padding-top: 2px;
+    gap: 6px;
+  }
+
+  .formActions > button {
+    min-width: 94px;
+    min-height: 34px;
+    padding: 0 10px;
+    gap: 5px;
+    font-size: 12px;
+  }
+
+  .formActions > button svg {
+    width: 15px;
+    height: 15px;
+  }
+}
+
+@media (max-width: 390px) {
+  .modalBackdrop {
+    padding: 6px;
+  }
+
+  .modalHeader {
+    padding: 10px 12px;
+  }
+
+  .modalHeader h3 {
+    font-size: 15px;
+  }
+
+  .modal form {
+    padding: 12px;
+    gap: 10px;
+  }
+
+  .formStepSection {
+    grid-template-columns: 24px minmax(0, 1fr);
+    gap: 8px;
+  }
+
+  .formStepMarker {
+    width: 22px;
+    height: 22px;
+    font-size: 9px;
+  }
+
+  .formStepConnected::after {
+    top: 22px;
+    bottom: -11px;
+    left: 10px;
+  }
+
+  .formKeyRow {
+    grid-template-columns: 68px minmax(0, 1fr) auto;
+    gap: 5px;
+  }
+
+  .formKeyRow > span:first-child {
+    padding-top: 1px;
+    font-size: 11px;
+  }
+
+  .formActions {
+    gap: 5px;
+  }
+
+  .formActions > button {
+    min-width: 84px;
+    min-height: 32px;
+    padding: 0 8px;
+    font-size: 11px;
+  }
+
+  .formActions > button svg {
+    width: 14px;
+    height: 14px;
+  }
+}
+
+.rowActions .iconButton:last-child,
+.mobileRowActions .iconButton:last-child {
+  border-color: rgba(180, 35, 24, 0.22);
+  background: #fef3f2;
+  color: #b42318;
+}
+
+.rowActions .iconButton:last-child:hover:not(:disabled),
+.mobileRowActions .iconButton:last-child:hover:not(:disabled) {
+  background: #fee4e2;
+}
+
+@media (max-width: 1023px) {
+  .tableWrap {
+    overflow-x: auto;
+  }
+
+  .tableWrap .mobileTable {
+    min-width: 900px;
+  }
+
+  .mobileSequenceColumn {
+    width: 52px;
+  }
+
+  .mobileDataColumn {
+    width: 190px;
+  }
+
+  .mobileKeyColumn {
+    width: 220px;
+  }
+
+  .mobileTimeColumn {
+    width: 170px;
+  }
+
+  .mobileActorColumn {
+    width: 140px;
+  }
+
+  .mobileStatusColumn {
+    width: 72px;
+  }
+
+  .mobileActionColumn {
+    width: 56px;
+  }
+
+  .mobileKeyCell,
+  .mobileTimeCell,
+  .mobileActorCell {
+    text-align: left !important;
+    vertical-align: middle !important;
+  }
+
+  .mobileKeyCell .desktopKeyStack,
+  .mobileTimeCell .timeCell,
+  .mobileActorCell .actorCell {
+    width: 100%;
+    margin: 0;
+  }
+}
+
+@media (max-width: 600px) {
+  .tableWrap .mobileTable {
+    min-width: 500px;
+  }
+
+  .mobileDataColumn {
+    width: 170px;
+  }
+
+  .mobileKeyColumn {
+    width: 205px;
+  }
+
+  .mobileTimeColumn {
+    width: 0;
+    visibility: collapse;
+  }
+
+  .mobileActorColumn {
+    width: 0;
+    visibility: collapse;
+  }
+
+  .mobileTimeHeader,
+  .mobileTimeCell,
+  .mobileActorHeader,
+  .mobileActorCell {
+    display: none;
+  }
+
+  .mobileStatusColumn {
+    width: 0;
+    visibility: collapse;
+  }
+
+  .mobileStatusHeader,
+  .mobileStatusCell {
+    display: none;
+  }
+
+  .mobileActionColumn {
+    width: 70px;
+  }
+
+  .mobileStatusToggle.mobileStatusToggleXs {
+    display: inline-grid;
+  }
+
+  .mobileStatusToggleXs em {
+    display: none;
+  }
+
+  .mobileActionHeaderLabel {
+    position: static;
+    width: auto;
+    height: auto;
+    padding: 0;
+    margin: 0;
+    overflow: visible;
+    clip: auto;
+    white-space: nowrap;
+  }
+}
+
+.mobileActionHeaderLabel {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (max-width: 600px) {
+  .mobileActionHeaderLabel {
+    position: static;
+    width: auto;
+    height: auto;
+    margin: 0;
+    overflow: visible;
+    clip: auto;
+  }
+}
+
+@media (max-width: 390px) {
+  .mobileStatusColumn {
+    width: 0;
+    visibility: collapse;
+  }
+}
+
+@media (max-width: 600px) {
+  .mobileTimeColumn,
+  .mobileActorColumn,
+  .mobileStatusColumn {
+    display: none;
+    width: 0;
+    visibility: visible;
+  }
+
+  .mobileActionHeader,
+  .mobileActionCell {
+    display: table-cell !important;
+  }
+
+  .mobileActionHeader {
+    background: var(--brand, #024b76) !important;
+    color: #ffffff !important;
+    text-align: center !important;
+  }
+
+  .mobileActionCell {
+    text-align: center !important;
+    vertical-align: middle !important;
+  }
+
+  .mobileManagement {
+    display: inline-grid;
+    justify-items: center;
+    gap: 7px;
+  }
+
+  .mobileRowActions {
+    display: inline-flex !important;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .mobileStatusToggle.mobileStatusToggleXs {
+    display: inline-grid !important;
+  }
+
+  .mobileStatusToggleXs > span {
+    background: #98a2b3;
+  }
+
+  .mobileStatusToggleXs input:checked + span {
+    background: #178747;
+  }
+}
+
+/* Tablet and phone: keep the table compact and show only the useful actions. */
+@media (max-width: 1023px) {
+  .tableWrap {
+    overflow-x: hidden;
+  }
+
+  .tableWrap .mobileTable {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .mobileTimeColumn,
+  .mobileActorColumn,
+  .mobileTimeHeader,
+  .mobileActorHeader,
+  .mobileTimeCell,
+  .mobileActorCell {
+    display: none;
+  }
+
+  .mobileSequenceColumn {
+    width: 7%;
+  }
+
+  .mobileDataColumn {
+    width: 28%;
+  }
+
+  .mobileKeyColumn {
+    width: 43%;
+  }
+
+  .mobileStatusColumn {
+    display: table-column;
+    width: 10%;
+  }
+
+  .mobileActionColumn {
+    width: 12%;
+  }
+
+  .mobileStatusHeader,
+  .mobileStatusCell {
+    display: table-cell;
+  }
+
+  .mobileActionHeader,
+  .mobileActionCell {
+    display: table-cell !important;
+  }
+
+  .mobileActionHeaderLabel {
+    position: static;
+    width: auto;
+    height: auto;
+    padding: 0;
+    margin: 0;
+    overflow: visible;
+    clip: auto;
+    white-space: nowrap;
+  }
+
+  .mobileStatusToggle.mobileStatusToggleXs {
+    display: none !important;
+  }
+
+  .mobileStatusToggleXs em {
+    display: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .mobileStatusColumn,
+  .mobileStatusHeader,
+  .mobileStatusCell {
+    display: none;
+  }
+
+  .mobileSequenceColumn {
+    width: 10%;
+  }
+
+  .mobileDataColumn {
+    width: 31%;
+  }
+
+  .mobileKeyColumn {
+    width: 43%;
+  }
+
+  .mobileActionColumn {
+    width: 16%;
+  }
+
+  .mobileStatusToggle.mobileStatusToggleXs {
+    display: inline-grid !important;
+  }
+
+  .mobileTable th {
+    height: 40px;
+    padding: 7px 4px;
+    font-size: 11px;
+  }
+
+  .mobileTable td {
+    padding: 10px 5px;
+  }
+
+  .mobileManagement,
+  .mobileRowActions {
+    gap: 5px;
+  }
+
+  .mobileRowActions .iconButton {
+    width: 30px;
+    height: 30px;
+    flex-basis: 30px;
+  }
+}

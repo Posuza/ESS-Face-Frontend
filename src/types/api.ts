@@ -5,6 +5,98 @@ export type AdminSession = {
   role_name: string;
 };
 
+export type ClientApplication = {
+  app_registration_id: number;
+  app_name: string;
+  public_key: string;
+  allowed_callback_origin: string;
+  is_active: boolean;
+  created_at: string;
+  updated_at: string;
+  created_by: string | null;
+  updated_by: string | null;
+};
+
+export type PresenceSummary = {
+  connections: number;
+  applications: number;
+  registered_applications: number;
+  active_applications: number;
+  registered_employees: number;
+  employees: number;
+  devices: number;
+  clients: number;
+};
+
+export type PresenceApplication = {
+  app_name: string;
+  public_key: string;
+  is_active: boolean;
+  connections: number;
+  employees: number;
+  devices: number;
+  clients: number;
+};
+
+export type PresenceConnection = {
+  connection_id: string;
+  app_name: string;
+  public_key: string;
+  employee_id: string;
+  employee_name: string;
+  device_id: string;
+  latitude: number | null;
+  longitude: number | null;
+  client_ip: string;
+  user_agent: string;
+  connected_at: string;
+  last_seen_at: string;
+};
+
+export type PresenceSnapshot = {
+  generated_at: string;
+  monitoring_enabled: boolean;
+  summary: PresenceSummary;
+  applications: PresenceApplication[];
+  connections: PresenceConnection[];
+};
+
+export type PresenceSettings = {
+  enabled: boolean;
+};
+
+export type ClientApplicationCreate = Pick<
+  ClientApplication,
+  "app_name" | "allowed_callback_origin"
+> & {
+  public_key?: string;
+  private_key?: string;
+};
+
+export type ClientApplicationUpdate = Partial<
+  Pick<ClientApplication, "app_name" | "allowed_callback_origin" | "is_active">
+> & {
+  public_key?: string;
+  private_key?: string;
+};
+
+export type BlockedClientIp = {
+  ip_address: string;
+  failure_count: number;
+  window_started_at: string;
+  blocked_until: string | null;
+  reason: string | null;
+  updated_at: string;
+  is_blocked: boolean;
+  retry_after_seconds: number;
+};
+
+export type ClientIpBlockCreate = {
+  ip_address: string;
+  duration_minutes: number;
+  reason: string;
+};
+
 export type DirectoryEmployee = {
   employee_code: string;
   first_name: string;
